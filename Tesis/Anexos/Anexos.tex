@@ -1,0 +1,306 @@
+\begin{appendix}
+\chapter{Appendix A: Harmonic coordinates}\label{appendix-harm}
+In this appendix first we will proof some properties of the Christoffel symbols and the metric tensor components. Then these properties are going to be
+use to arrived, from the harmonic coordinates, to the DeDonder gauge.
+Main reference for this appendix is \cite{DIRAC}.
+
+\section{Useful properties}
+
+The following properties are going to be useful for this appendix
+
+\subsection*{Property 1}
+
+\begin{equation}
+\partial_{\sigma}g^{\alpha\beta}=-g^{\alpha\mu}g^{\beta\nu}\partial_{\sigma}g_{\mu\nu},\label{eq:a1}
+\end{equation}
+\textbf{Proof:} We start from
+\begin{align*}
+\partial_{\sigma}g^{\alpha\mu}\cdot g_{\mu\nu}+g^{\alpha\mu}\cdot\partial_{\sigma}g_{\mu\nu} & =\partial_{\sigma}\left(g^{\alpha\mu}g_{\mu\nu}\right)\\
+\  & =\partial_{\sigma}\delta_{\nu}^{\alpha}\\
+\  & =0
+\end{align*}
+then
+\[
+\partial_{\sigma}g^{\alpha\mu}\cdot g_{\mu\nu}=-g^{\alpha\mu}\cdot\partial_{\sigma}g_{\mu\nu},
+\]
+multiplying by $g^{\beta\nu}$ and adding in $\nu$, because $g^{\beta\nu}g_{\mu\nu}=\delta_{\mu}^{\beta}$,
+we obtain (\ref{eq:a1}).
+
+\subsection*{Property 2}
+
+\begin{equation}
+\Gamma_{\alpha\beta\sigma}+\Gamma_{\beta\alpha\sigma}=\partial_{\sigma}g_{\alpha\beta},\label{eq:a2}
+\end{equation}
+\textbf{Proof:} From the fact that
+\[
+\Gamma_{\beta\gamma}^{\alpha}=\frac{1}{2}g^{\alpha\sigma}\left(\partial_{\beta}g_{\sigma\gamma}+\partial_{\gamma}g_{\sigma\beta}-\partial_{\sigma}g_{\beta\gamma}\right)
+\]
+we have that
+\[
+\Gamma_{\alpha\beta\sigma}=\frac{1}{2}\left(\partial_{\beta}g_{\alpha\sigma}+\partial_{\sigma}g_{\alpha\beta}-\partial_{\alpha}g_{\beta\sigma}\right)
+\]
+and
+
+\[
+\Gamma_{\beta\alpha\sigma}=\frac{1}{2}\left(\partial_{\alpha}g_{\beta\sigma}+\partial_{\sigma}g_{\beta\alpha}-\partial_{\beta}g_{\alpha\sigma}\right),
+\]
+if we make $\Gamma_{\alpha\beta\sigma}+\Gamma_{\beta\alpha\sigma}$
+we obtain (\ref{eq:a2}).
+
+\subsection*{Property 3}
+
+\begin{equation}
+\Gamma_{\alpha\beta}^{\beta}\sqrt{-g}=\partial_{\text{\ensuremath{\alpha}}}\sqrt{-g},\label{eq:a3}
+\end{equation}
+\textbf{Proof: }First we have to differentiate the determinant of
+the metric tensor $g$, we must differentiate each element $g_{\lambda\mu}$
+in it and then multiply by the cofactor $gg^{\lambda u}$. Thus
+\begin{equation}
+\partial_{\nu}g=gg^{\lambda\mu}\partial_{\nu}g_{\lambda\mu}.\label{eq:ag}
+\end{equation}
+Now we are going to calculate $\Gamma_{\nu\mu}^{\mu}$
+\begin{align}
+\Gamma_{\nu\mu}^{\mu} & =\frac{1}{2}g^{\mu\sigma}\left(\partial_{\mu}g_{\sigma\nu}+\partial_{\nu}g_{\sigma\mu}-\partial_{\sigma}g_{\nu\mu}\right)\\
+\  & =\frac{1}{2}\left(g^{\mu\sigma}\partial_{\mu}g_{\sigma\nu}-g^{\mu\sigma}\partial_{\sigma}g_{\nu\mu}+g^{\mu\sigma}\partial_{\nu}g_{\sigma\mu}\right)\\
+\  & =\frac{1}{2}g^{\mu\sigma}\partial_{\nu}g_{\sigma\mu}.\label{eq:a-gamma}
+\end{align}
+Let us write $g^{-1}\partial_{\nu}g$ in the following way
+\begin{align}
+g^{-1}\partial_{\nu}g & =g^{-1}\partial_{\nu}\left(\left[\sqrt{-g}\right]^{2}\right)\nonumber \\
+\  & =2\left(\sqrt{-g}\right)^{-1}\partial_{\nu}\sqrt{-g},\label{eq:a-sqrt}
+\end{align}
+from (\ref{eq:ag}) and (\ref{eq:a-sqrt})
+\begin{equation}
+\partial_{\nu}\sqrt{-g}=\frac{1}{2}\sqrt{-g}g^{\lambda\mu}\partial_{\nu}g_{\lambda\mu}.\label{eq:a-gg}
+\end{equation}
+Using (\ref{eq:a-gg}) in (\ref{eq:a-gamma}) we obtain (\ref{eq:a3}).
+
+\section{The DeDonder Gauge}
+
+To understand harmonic coordinates we have to start from the d'Alembert
+equation for a scalar $V$, namely $\boxempty V=0$, in a curved spacetime
+\[
+\boxempty V=g^{\alpha\beta}\nabla_{\alpha}\nabla_{\beta}V,
+\]
+then
+\[
+g^{\alpha\beta}\nabla_{\alpha}\nabla_{\beta}V=g^{\alpha\beta}\nabla_{\alpha}\left(\partial_{\beta}V\right)=g^{\alpha\beta}\left(\partial_{\alpha}\partial_{\beta}V-\Gamma_{\alpha\beta}^{\sigma}\partial_{\sigma}V\right)=0,
+\]
+if we are using rectilinear axes in flat space, each of the four coordinates
+$x^{\alpha}$ satisfies $\boxempty x^{\alpha}=0$. This impose a restriction
+over the coordinates, because $x^{\alpha}$ is not an scalar like
+$V$, so it holds only in certain coordinate system.
+
+If we substitute $x^{\alpha}$ for $V$
+\begin{align*}
+g^{\alpha\beta}\left(\partial_{\alpha}\partial_{\beta}x^{\lambda}-\Gamma_{\alpha\beta}^{\sigma}\partial_{\sigma}x^{\lambda}\right)= & \ g^{\alpha\beta}\left(\partial_{\alpha}\delta_{\text{\ensuremath{\beta}}}^{\lambda}-\Gamma_{\alpha\beta}^{\sigma}\delta_{\text{\ensuremath{\sigma}}}^{\lambda}\right)\\
+= & \ -g^{\alpha\beta}\Gamma_{\alpha\beta}^{\lambda}=0,
+\end{align*}
+the coordinates that satisfies this condition are called \textbf{harmonic
+coordinates}. They provide the closest approximation to rectilinear
+coordinates that we can have in curved spacetime. Now, we are going
+to prove that the harmonic coordinate system is equivalent to set
+the DeDonder gauge $\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)=0$,
+from equations (\ref{eq:a1}) and (\ref{eq:a2})
+
+\begin{align*}
+\partial_{\sigma}g^{\alpha\beta}= & \ -g^{\alpha\mu}g^{\beta\nu}\left(\Gamma_{\mu\nu\sigma}+\Gamma_{\nu\mu\sigma}\right)\\
+= & \ -g^{\alpha\mu}\Gamma_{\mu\sigma}^{\beta}-g^{\beta\nu}\Gamma_{\nu\sigma}^{\alpha},
+\end{align*}
+from equation (\ref{eq:a2}) and (\ref{eq:a3}) 
+\begin{align*}
+\partial_{\sigma}\left(g^{\alpha\beta}\sqrt{-g}\right)= & \ \sqrt{-g}\partial_{\sigma}g^{\alpha\beta}+g^{\alpha\beta}\partial_{\sigma}\sqrt{-g}\\
+= & \ \sqrt{-g}\left(-g^{\alpha\mu}\Gamma_{\mu\sigma}^{\beta}-g^{\beta\nu}\Gamma_{\nu\sigma}^{\alpha}+g^{\alpha\beta}\Gamma_{\sigma\mu}^{\mu}\right),
+\end{align*}
+contracting $\sigma$ and $\beta$
+\begin{align*}
+\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)= & \ \sqrt{-g}\left(-g^{\alpha\mu}\Gamma_{\mu\beta}^{\beta}-g^{\beta\nu}\Gamma_{\nu\beta}^{\alpha}+g^{\alpha\beta}\Gamma_{\beta\mu}^{\mu}\right)\\
+= & \ -\sqrt{-g}g^{\beta\nu}\Gamma_{\nu\beta}^{\alpha},
+\end{align*}
+because $g^{\alpha\beta}\Gamma_{\alpha\beta}^{\lambda}=0$, then
+\[
+\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)=0
+\]
+which is what we wanted to proof.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Appendix B: Relativistic Angular Momentum}\label{appendix-momentum}
+In this appendix will be obtain the expression for the relativistic angular momentum for a closed particle system. Then a general system is consider with a general action integral, a momentum and angular momentum expression is obtained and the role of the angular momentum conservation in the symmetry of the energy-momentum tensor. Main reference is \cite{LANDAU,DEWITT}.
+
+\section{For a closed particle system}
+
+Here we are going to obtain a relativistic expression for the angular
+momentum. We need to take into account that there is conservation
+of angular momentum in classical mechanics, so here we are goint to
+take a rotation and proof that there is an expression that is conserved
+under rotations in the four-dimensional space and this expression
+is the angular momentum. We also verify that this correspond to the
+angular momentum expression when we return to a classical system. 
+
+Let us take a system of several particles, let $x^{\alpha}$ be the
+coordinates of one of the particles of the system. We make an infinitesimal
+rotation in the four-dimensional space. Under a transformation, the
+coordinates $x^{\alpha}$ take on new values $x'^{\alpha}$ such that
+the differences $x'^{\alpha}-x^{\alpha}$ are linear functions
+\begin{equation}
+x'^{\alpha}-x^{\alpha}=x_{\beta}\delta\Omega^{\alpha\beta},\label{eq:b1}
+\end{equation}
+where $\delta\Omega^{\alpha\beta}$ are infinitesimal coefficients.
+Under rotation, the length of the four-position vector must remain
+unchaged
+\begin{equation}
+x'_{\alpha}x'^{\alpha}=x_{\alpha}x^{\alpha},\label{eq:b2}
+\end{equation}
+from equation (\ref{eq:b1}) $x'^{\alpha}=x^{\alpha}+x_{\beta}\delta\Omega^{\alpha\beta}$,
+then
+\begin{align*}
+x'_{\alpha}x'^{\alpha}= & \ \left(x_{\alpha}+x_{\beta}\delta\Omega_{\alpha}^{\beta}\right)\left(x^{\alpha}+x_{\beta}\delta\Omega^{\alpha\beta}\right)\\
+= & \ x_{\alpha}x^{\alpha}+x_{\alpha}x_{\beta}\delta\Omega^{\alpha\beta}+x^{\alpha}x_{\beta}\delta\Omega_{\alpha}^{\beta}+\mathcal{O}\left(\delta\Omega^{2}\right),
+\end{align*}
+because
+\[
+x_{\alpha}x_{\beta}\delta\Omega^{\alpha\beta}=x^{\alpha}x_{\beta}\delta\Omega_{\alpha}^{\beta}=x^{\alpha}x^{\beta}\delta\Omega_{\alpha\beta}
+\]
+we have that
+\[
+x'_{\alpha}x'^{\alpha}=x_{\alpha}x^{\alpha}+2x^{\alpha}x^{\beta}\delta\Omega_{\alpha\beta}+\mathcal{O}\left(\delta\Omega^{2}\right),
+\]
+taking only the first orden contribution $\mathcal{O}\left(\delta\Omega^{2}\right)=0$.
+From equation (\ref{eq:b2})
+\[
+x^{\alpha}x^{\beta}\delta\Omega_{\alpha\beta}=0,
+\]
+since $x^{\alpha}x^{\beta}$ is a symmetric tensor $\delta\Omega_{\alpha\beta}$
+must be antisymmetric, $\delta\Omega_{\alpha\beta}=-\delta\Omega_{\beta\alpha}$.
+
+Now, we have that the action for a free material point is, (see \cite{LANDAU})
+\[
+S=-mc\int_{a}^{b}ds
+\]
+then $\delta S=-mc\int_{a}^{b}ds=0$, it can be shown that, (see \cite{LANDAU})
+\[
+\delta S=-p^{\alpha}\delta x_{\alpha},
+\]
+where $p^{\alpha}$ is the four-momentum. Adding over all particles
+in the system
+\[
+\delta S=-\sum\left.p^{\alpha}\delta x_{\alpha}\right|_{a}^{b},
+\]
+which goes from the event $a$ to the event $b$, in the case of a
+rotation $\delta x_{\alpha}=\delta\Omega_{\alpha\beta}x^{\beta}$,
+therefore
+
+\[
+\delta S=-\delta\Omega_{\alpha\beta}\sum\left.p^{\alpha}x^{\beta}\right|_{a}^{b}.
+\]
+We split $\sum\left.p^{\alpha}x^{\beta}\right|_{a}^{b}$ into its
+symmetric and antisymmetric part
+\begin{align*}
+\delta S= & \ -\delta\Omega_{\alpha\beta}\left[\left(\sum\left.p^{\alpha}x^{\beta}\right|_{a}^{b}\right)_{\text{symmetric}}+\left(\sum\left.p^{\alpha}x^{\beta}\right|_{a}^{b}\right)_{\text{antisymmetric}}\right]\\
+= & \ -\delta\Omega_{\alpha\beta}\left(\sum\left.p^{\alpha}x^{\beta}\right|_{a}^{b}\right)_{\text{antisymmetric}},
+\end{align*}
+then
+\[
+\delta\Omega_{\alpha\beta}\left[\frac{1}{2}\sum\left.\left(p^{\alpha}x^{\beta}-p^{\beta}x^{\alpha}\right)\right|_{a}^{b}\right]=0.
+\]
+For a closed system, the action is not changed by a rotation in the
+four-space, this means that the coefficients $\delta\Omega_{\alpha\beta}$
+must vanish, according to this
+\[
+\sum\left.\left(p^{\alpha}x^{\beta}-p^{\beta}x^{\alpha}\right)\right|_{a}=\sum\left.\left(p^{\alpha}x^{\beta}-p^{\beta}x^{\alpha}\right)\right|_{b}.
+\]
+Consequently, for a closed system the antisymmetric tensor of angular
+momentum $J^{\alpha\beta}$ is defined as
+\[
+J^{\alpha\beta}=\sum\left(p^{\alpha}x^{\beta}-p^{\beta}x^{\alpha}\right).
+\]
+We check that the spatial components of $J^{\alpha\beta}$ correspond
+to the classical angular momentum
+\[
+J^{23}=J_{x},\ J^{31}=J_{y},\ J^{12}=J_{z}.
+\]
+
+\section{For a general system}
+
+Here we consider a general system whose action integral has the form
+\[
+S=\int\Lambda\left(q,\partial_{\alpha}q\right)dVdt=\frac{1}{c}\int\Lambda\left(q,\partial_{\alpha}q\right)dx^{4},
+\]
+where $\Lambda$ is some function of the quantities $q$, describing
+the state of the system, and of their first derivatives with respect
+to coordinates and time, we also have that
+\[
+\int\Lambda dV
+\]
+is the lagrangian of the system and $\Lambda$ its lagrangian density.
+The equations of motion for the lagrangian density are given by
+\begin{equation}
+\frac{\partial}{\partial x^{\alpha}}\left(\frac{\partial\Lambda}{\partial\left(\partial_{\alpha}q\right)}\right)-\frac{\partial\Lambda}{\partial q}=0,\label{eq:b3}
+\end{equation}
+we are going to use the fact that
+\begin{equation}
+\frac{\partial\Lambda}{\partial x^{\alpha}}=\frac{\partial\Lambda}{\partial q}\frac{\partial q}{\partial x^{\alpha}}+\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}\frac{\partial\left(\partial_{\beta}q\right)}{\partial x^{\alpha}},\label{eq:b4}
+\end{equation}
+if we substitute the term $\partial\Lambda/\partial q$ given by equation
+(\ref{eq:b3}) in (\ref{eq:b4})
+\begin{equation}
+\frac{\partial\Lambda}{\partial x^{\alpha}}=\frac{\partial}{\partial x^{\beta}}\left(\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}\right)\partial_{\alpha}q+\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}\frac{\partial\left(\partial_{\alpha}q\right)}{\partial x^{\beta}}=\frac{\partial}{\partial x^{\beta}}\left(\partial_{\alpha}q\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}\right).\label{eq:b5}
+\end{equation}
+
+On the other hand, we can write
+\[
+\frac{\partial\Lambda}{\partial x^{\alpha}}=\delta_{\alpha}^{\beta}\frac{\partial\Lambda}{\partial x^{\beta}},
+\]
+then we write equation (\ref{eq:b5}) as
+\[
+\frac{\partial}{\partial x^{\beta}}\left(\partial_{\alpha}q\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}-\delta_{\alpha}^{\beta}\Lambda\right)=0,
+\]
+let us introduce the tensor $T_{\alpha}^{\beta}$ definde as
+\[
+T_{\alpha}^{\beta}=\partial_{\alpha}q\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q\right)}-\delta_{\alpha}^{\beta}\Lambda,
+\]
+then
+\[
+\frac{\partial T_{\alpha}^{\beta}}{\partial x^{\beta}}=0
+\]
+this is satisfied for several quantities $q^{(l)}$, then
+
+\[
+T_{\alpha}^{\beta}=\sum_{l}\partial_{\alpha}q^{(l)}\frac{\partial\Lambda}{\partial\left(\partial_{\beta}q^{(l)}\right)}-\delta_{\alpha}^{\beta}\Lambda.
+\]
+
+We have the four divergence of a vector equal to zero, then the integral
+over a hypersurface which contains all of three-dimensional space
+is conserved. Given the units of the lagrangian density $T^{00}$
+must be considered the energy density of the system, then $\int T^{00}dV$
+is the total energy o the system. We can multiply our integral by
+a constant and the integral is still conserved, we set this constant
+to $1/c$, so $P^{0}$ is equal to the energy of the system multiplied
+by $1/c$, therefore we get four momentum of the system expression
+\[
+P^{\alpha}=\frac{1}{c}\int T^{\alpha\beta}dS_{\beta},
+\]
+which agrees with the expression obtained solving the Killing equation,
+see \cite{DEWITT}. 
+
+From the above section we have that we can define the angular momentum
+as
+\[
+J^{\alpha\beta}=\frac{1}{c}\int\left(x^{\alpha}T^{\beta\sigma}-x^{\alpha}T^{\beta\sigma}\right)dS_{\sigma},
+\]
+lets see that the law of conservation of angular momentum implies
+symmetric index in $T^{\alpha\beta}$, this law of conservation is
+given by
+\[
+\partial_{\sigma}\left(x^{\alpha}T^{\beta\sigma}-x^{\alpha}T^{\beta\sigma}\right)=0,
+\]
+then
+\begin{align*}
+\delta_{\sigma}^{\alpha}T^{\beta\sigma}+x^{\alpha}\partial_{\sigma}T^{\beta\sigma}-\delta_{\sigma}^{\beta}T^{\alpha\sigma}-x^{\beta}\partial_{\sigma}T^{\alpha\sigma}= & \ \delta_{\sigma}^{\alpha}T^{\beta\sigma}-\delta_{\sigma}^{\beta}T^{\alpha\sigma}\\
+= & \ T^{\alpha\beta}-T^{\beta\alpha}\\
+= & 0,
+\end{align*}
+therefore $T^{\alpha\beta}=T^{\beta\alpha}$.
+
+%\chapter{Anexo: Nombrar el anexo C de acuerdo con su contenido}
+
+\end{appendix}

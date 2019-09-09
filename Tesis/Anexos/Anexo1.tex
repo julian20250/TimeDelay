@@ -1,0 +1,138 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=3.5cm}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage{babel}
+\begin{document}
+
+\title{Appendix 1: Harmonic coordinates(Dirac)}
+
+\maketitle
+In this appendix we will proof some properties that are going to be
+use to arrived, from the harmonic coordinates, to the DeDonder gauge.
+Main references are DIRAC, LANDAU.
+
+\section{Useful properties}
+
+The following properties are going to be useful for this appendix
+
+\subsection*{Property 1}
+
+\begin{equation}
+\partial_{\sigma}g^{\alpha\beta}=-g^{\alpha\mu}g^{\beta\nu}\partial_{\sigma}g_{\mu\nu},\label{eq:a1}
+\end{equation}
+\textbf{Proof:} We start from
+\begin{align*}
+\partial_{\sigma}g^{\alpha\mu}\cdot g_{\mu\nu}+g^{\alpha\mu}\cdot\partial_{\sigma}g_{\mu\nu} & =\partial_{\sigma}\left(g^{\alpha\mu}g_{\mu\nu}\right)\\
+\  & =\partial_{\sigma}\delta_{\nu}^{\alpha}\\
+\  & =0
+\end{align*}
+then
+\[
+\partial_{\sigma}g^{\alpha\mu}\cdot g_{\mu\nu}=-g^{\alpha\mu}\cdot\partial_{\sigma}g_{\mu\nu},
+\]
+multiplying by $g^{\beta\nu}$ and adding in $\nu$, because $g^{\beta\nu}g_{\mu\nu}=\delta_{\mu}^{\beta}$,
+we obtain (\ref{eq:a1}).
+
+\subsection*{Property 2}
+
+\begin{equation}
+\Gamma_{\alpha\beta\sigma}+\Gamma_{\beta\alpha\sigma}=\partial_{\sigma}g_{\alpha\beta},\label{eq:a2}
+\end{equation}
+\textbf{Proof:} From the fact that
+\[
+\Gamma_{\beta\gamma}^{\alpha}=\frac{1}{2}g^{\alpha\sigma}\left(\partial_{\beta}g_{\sigma\gamma}+\partial_{\gamma}g_{\sigma\beta}-\partial_{\sigma}g_{\beta\gamma}\right)
+\]
+we have that
+\[
+\Gamma_{\alpha\beta\sigma}=\frac{1}{2}\left(\partial_{\beta}g_{\alpha\sigma}+\partial_{\sigma}g_{\alpha\beta}-\partial_{\alpha}g_{\beta\sigma}\right)
+\]
+and
+
+\[
+\Gamma_{\beta\alpha\sigma}=\frac{1}{2}\left(\partial_{\alpha}g_{\beta\sigma}+\partial_{\sigma}g_{\beta\alpha}-\partial_{\beta}g_{\alpha\sigma}\right),
+\]
+if we make $\Gamma_{\alpha\beta\sigma}+\Gamma_{\beta\alpha\sigma}$
+we obtain (\ref{eq:a2}).
+
+\subsection*{Property 3}
+
+\begin{equation}
+\Gamma_{\alpha\beta}^{\beta}\sqrt{-g}=\partial_{\text{\ensuremath{\alpha}}}\sqrt{-g},\label{eq:a3}
+\end{equation}
+\textbf{Proof: }First we have to differentiate the determinant of
+the metric tensor $g$, we must differentiate each element $g_{\lambda\mu}$
+in it and then multiply by the cofactor $gg^{\lambda u}$. Thus
+\begin{equation}
+\partial_{\nu}g=gg^{\lambda\mu}\partial_{\nu}g_{\lambda\mu}.\label{eq:ag}
+\end{equation}
+Now we are going to calculate $\Gamma_{\nu\mu}^{\mu}$
+\begin{align}
+\Gamma_{\nu\mu}^{\mu} & =\frac{1}{2}g^{\mu\sigma}\left(\partial_{\mu}g_{\sigma\nu}+\partial_{\nu}g_{\sigma\mu}-\partial_{\sigma}g_{\nu\mu}\right)\\
+\  & =\frac{1}{2}\left(g^{\mu\sigma}\partial_{\mu}g_{\sigma\nu}-g^{\mu\sigma}\partial_{\sigma}g_{\nu\mu}+g^{\mu\sigma}\partial_{\nu}g_{\sigma\mu}\right)\\
+\  & =\frac{1}{2}g^{\mu\sigma}\partial_{\nu}g_{\sigma\mu}.\label{eq:a-gamma}
+\end{align}
+Let us write $g^{-1}\partial_{\nu}g$ in the following way
+\begin{align}
+g^{-1}\partial_{\nu}g & =g^{-1}\partial_{\nu}\left(\left[\sqrt{-g}\right]^{2}\right)\nonumber \\
+\  & =2\left(\sqrt{-g}\right)^{-1}\partial_{\nu}\sqrt{-g},\label{eq:a-sqrt}
+\end{align}
+from (\ref{eq:ag}) and (\ref{eq:a-sqrt})
+\begin{equation}
+\partial_{\nu}\sqrt{-g}=\frac{1}{2}\sqrt{-g}g^{\lambda\mu}\partial_{\nu}g_{\lambda\mu}.\label{eq:a-gg}
+\end{equation}
+Using (\ref{eq:a-gg}) in (\ref{eq:a-gamma}) we obtain (\ref{eq:a3}).
+
+\section{The DeDonder Gauge}
+
+To understand harmonic coordinates we have to start from the d'Alembert
+equation for a scalar $V$, namely $\boxempty V=0$, in a curved spacetime
+\[
+\boxempty V=g^{\alpha\beta}\nabla_{\alpha}\nabla_{\beta}V,
+\]
+then
+\[
+g^{\alpha\beta}\nabla_{\alpha}\nabla_{\beta}V=g^{\alpha\beta}\nabla_{\alpha}\left(\partial_{\beta}V\right)=g^{\alpha\beta}\left(\partial_{\alpha}\partial_{\beta}V-\Gamma_{\alpha\beta}^{\sigma}\partial_{\sigma}V\right)=0,
+\]
+if we are using rectilinear axes in flat space, each of the four coordinates
+$x^{\alpha}$ satisfies $\boxempty x^{\alpha}=0$. This impose a restriction
+over the coordinates, because $x^{\alpha}$ is not an scalar like
+$V$, so it holds only in certain coordinate system.
+
+If we substitute $x^{\alpha}$ for $V$
+\begin{align*}
+g^{\alpha\beta}\left(\partial_{\alpha}\partial_{\beta}x^{\lambda}-\Gamma_{\alpha\beta}^{\sigma}\partial_{\sigma}x^{\lambda}\right)= & \ g^{\alpha\beta}\left(\partial_{\alpha}\delta_{\text{\ensuremath{\beta}}}^{\lambda}-\Gamma_{\alpha\beta}^{\sigma}\delta_{\text{\ensuremath{\sigma}}}^{\lambda}\right)\\
+= & \ -g^{\alpha\beta}\Gamma_{\alpha\beta}^{\lambda}=0,
+\end{align*}
+the coordinates that satisfies this condition are called \textbf{harmonic
+coordinates}. They provide the closest approximation to rectilinear
+coordinates that we can have in curved spacetime. Now, we are going
+to prove that the harmonic coordinate system is equivalent to set
+the DeDonder gauge $\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)=0$,
+from equations (\ref{eq:a1}) and (\ref{eq:a2})
+
+\begin{align*}
+\partial_{\sigma}g^{\alpha\beta}= & \ -g^{\alpha\mu}g^{\beta\nu}\left(\Gamma_{\mu\nu\sigma}+\Gamma_{\nu\mu\sigma}\right)\\
+= & \ -g^{\alpha\mu}\Gamma_{\mu\sigma}^{\beta}-g^{\beta\nu}\Gamma_{\nu\sigma}^{\alpha},
+\end{align*}
+from equation (\ref{eq:a2}) and (\ref{eq:a3}) 
+\begin{align*}
+\partial_{\sigma}\left(g^{\alpha\beta}\sqrt{-g}\right)= & \ \sqrt{-g}\partial_{\sigma}g^{\alpha\beta}+g^{\alpha\beta}\partial_{\sigma}\sqrt{-g}\\
+= & \ \sqrt{-g}\left(-g^{\alpha\mu}\Gamma_{\mu\sigma}^{\beta}-g^{\beta\nu}\Gamma_{\nu\sigma}^{\alpha}+g^{\alpha\beta}\Gamma_{\sigma\mu}^{\mu}\right),
+\end{align*}
+contracting $\sigma$ and $\beta$
+\begin{align*}
+\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)= & \ \sqrt{-g}\left(-g^{\alpha\mu}\Gamma_{\mu\beta}^{\beta}-g^{\beta\nu}\Gamma_{\nu\beta}^{\alpha}+g^{\alpha\beta}\Gamma_{\beta\mu}^{\mu}\right)\\
+= & \ -\sqrt{-g}g^{\beta\nu}\Gamma_{\nu\beta}^{\alpha},
+\end{align*}
+because $g^{\alpha\beta}\Gamma_{\alpha\beta}^{\lambda}=0$, then
+\[
+\partial_{\beta}\left(g^{\alpha\beta}\sqrt{-g}\right)=0
+\]
+which is what we wanted to proof.
+\end{document}

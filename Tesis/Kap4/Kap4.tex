@@ -1,0 +1,265 @@
+\chapter{Chapter 3: Relaxed Einsteins equations \label{chp3}}
+
+In chapter 2 we discuss the nature of a background and a physical
+manifold, now we are going to write the Einsteins equations in such
+a way that are going to be helpful for the analysis of the measure
+of energy, linear and angular momentum carried by gravitational waves. The expressions obtained in this chapter are general expressions, this means that there is no assumptions over the gravitational field. Then a wave equation is obtained for the general case, which can be reduced, in the case of the linearized gravitational field, to the wave equation obtained in Chapter \ref{chp2}. Main references of this chapter \cite{LANDAU,POISSON,DEWITT,THORNE-MP}
+
+\section{Landau-Lifshitz form of Einstein field equations}
+
+The rewriting of the Einsteins field equations arises from the fact
+that the equations
+\begin{equation}
+\nabla_{\beta}T_{\alpha}^{\beta}=\frac{1}{\sqrt{-g}}\partial_{\beta}\left(T_{\alpha}^{\beta}\sqrt{-g}\right)-\frac{1}{2}\left(\partial_{\alpha}g_{\beta\gamma}\right)T^{\beta\gamma}=0\label{eq:tg}
+\end{equation}
+do not generally express any conservation law whatever, we must include
+the conservation of the gravitational field. We choose a coordinate
+system such that at some particular point in spacetime all the first
+derivatives of $g_{\alpha\beta}$ vanish, so the equation (\ref{eq:tg})
+is written as
+\[
+\partial_{\beta}T^{\alpha\beta}=0.
+\]
+
+We are going to show that we ca write $T^{\alpha\beta}$ in the following
+form
+\begin{equation}
+T^{\alpha\beta}=\partial_{\gamma}h^{\alpha\beta\gamma},\label{eq:th}
+\end{equation}
+where $h^{\alpha\beta\gamma}$ is such that
+\[
+h^{\alpha\beta\gamma}=-h^{\alpha\gamma\beta}.
+\]
+In order to do this we start from
+\begin{equation}
+T^{\alpha\beta}=\frac{c^{4}}{8\pi G}\left(R^{\alpha\beta}-\frac{1}{2}g^{\alpha\beta}R\right),\label{eq:tt}
+\end{equation}
+because we are in a particular coordinate system we write the tensor
+$R^{\alpha\beta}$ as
+\[
+R^{\alpha\beta}=\frac{1}{2}g^{\alpha\sigma}g^{\beta\rho}g^{\delta\gamma}\left(\partial_{\sigma}\partial_{\gamma}g_{\delta\rho}+\partial_{\delta}\partial_{\rho}g_{\sigma\gamma}-\partial_{\sigma}\partial_{\rho}g_{\delta\gamma}-\partial_{\delta}\partial_{\delta}g_{\sigma\rho}\right),
+\]
+therefore the equation (\ref{eq:tt}) takes the form
+\[
+T^{\alpha\beta}=\partial_{\sigma}\left\{ \frac{c^{4}}{16\pi G\left(-g\right)}\partial_{\mu}\left[\left(-g\right)\left(g^{\alpha\beta}g^{\sigma\mu}-g^{\alpha\sigma}g^{\beta\mu}\right)\right]\right\} .
+\]
+Let us define
+\begin{equation}
+H^{\alpha\beta\mu\nu}=\frac{c^{4}}{16\pi G}\left(-g\right)\left(g^{\alpha\beta}g^{\mu\nu}-g^{\alpha\mu}g^{\beta\nu}\right),\label{eq:H}
+\end{equation}
+therefore according to (\ref{eq:th})
+\[
+h^{\alpha\beta\mu}=\partial_{\nu}H^{\alpha\beta\mu\nu},
+\]
+then we write our field equations as
+\[
+\partial_{\mu}\partial_{\nu}H^{\alpha\beta\mu\nu}=\left(-g\right)T^{\alpha\beta}.
+\]
+
+This relations face a problem, is that not allways we are in a coordinate
+system such that all the first derivatives of $g_{\alpha\beta}$ vanish,
+then in the general case 
+\[
+\partial_{\mu}\partial_{\nu}H^{\alpha\beta\mu\nu}-\left(-g\right)T^{\alpha\beta}\neq0.
+\]
+Let us denote this difference as $\left(-g\right)t_{LL}^{\alpha\beta}$,
+where $t_{LL}^{\alpha\beta}$ is symmetric in $\alpha$ and $\beta$,
+then
+\begin{equation}
+\partial_{\mu}\partial_{\nu}H^{\alpha\mu\beta\nu}=\left(-g\right)\left(T^{\alpha\beta}+t_{LL}^{\alpha\beta}\right),\label{eq:ll-eq}
+\end{equation}
+from (\ref{eq:tt}) and (\ref{eq:H}) we obtain an expression of $t^{\alpha\beta}$
+in terms of $g^{\alpha\beta}$ and $\mathfrak{g}^{\alpha\beta}$,
+where 
+\begin{equation}
+\mathfrak{g}^{\alpha\beta}=\sqrt{-g}g^{\alpha\beta},\label{eq:goth-g}
+\end{equation}
+ then
+\begin{align*}
+\left(-g\right)t_{LL}^{\alpha\beta}= & \ \frac{c^{4}}{16\pi G}\left\{ \partial_{\lambda}\mathfrak{g}^{\alpha\beta}\partial_{\mu}\mathfrak{g}^{\lambda\mu}-\partial_{\lambda}\mathfrak{g}^{\alpha\lambda}\partial_{\mu}\mathfrak{g}^{\beta\mu}+\frac{1}{2}g^{\alpha\beta}g_{\lambda\mu}\partial_{\rho}\mathfrak{g}^{\lambda\nu}\partial_{\nu}\mathfrak{g}^{\mu\rho}\right.\\
+\  & \ g^{\alpha\lambda}g_{\mu\nu}\partial_{\rho}\mathfrak{g}^{\beta\nu}\partial_{\lambda}\mathfrak{g}^{\mu\rho}-g^{\beta\lambda}g_{\mu\nu}\partial_{\rho}\mathfrak{g}^{\alpha\nu}\partial_{\lambda}\mathfrak{g}^{\mu\rho}+g_{\lambda\mu}g^{\nu\rho}\partial_{\nu}\mathfrak{g}^{\alpha\lambda}\partial_{\rho}\mathfrak{g}^{\mu\beta}\\
+\  & \ \left.\frac{1}{8}\left(2g^{\alpha\lambda}g^{\beta\mu}-g^{\alpha\beta}g^{\lambda\mu}\right)\left(2g_{\nu\rho}g_{\sigma\tau}-g_{\rho\sigma}g_{\nu\tau}\right)\partial_{\lambda}\mathfrak{g}^{\nu\tau}\partial_{\mu}\mathfrak{g}^{\rho\sigma}\right\} .
+\end{align*}
+This is known as the Landau-Lifshitz pseudotensor, and the expression
+(\ref{eq:ll-eq}) is known as the Landau-Lifshitz form of the Einsteins
+field equations. From equation (\ref{eq:ll-eq}) we have, finally,
+our conservation equation
+\begin{equation}
+\partial_{\beta}\left[\left(-g\right)\left(T^{\alpha\beta}+t^{\alpha\beta}\right)\right]=0.\label{eq:gen-con-law}
+\end{equation}
+
+In the above analysis we supposed that we had a Minkowskian background
+metric, thats why appeared partial derivatives. In the case where
+we have a background metric $\bar{g}_{\alpha\beta}$ we must change
+the derivative respect to the flat background by the covariant derivative,
+$\partial_{\mu}\rightarrow\bar{\nabla}_{\mu}$. 
+
+\section{Linear and angular momentum}
+
+\subsection{In Flat spacetime}
+
+Let $\xi^{\alpha}$ be a Killing vector , therefore satisfies the
+Killing equation
+\[
+\nabla_{\alpha}\xi_{\beta}+\nabla_{\beta}\xi_{\alpha}=0,
+\]
+we can build conserved quantities out of $T^{\alpha\beta}$, then
+\begin{align*}
+\nabla_{\beta}\left(\xi_{\alpha}T^{\alpha\beta}\right)= & \ T^{\alpha\beta}\nabla_{\beta}\xi_{\alpha}+\xi_{\alpha}\nabla_{\beta}T^{\alpha\beta}\\
+= & \ \frac{1}{2}T^{\alpha\beta}\nabla_{\beta}\xi_{\alpha}+\frac{1}{2}T^{\beta\alpha}\nabla_{\alpha}\xi_{\beta}\\
+= & \ \frac{1}{2}\left(\nabla_{\alpha}\xi_{\beta}+\nabla_{\beta}\xi_{\alpha}\right)T^{\alpha\beta}=0,
+\end{align*}
+implying the conservation of
+\begin{equation}
+\int\xi_{\alpha}T^{\alpha\beta}dS_{\beta}\label{eq:3cons}
+\end{equation}
+where we are integrating over any hypersurface. If we do this for
+the flat spacetime, we have the Killing equation
+\[
+\partial_{\alpha}\xi_{\beta}+\partial_{\beta}\xi_{\alpha}=0,
+\]
+which has the general solution
+\begin{equation}
+\label{eq:killing-general}
+\xi_{\alpha}=a_{\alpha}+l_{\alpha\beta}x^{\beta}
+\end{equation}
+where $a_{\alpha}$ and $l_{\alpha\beta}$ are constants with $l_{\alpha\beta}=-l_{\beta\alpha}$.
+From equation (\ref{eq:3cons}) the corresponding conserved quantity
+for $\xi_{\alpha}$ is
+\[
+\int\left(a_{\alpha}+l_{\alpha\beta}x^{\beta}\right)T^{\alpha\sigma}dS_{\sigma}=a_{\alpha}P^{\alpha}-\frac{1}{2}l_{\alpha\beta}J^{\alpha\beta}
+\]
+given that $a_{\alpha}$ and $l_{\alpha\beta}$ are constants, we
+set them in such a way that
+\begin{align*}
+P^{\alpha}= & \ \frac{1}{c}\int T^{\alpha\beta}dS_{\beta},\\
+J^{\alpha\beta}= & \ \frac{1}{c}\int\left(x^{\alpha}T^{\beta\sigma}-x^{\alpha}T^{\beta\sigma}\right)dS_{\sigma},
+\end{align*}
+where $P^{\alpha}$ the total energy momentum four vector and $J^{\alpha\beta}$
+the total angular momentum tensors, we see that these agrees with
+the expression obtained in Appendix \ref{appendix-momentum}
+
+\subsection{General expressions}
+
+Equation (\ref{eq:gen-con-law}) shows us a conservation law equation,
+from this we are going to obtain expressions for the linear and angular
+momentum. Let us define the quantities
+\[
+P^{\alpha}=\frac{1}{c}\int\left(-g\right)\left(T^{\alpha\beta}+t^{\alpha\beta}\right)dS_{\beta},
+\]
+where $S_{\beta}$ is an hypersurface, $P^{\alpha}$ this is known
+as the total four-momentum of matter plus gravitational field. This
+integration can be taken over any infinite hypersurface, including
+all of the three-dimensional space. If we choose for this the hypersurface
+$x^{0}=\text{const}$, then $P^{\alpha}$ can be written in the form
+of a three-dimensional space integral
+\begin{equation}
+P^{\alpha}=\frac{1}{c}\int\left(-g\right)\left(T^{\alpha0}+t^{\alpha0}\right)dV.\label{eq:p-general}
+\end{equation}
+The fact that $T^{\alpha\beta}+t^{\alpha\beta}$ has symmetric index
+implies that there is a conservation law for the angular momentum \footnote{See Appendix \ref{appendix-momentum}},
+which is defined as
+\[
+J^{\alpha\beta}=\frac{1}{c}\int\left(-g\right)\left[x^{\alpha}\left(T^{\beta\sigma}+t^{\beta\sigma}\right)-x^{\beta}\left(T^{\alpha\sigma}+t^{\alpha\sigma}\right)\right]dS_{\sigma}.
+\]
+
+As we saw in Chapter 2, the expression (\ref{eq:p-general}) is used
+to obtain the energy flux and the momentum flux for the gravitational
+radiation, therefore there must be and expression for the flux of
+angular momentum for the gravitational waves in the local wave zone,
+this expression was obtained in \cite{THORNE-MP}. In the TT gauge this expression
+is
+\begin{equation}
+\label{eq:an-mom-flux}
+\frac{dJ^{i}}{dt}=\frac{r^{2}}{32\pi c^{2}}\int\epsilon^{ijk}\left(x_{j}\partial_{k}h_{ab}+2\delta_{aj}h_{bk}\right)\partial_{r}h^{ab}d\Omega,
+\end{equation}
+where $\epsilon^{ijk}$ is the three-dimensional Levi-Civita antisymmetric
+tensor. This expression is going to be useful in the next chapter.
+
+\section{Relaxed Einstein equations}
+
+\subsection{Harmonic coordinates and a wave equation}
+
+We want to reach a wave equation form for de Einstein field equations,
+just like in (\ref{efh}), but without any assumptions over the dimensions
+of $g_{\alpha\beta}$. We define the field $\text{h}^{\alpha\beta}$
+such that
+\begin{equation}
+\text{h}^{\alpha\beta}=\eta^{\alpha\beta}-\mathfrak{g}^{\alpha\beta}\label{eq:h-general}
+\end{equation}
+this is indeed a expression that generalize our linearized gravitational
+field\footnote{For details of this discussion see \cite{THORNE-GR}}, if we
+assume that $g_{\alpha\beta}=\eta_{\alpha\beta}+h_{\alpha\beta}+\mathcal{O}\left(h^{2}\right)$
+then, taking $h_{\alpha\beta}$ only to linear order
+\begin{align*}
+\text{h}^{\alpha\beta}\approx & \ \eta^{\alpha\beta}-\sqrt{1+h}\left(\eta^{\text{\ensuremath{\alpha\beta}}}-h^{\alpha\beta}\right)\\
+= & \ h^{\alpha\beta}-\frac{1}{2}\eta^{\alpha\beta}h,
+\end{align*}
+then $\text{h}^{\alpha\beta}$ reduce to $\bar{h}^{\alpha\beta}$. 
+
+We will write our wave equation using
+the Landau-Lifshitz form of Einstein field equations. We now impose
+the DeDonder gauge
+\begin{equation}
+\partial_{\beta}\text{h}^{\alpha\beta}=0,\label{eq:gauge-h}
+\end{equation}
+calculating $H^{\alpha\mu\beta\nu}$ using (\ref{eq:H}), (\ref{eq:h-general})
+and (\ref{eq:goth-g})
+\[
+H^{\alpha\mu\beta\nu}=\left(\eta^{\alpha\beta}\eta^{\mu\nu}-\eta^{\alpha\beta}\text{h}^{\mu\nu}-\text{h}^{\alpha\beta}\eta^{\mu\nu}+\text{h}^{\alpha\beta}\text{h}^{\mu\nu}\right)-\left(\eta^{\alpha\nu}\eta^{\beta\mu}-\eta^{\alpha\nu}\text{h}^{\beta\mu}-\text{h}^{\alpha\nu}\eta^{\beta\mu}+\text{h}^{\alpha\nu}\text{h}^{\beta\mu}\right),
+\]
+derivating with respect to $x^{\nu}$ and $x^{\mu}$ and using (\ref{eq:gauge-h})
+\[
+\partial_{\mu}\partial_{\nu}H^{\alpha\mu\beta\nu}=-\square\text{h}^{\alpha\beta}+\text{h}^{\mu\nu}\partial_{\mu}\partial_{\nu}\text{h}^{\alpha\beta}-\partial_{\mu}\text{h}^{\alpha\nu}\partial_{\nu}\text{h}^{\beta\mu},
+\]
+let us define the pseudotensor $t_{H}^{\alpha\beta}$ such that
+\[
+\left(-g\right)t_{H}^{\alpha\beta}=\frac{c^{4}}{16\pi G}\left(\partial_{\mu}h^{\alpha\nu}\partial_{\nu}h^{\beta\mu}-h^{\mu\nu}\partial_{\mu}\partial_{\nu}h^{\alpha\beta}\right),
+\]
+and the pseudotensor $\tau^{\alpha\beta}$ in the following way
+\[
+\tau^{\alpha\beta}=\left(-g\right)\left(T^{\alpha\beta}+t_{LL}^{\alpha\beta}+t_{H}^{\alpha\beta}\right),
+\]
+this tensor is known as the \textbf{effective energy-momentum pseudotensor}.
+With this we have the following wave equation
+\begin{equation}
+\square\text{h}^{\alpha\beta}=-\frac{16\pi G}{c^{4}}\tau^{\alpha\beta}.\label{eq:einstein-wave}
+\end{equation}
+The pseudotensor $t_{H}^{\alpha\beta}$ have the property that $\partial_{\beta}\left[\left(-g\right)t_{H}^{\alpha\beta}\right]=0$,
+this because, using (\ref{eq:gauge-h})
+\begin{align*}
+\partial_{\beta}t_{H}^{\alpha\beta} & =\partial_{\beta}\partial_{\mu}\text{h}^{\alpha\nu}\cdot\partial_{\nu}\text{h}^{\beta\mu}-\partial_{\beta}\text{h}^{\mu\nu}\partial_{\mu}\partial_{\nu}\text{h}^{\alpha\beta}\\
+\  & =\partial_{\nu}\partial_{\mu}\text{h}^{\alpha\beta}\cdot\partial_{\beta}\text{h}^{\nu\mu}-\partial_{\beta}\text{h}^{\mu\nu}\partial_{\mu}\partial_{\nu}\text{h}^{\alpha\beta}\\
+\  & =0,
+\end{align*}
+therefore
+\begin{equation}
+\partial_{\beta}\tau^{\alpha\beta}=0.\label{eq:cons-tau}
+\end{equation}
+
+The name of relaxed equations is because the equation (\ref{eq:einstein-wave})
+can be solved without enforcing the gauge condition (\ref{eq:gauge-h})
+or the conservation statement (\ref{eq:cons-tau}).
+
+\subsection{Formal solution to the wave equation}
+
+As the linearized equation, this can be solved by the method of Green's
+function: if $G(\boldsymbol{x}-\boldsymbol{x}')$ is a solution of
+the equation
+\[
+\boxempty_{\boldsymbol{x}}G\left(\boldsymbol{x}-\boldsymbol{x}'\right)=\delta^{4}\left(\boldsymbol{x}-\boldsymbol{x}'\right),
+\]
+where $\boxempty_{\boldsymbol{x}}$ is the d'Alembertian operator
+with derivatives taken with respect to the variable $\boldsymbol{x}$,
+then the corresponding solution of equation (\ref{eq:einstein-wave})
+is
+\[
+\text{h}^{\alpha\beta}=\frac{4G}{c^{4}}\int G\left(\boldsymbol{x}-\boldsymbol{x}'\right)\tau^{\alpha\beta}\left(\boldsymbol{x}'\right)d^{4}\boldsymbol{x}'.
+\]
+Just like in the linearized case, the appropriate solution is the
+retarded Green's function
+\[
+G\left(\boldsymbol{x}-\boldsymbol{x}'\right)=-\frac{1}{4\pi\left|\boldsymbol{x}-\boldsymbol{x}'\right|}\delta\left(x_{\text{ret}}^{0}-{x'}^{0}\right).
+\]
+
+For details of the calculation of the Green's function see Box 6.5 of \cite{POISSON}.

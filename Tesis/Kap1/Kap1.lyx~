@@ -1,0 +1,845 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Chapter 1: Introduction to General Relativity
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+tableofcontents
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Brief introduction to differential geometry
+\end_layout
+
+\begin_layout Subsection
+Differential Manifolds
+\end_layout
+
+\begin_layout Standard
+The mathematical language of General Relativity (here from now GR) is the
+ differential geometry.
+ In this section we are going to give some of the main geometric definitions
+ and properties used in GR.
+ For further details see Tejeiro.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ be a topological space, a 
+\series bold
+coordinate chart
+\series default
+ 
+\begin_inset Formula $C_{\alpha}=\left(\varphi_{\alpha},U_{\alpha}\right)$
+\end_inset
+
+ over 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ is a homeomorphism 
+\begin_inset Formula 
+\[
+\varphi_{\alpha}:U_{\alpha}\subseteq\mathcal{M}\rightarrow\mathbb{R}^{n},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $U_{\alpha}$
+\end_inset
+
+ is an open set over 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+.
+ We call a 
+\series bold
+
+\begin_inset Formula $\boldsymbol{C^{r}}$
+\end_inset
+
+-atlas
+\series default
+ over 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ to a chart collection 
+\begin_inset Formula $\left\{ C_{\alpha}=\left(\varphi_{\alpha},U_{\alpha}\right)\right\} _{\alpha\in I}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\mathcal{M}=\bigcup_{\alpha\in I}U_{\alpha},
+\]
+
+\end_inset
+
+and if 
+\begin_inset Formula $U_{\alpha}\bigcap U_{\beta}\neq\emptyset$
+\end_inset
+
+ then 
+\begin_inset Formula 
+\[
+\varphi_{\beta}\circ\varphi_{\alpha}^{-1}:\varphi_{\alpha}\left(U_{\alpha}\bigcap U_{\beta}\right)\subseteq\mathbb{R}^{n}\rightarrow\varphi_{\beta}\left(U_{\alpha}\bigcap U_{\beta}\right)\subseteq\mathbb{R}^{n}
+\]
+
+\end_inset
+
+is a 
+\begin_inset Formula $C^{r}$
+\end_inset
+
+ diffeomorfism.
+\end_layout
+
+\begin_layout Standard
+Two 
+\begin_inset Formula $C^{r}$
+\end_inset
+
+ atlas over a topological space 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ are 
+\series bold
+compatible
+\series default
+ if the union of the atlas is a new atlas, then, the union of all compatible
+ atlas over a topological space forms an equivalence class atlas, or a maximal
+ altas.
+ Then, a 
+\begin_inset Formula $C^{r}$
+\end_inset
+
+ differentiable manifold 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ is a Haurdorff topological space with a maximal atlas.
+ 
+\end_layout
+
+\begin_layout Standard
+A manifold is 
+\series bold
+orientable
+\series default
+ if there is an atlas 
+\begin_inset Formula $\left\{ \phi_{\alpha},U_{\alpha}\right\} _{\alpha\in I}$
+\end_inset
+
+ such that, in every no-empty intersection 
+\begin_inset Formula $U_{\alpha}\bigcap U_{\beta}$
+\end_inset
+
+ of open sets, the determinant of the matrix 
+\begin_inset Formula $\partial x^{i}/\partial x'^{j}$
+\end_inset
+
+ is greater than zero, where 
+\begin_inset Formula $x^{i}$
+\end_inset
+
+ are 
+\begin_inset Formula $U_{\alpha}$
+\end_inset
+
+ coordinates and 
+\begin_inset Formula $x'^{i}$
+\end_inset
+
+ are 
+\begin_inset Formula $U_{\beta}$
+\end_inset
+
+ coordinates.
+ An atlas is 
+\series bold
+locally finite
+\series default
+, if every point in the manifold has an open neighborhood that intercepts
+ only a finite number of neighborhood 
+\begin_inset Formula $U_{\beta}$
+\end_inset
+
+.
+ A manifold 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ is 
+\series bold
+paracompact
+\series default
+ if for every atlas 
+\begin_inset Formula $\left\{ \phi_{\alpha},U_{\alpha}\right\} _{\alpha\in I}$
+\end_inset
+
+, exist a a locally finite atlas 
+\begin_inset Formula $\left\{ \psi_{\beta},V_{\beta}\right\} _{\beta\in I}$
+\end_inset
+
+ with each 
+\begin_inset Formula $V_{\beta}$
+\end_inset
+
+ contained in some 
+\begin_inset Formula $U_{\alpha}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Tangent space , Dual space and Tensors
+\end_layout
+
+\begin_layout Subsubsection
+Tangent space
+\end_layout
+
+\begin_layout Standard
+Let us define the set of all real value functions over a manifold 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\mathcal{F}\left(\mathcal{M},\mathbb{R}\right):=\left\{ f:\mathcal{M}\rightarrow\mathbb{R}\right\} ,
+\]
+
+\end_inset
+
+where for 
+\begin_inset Formula $f,g\in\mathcal{F}\left(\mathcal{M},\mathbb{R}\right)$
+\end_inset
+
+ we have a vector space structure and if 
+\begin_inset Formula $f$
+\end_inset
+
+ is differentiable respect to a chart 
+\begin_inset Formula $\left(\phi_{\alpha},U_{\alpha}\right)$
+\end_inset
+
+, it is also differentiable respect to 
+\begin_inset Formula $\left(\phi_{\beta},U_{\beta}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+tangent vector
+\series default
+ 
+\begin_inset Formula $v_{p}$
+\end_inset
+
+ to the manifold in a point 
+\begin_inset Formula $p$
+\end_inset
+
+ is a function
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+v_{p}: & \mathcal{F}\left(\mathcal{M},\mathbb{R}\right) & \rightarrow & \mathbb{R}\\
+\  & f & \mapsto & v_{p}\left(f\right)
+\end{array},
+\]
+
+\end_inset
+
+such that 
+\begin_inset Formula $v_{p}$
+\end_inset
+
+ is lineal in 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ and meets the Leibniz product property.
+ The space of all tangent vectors at the point 
+\begin_inset Formula $p$
+\end_inset
+
+, denoted by 
+\begin_inset Formula $T_{p}\mathcal{M}$
+\end_inset
+
+, is a vector real space.
+ The partial derivatives, denoted as 
+\begin_inset Formula $\partial_{\alpha}$
+\end_inset
+
+ where 
+\begin_inset Formula $i=1,2,...,n$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ is the manifolds dimension, are tanget vectors in 
+\begin_inset Formula $T_{p}\mathcal{M}$
+\end_inset
+
+ and form a base for the tangent space.
+ Then, for 
+\begin_inset Formula $v_{p}\in T_{p}\mathcal{M}$
+\end_inset
+
+ and introducing the Einsten sum convention
+\begin_inset Formula 
+\[
+v_{p}=\left.\sum_{\alpha}v_{p}^{\alpha}\partial_{\alpha}\right|_{p}\equiv\left.v_{p}^{\alpha}\partial_{\alpha}\right|_{p}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Dual space
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+one-form 
+\begin_inset Formula $\boldsymbol{\omega}$
+\end_inset
+
+ 
+\series default
+in the point 
+\begin_inset Formula $p$
+\end_inset
+
+ is a real function over 
+\begin_inset Formula $T_{p}\mathcal{M}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\boldsymbol{\omega}: & T_{p}\mathcal{M} & \rightarrow & \mathbb{R}\\
+\  & \boldsymbol{v} & \mapsto & \boldsymbol{\omega}\left(\boldsymbol{v}\right)\equiv\left\langle \boldsymbol{\omega},\boldsymbol{v}\right\rangle 
+\end{array},
+\]
+
+\end_inset
+
+such that 
+\series bold
+
+\begin_inset Formula $\boldsymbol{\omega}$
+\end_inset
+
+
+\series default
+ is linear in 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+.
+ The space of all one-forms, denoted by 
+\begin_inset Formula $T_{p}^{*}\mathcal{M}$
+\end_inset
+
+, is called the dual vector space.
+\end_layout
+
+\begin_layout Standard
+Every function 
+\begin_inset Formula $f\in\mathcal{F}\left(\mathcal{M},\mathbb{R}\right)$
+\end_inset
+
+ defines a one-form 
+\begin_inset Formula $df$
+\end_inset
+
+ in 
+\begin_inset Formula $p$
+\end_inset
+
+, this one.form is called the 
+\series bold
+differential
+\series default
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ in 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ For the local coordinates 
+\begin_inset Formula $\phi_{\alpha}(p)=\left(x^{1},x^{2},...,x^{n}\right)$
+\end_inset
+
+ we have that the set of differentials
+\begin_inset Formula 
+\[
+\left\{ dx^{1},dx^{2},...,dx^{n}\right\} 
+\]
+
+\end_inset
+
+in 
+\begin_inset Formula $p$
+\end_inset
+
+ forms a base for the dual vector space, then
+\begin_inset Formula 
+\[
+\boldsymbol{\omega}=\omega_{\alpha}dx^{\alpha}.
+\]
+
+\end_inset
+
+This space meets the condition
+\begin_inset Formula 
+\[
+\left\langle dx^{\alpha},\partial_{\beta}\right\rangle =\delta_{\beta}^{\alpha},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left\{ \partial_{\alpha}\right\} $
+\end_inset
+
+ is a base of 
+\begin_inset Formula $T_{p}\mathcal{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Tensors
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\Pi_{r}^{s}$
+\end_inset
+
+ be defined as
+\begin_inset Formula 
+\[
+\Pi_{r}^{s}:=\left\{ \left(\boldsymbol{\eta}^{1},...,\boldsymbol{\eta}^{r},\boldsymbol{Y}_{1},...,\boldsymbol{Y}_{s}\right)\text{|}\boldsymbol{\eta}^{i}\in T_{p}^{*}\mathcal{M},\boldsymbol{Y}_{j}\in T_{p}\mathcal{M}\right\} ,
+\]
+
+\end_inset
+
+then a 
+\series bold
+tensor 
+\begin_inset Formula $\boldsymbol{T}$
+\end_inset
+
+ of type
+\series default
+ 
+\begin_inset Formula $\boldsymbol{(r,s)}$
+\end_inset
+
+ is a multilinear function over 
+\begin_inset Formula $\Pi_{r}^{s}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\boldsymbol{T}: & \Pi_{r}^{s} & \rightarrow & \mathbb{R}\\
+\  & \left(\boldsymbol{\eta}^{1},...,\boldsymbol{\eta}^{r},\boldsymbol{Y}_{1},...,\boldsymbol{Y}_{s}\right) & \mapsto & \boldsymbol{T}\left(\boldsymbol{\eta}^{1},...,\boldsymbol{\eta}^{r},\boldsymbol{Y}_{1},...,\boldsymbol{Y}_{s}\right)
+\end{array}.
+\]
+
+\end_inset
+
+The space of all tensors, denoted as 
+\begin_inset Formula $T_{s}^{r}$
+\end_inset
+
+, is called the tensor product
+\begin_inset Formula 
+\[
+T_{s}^{r}:=\underset{r\text{-times}}{\underbrace{T_{p}\mathcal{M}\otimes\cdots\otimes T_{p}\mathcal{M}}}\otimes\underset{s\text{-times}}{\underbrace{T_{p}^{*}\mathcal{M}\otimes\cdots\otimes T_{p}^{*}\mathcal{M}}},
+\]
+
+\end_inset
+
+this is a vector real space of dimension 
+\begin_inset Formula $r+s$
+\end_inset
+
+.
+ Given 
+\begin_inset Formula $\boldsymbol{T}\in T_{s}^{r}$
+\end_inset
+
+ it can be written as
+\begin_inset Formula 
+\[
+\boldsymbol{T}=T_{\beta_{1}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}\partial_{\alpha_{1}}\otimes\cdots\otimes\partial_{\alpha_{r}}\otimes dx^{\beta_{1}}\otimes\cdots\otimes dx^{\beta_{s}},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $T_{\beta_{1}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}$
+\end_inset
+
+ are the components of 
+\begin_inset Formula $\boldsymbol{T}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Under a change of coordinates the tensor components, the vector and the
+ one-foms components as well, transform acording to
+\begin_inset Formula 
+\[
+{T'}{}_{\sigma_{1}\cdots\sigma_{s}}^{\gamma_{1}\cdots\gamma_{r}}=\frac{\partial x'^{\gamma_{1}}}{\partial x{}^{\alpha_{1}}}\cdots\frac{\partial x'{}^{\gamma_{r}}}{\partial x{}^{\alpha_{r}}}\frac{\partial x{}^{\beta_{1}}}{\partial x'{}^{\sigma_{1}}}\cdots\frac{\partial x{}^{\beta_{s}}}{\partial x'{}^{\sigma_{s}}}T_{\beta_{1}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Transformation between manifolds
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{N}$
+\end_inset
+
+ be two manifolds.
+ We can define a diffeomorfism between these manifolds
+\begin_inset Formula 
+\[
+\phi:\mathcal{M}\rightarrow\mathcal{N}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From this, we can induce a new function
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\tilde{\phi}: & \mathcal{F}\left(\mathcal{M}\right) & \rightarrow & \mathcal{F}\left(\mathcal{M}\right)\\
+\  & f & \mapsto & \tilde{\phi}\left(f\right)
+\end{array}
+\]
+
+\end_inset
+
+defined as 
+\begin_inset Formula $\tilde{\phi}\left(f\right)=f\left(\phi(p)\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $p\in\mathcal{M}$
+\end_inset
+
+.
+ We induce now the function
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\phi_{*}: & T_{p}\mathcal{M} & \rightarrow & T_{\phi(p)}\mathcal{N}\\
+\  & \boldsymbol{X} & \mapsto & \phi_{*}\left(\boldsymbol{X}\right)
+\end{array}
+\]
+
+\end_inset
+
+such that
+\begin_inset Formula 
+\[
+\left.\phi_{*}\left(\boldsymbol{X}(f)\right)\right|_{\phi(p)}:=\left.\boldsymbol{X}\left(f\circ\phi\right)\right|_{p},
+\]
+
+\end_inset
+
+the function 
+\begin_inset Formula $\phi_{*}$
+\end_inset
+
+ is known as 
+\series bold
+pushforward
+\series default
+.
+ Now, from the definition of 
+\begin_inset Formula $\phi_{*}$
+\end_inset
+
+, we define the function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{cccc}
+\phi^{*}: & T_{\phi(p)}^{*}\mathcal{N} & \rightarrow & T_{p}^{*}\mathcal{M}\\
+\  & \boldsymbol{\omega} & \mapsto & \phi^{*}\left(\boldsymbol{\omega}\right)
+\end{array}
+\]
+
+\end_inset
+
+given by
+\begin_inset Formula 
+\[
+\left\langle \phi^{*}\left(\boldsymbol{\omega}\right),\boldsymbol{X}\right\rangle =\left\langle \boldsymbol{\omega},\phi_{*}\left(\boldsymbol{X}\right)\right\rangle ,
+\]
+
+\end_inset
+
+the function 
+\begin_inset Formula $\phi^{*}$
+\end_inset
+
+ is known as 
+\series bold
+pullback
+\series default
+.
+ These functions extends to tensors of type 
+\begin_inset Formula $(0,s)$
+\end_inset
+
+ and 
+\begin_inset Formula $(r,0)$
+\end_inset
+
+, then extends to 
+\begin_inset Formula $(r,s)$
+\end_inset
+
+ tensors.
+\end_layout
+
+\begin_layout Section
+Curvature
+\end_layout
+
+\begin_layout Subsection
+Connection and covariant derivative
+\end_layout
+
+\begin_layout Standard
+Given the fact that under the change of coordinates de partial derivative
+ is not invariant, we need to generalize this concept over a manifold.
+ This generalization is given by the 
+\series bold
+covariant derivative
+\series default
+ 
+\begin_inset Formula $\nabla_{\boldsymbol{X}}\boldsymbol{Y}$
+\end_inset
+
+, where 
+\begin_inset Formula $\boldsymbol{X},\boldsymbol{Y}\in T_{p}\mathcal{M}$
+\end_inset
+
+.
+ Because 
+\begin_inset Formula $\nabla_{\boldsymbol{X}}\boldsymbol{Y}$
+\end_inset
+
+ is a tensor, we can write it using the bases 
+\begin_inset Formula $\left\{ \partial_{\alpha}\right\} $
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ dx^{\alpha}\right\} $
+\end_inset
+
+, then the components of this tensor, denoted as 
+\begin_inset Formula $\nabla_{\beta}Y^{\alpha}$
+\end_inset
+
+, are
+\begin_inset Formula 
+\[
+\nabla_{\beta}Y^{\alpha}=\partial_{\beta}Y^{\alpha}+\Gamma_{\beta\gamma}^{\alpha}Y^{\gamma}.
+\]
+
+\end_inset
+
+The terms 
+\begin_inset Formula $\Gamma_{\beta\gamma}^{\alpha}$
+\end_inset
+
+ are called 
+\series bold
+Christoffel symbols of the second kind
+\series default
+, these symbols are given by
+\begin_inset Formula 
+\[
+\Gamma_{\beta\gamma}^{\alpha}=\left\langle dx^{\alpha},\nabla_{\partial_{\beta}}\partial_{\alpha}\right\rangle .
+\]
+
+\end_inset
+
+Just like the partial derivative, it is linear and meets the Leibniz product
+ property.
+\end_layout
+
+\begin_layout Standard
+We extend the covariant derivative to arbitrary tensor.
+ If 
+\begin_inset Formula $\boldsymbol{T}\in T_{r}^{s}$
+\end_inset
+
+, then 
+\begin_inset Formula $\nabla\boldsymbol{T}\in T_{r+1}^{s}$
+\end_inset
+
+, where the components of 
+\begin_inset Formula $\nabla\boldsymbol{T}$
+\end_inset
+
+ are
+\begin_inset Formula 
+\[
+\nabla_{\gamma}T_{\beta_{1}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}=\partial_{\gamma}T_{\beta_{1}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}+\Gamma_{\gamma\sigma}^{\alpha_{1}}T_{\beta_{1}\cdots\beta_{s}}^{\sigma\alpha_{2}\cdots\alpha_{r}}+\cdots+\Gamma_{\gamma\sigma}^{\alpha_{r}}T_{\beta_{1}\cdots\beta_{s}}^{\sigma\alpha_{2}\cdots\alpha_{r-1}\sigma}-\Gamma_{\gamma\beta_{1}}^{\sigma}T_{\sigma\beta_{2}\cdots\beta_{s}}^{\alpha_{1}\cdots\alpha_{r}}-\cdots-\Gamma_{\gamma\beta_{s}}^{\sigma}T_{\beta_{1}\cdots\sigma\beta_{s-1}}^{\alpha_{1}\cdots\alpha_{r}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

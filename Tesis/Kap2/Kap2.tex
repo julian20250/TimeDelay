@@ -1,0 +1,126 @@
+\chapter{Relatividad General}
+\section{Introducción}
+Este capítulo es una breve introducción a la teoría de la relatividad general, partiendo desde el concepto de variedad, el espacio tangente y cotangente, el concepto de curvatura y el papel que juega la gravedad en todas estas ideas matemáticas. Las referencias clave de este capítulo son \cite{Carroll},\cite{Munkres}.
+\section{Variedades}
+\subsection{Mapas}
+\begin{defi}[Mapa]
+	Dados dos conjuntos $A$ y $B$, un mapa $\phi:M\rightarrow N$ es una relación que asigna cada elemento $x\in M$ a un único elemento $y\in N$. En este caso, se denota como $\phi(x)=y$.
+\end{defi}
+\begin{defi}[Composición de Mapas]
+	Con dos mapas $\phi:A\rightarrow B$ y $\Psi:B\rightarrow C$, se define la composición de ambos mapas, $\Psi\circ\phi:A\rightarrow C$, por su acción sobre los elementos de $A$:
+	$$(\Psi\circ\phi)(a)=\Psi(\phi(a)).$$
+\end{defi}
+\begin{center}
+	\begin{tikzcd}
+		A \arrow[rr, "\Psi\circ\phi"] \arrow[rd, "\phi"] &                      & C \\
+		& B \arrow[ru, "\Psi"] &  
+	\end{tikzcd}
+\end{center}
+
+Un mapa $\phi:A\rightarrow B$ se dice inyectivo (uno a uno) si cada elemento de $B$ tiene a lo sumo un elemento de $A$ que es mapeado a él. Este mapa se dice sobreyectivo si cada elemento de $B$ tiene al menos un elemento de $A$ mapeado a él. $A$ se conoce como el dominio del mapa $\phi$, y su imagen es
+$$\mathop{Im}\phi:=\{y\in B: \exists x\in A \text{ tal que }\phi(x)=y\}.$$
+La preimagen de un conjunto $U\subseteq B$ bajo la función $\phi$ se define como
+$$\phi^{-1}(U):=\{ x\in A: \exists y \in U \text{ tal que }\phi(x)=y\}.$$
+Un mapa $\phi:A\rightarrow B$ que es inyectivo y sobreyectivo a la vez se conoce como invertible (biyectivo). En este caso, se define el mapa inverso $\phi^{-1}:B\rightarrow A$ de modo que se satisfaga que, para todo $y\in B$ $(\phi\circ\phi^{-1})(y)=y.$
+\begin{center}
+	\begin{tikzcd}
+		A \arrow[r, "\phi", bend right] & B \arrow[l, "\phi^{-1}"', bend right]
+	\end{tikzcd}
+\end{center}
+
+Un mapa $f$ de $\mathbb{R}^m$ a $\mathbb{R}^n$ toma una $m-$tupla $(x^1,x^2,\dots,x^m)$ y la envía a una $n-$tupla $(y^1,y^2,\dots,y^n)$, de modo que se puede pensar como una colección de $n$ funciones $\phi^i$ de $m$ variables:
+$$y^i=\phi^i(x^1,\dots,x^m)\text{ con }i=1,\dots,n,$$
+de modo que
+$$f(x^1,\dots,x^m)=(\phi^1(x^1,\dots,x^m),\dots,\phi^n(x^1,\dots,x^m)).$$
+Se referirá a cada una de las funciones $\phi^i$ como $C^p$ si son continuas y $p-$veces diferenciables, y al mapa entero $f:\mathbb{R}^m\rightarrow \mathbb{R}^n$ como $C^p$ si cada uno de los campos escalares $\phi^i, i=1,\dots,n$ es al menos $C^p$.
+
+Un mapa $C^0$ es continuo pero no necesariamente diferenciable, mientras que un mapa $C^\infty$ es continuo y puede ser diferenciado cuantas veces se desee. Los mapas $C^\infty$ se llaman suaves.
+\begin{defi}[Difeomorfismo]
+	El mapa $\phi:A\rightarrow B$ se conoce como difeomorfismo si es biyectivo, y tanto él como su inversa son $C^\infty$. Se dice entonces que los conjuntos $A$ y $B$ son difeomorfos.
+\end{defi}
+
+\subsection{Regla de la cadena}
+Si tiene dos mapas $f:\mathbb{R}^m\rightarrow \mathbb{R}^n$ y $g:\mathbb{R}^n\rightarrow\mathbb{R}^l,$ que se componen en $(g\circ f):\mathbb{R}^m\rightarrow\mathbb{R}^l$, represente cada espacio en términos de coordenadas: $x^a$ en $\mathbb{R}^m$, $y^b$ en $\mathbb{R}^n$ y $z^c$ en $\mathbb{R}^l$, donde los índices $a,b,c$ varían sobre los valores apropiados.
+\begin{center}
+	\begin{tikzcd}
+		\mathbb{R}^m \arrow[rd, "f"] \arrow[rr, "g\circ f"] &                              & \mathbb{R}^l \\
+		& \mathbb{R}^n \arrow[ru, "g"] &             
+	\end{tikzcd}
+\end{center}
+
+La regla de la cadena relaciona las derivadas parciales de la composición $(g\circ f)$ con las derivadas parciales de los mapas $f$ y $g$ de la siguiente manera
+$$\frac{\partial}{\partial x^a}(g\circ f)^c=\sum_{b=1}^n\frac{\partial f^b}{\partial x^a}\frac{\partial g^c}{\partial y^b}.$$
+
+\subsection{Variedades}
+En el capítulo de estabilidad se trató el concepto de variedad como un espacio métrico homeomorfo localmente a la bola abierta. En este capítulo se tomará una variedad más general: la variedad topológica, para lo cual se introducirá la idea de topología, y demás conceptos necesarios en términos de la topología de la variedad.
+\begin{defi}[Espacio topologico]
+	Tome $A$ como un conjunto arbitrario. $\tau$ es una topología para el conjunto $A$ si satisface las siguientes condiciones:
+	\begin{enumerate}
+		\item $\emptyset,A\in\tau$,
+		\item Si $\{U_\alpha\}_{\alpha\in I}\subset\tau$ es una familia arbitraria de elementos de $\tau$, entonces la unión de toda esta familia pertenece a $\tau$, es decir, $\bigcup_{\alpha\in I} U_\alpha\in\tau$, y
+		\item Si $\{U_n\}_{n=1}^m\subset\tau$ es una familia finita de elementos de $\tau$, entonces la intersección de todos sus elementos también es un elemento de $\tau,$ es decir, $\bigcap_{n=1}^m U_n\in\tau$.
+	\end{enumerate}
+	En este caso se dice que la pareja $(A,\tau)$ es un espacio topológico. Los elementos de $\tau$ se llaman abiertos y sus complementos se llaman cerrados.
+\end{defi}
+\begin{defi}[Carta o sistema coordenado]
+	Considere un espacio topológico $(M,\tau)$. Una carta o sistema coordenado $(U, \phi)$ consiste de un conjunto abierto $U\subset M$, junto con un mapa inyectivo $\phi:U\rightarrow\mathbb{R}^n,$ tal que $\phi(U)$ es abierto en $(\mathbb{R}^n, \tau_u)$\footnote{$\tau_u$ denota la topología usual sobre $\mathbb{R}^n$.}.
+\end{defi}
+\begin{defi}[Atlas $C^r$]
+	Un atlas $C^r$ es una colección indexada de cartas $\{(U_\alpha.\phi_\alpha)\}_{\alpha\in I}$, con $\phi_\alpha$ siendo al menos $C^r$, para todo $\alpha\in I$, que satisface las siguientes condiciones
+	\begin{enumerate}
+		\item $\bigcup_{\alpha\in I} U_\alpha=M$, es decir, $\{U_\alpha\}_{\alpha\in I}$ es un cubrimiento abierto para $M$ y
+		\item si para algunos $\alpha,\beta\in I$ ($\alpha\neq\beta$), $U_\alpha\cap U_\beta\neq\emptyset$, entonces el mapa $(\phi_\alpha\circ\phi_\beta^{-1}):\phi_\beta(U_\alpha\cap U_\beta)\rightarrow\phi_\alpha(U_\alpha\cap U_\beta)$ toma puntos en $\phi_\beta(U_\alpha\cap U_\beta)\subseteq\mathbb{R}^n$ y los envía a puntos en $\phi_\alpha(U_\alpha\cap U_\beta)$, y viceversa. Ambas composiciones deben ser $C^r$. Si se satisface esta condición se dice que los mapas $\phi_\alpha$ y $\phi_\beta$ son compatibles
+	\end{enumerate}
+	
+	Un atlas se dice maximal si contiene todas las posibles cartas compatibles.
+\end{defi}
+\begin{center}
+	\begin{tikzcd}
+		U_\alpha\cap U_\beta\subset M \arrow[d, "\phi_\beta"] \arrow[rr, "\phi_\alpha"]                    &  & \phi_\alpha(U_\alpha\cap U_\beta)\subset\mathbb{R}^n \arrow[lld, "\phi_\beta\circ\phi_\alpha^{-1}", bend left] \\
+		\phi_\beta(U_\alpha\cap U_\beta)\subset\mathbb{R}^n \arrow[rru, "\phi_\alpha\circ\phi_\beta^{-1}"] &  &                                                                                                               
+	\end{tikzcd}
+\end{center}
+\begin{defi}[$C^r$ Variedad $n-$dimensional]
+	Una $C^r$ variedad $n-$dimensional es un espacio topológico $(M,\tau)$ junto con un atlas maximal $C^r$.
+\end{defi}
+El hecho de que una variedad sea localmente como $\mathbb{R}^n$ (a través de las cartas) introduce la posibilidad de usar herramientas del cálculo real sobre ella. Tome por ejemplo dos $C^\infty$ variedades $(M,\tau_M)$ y $(N,\tau_N)$ de dimensión $m$ y $n$, respectivamente. Por simplicidad, pero sin pérdida de generalidad, tome $\phi:M\rightarrow\mathbb{R}^m$ y $\Psi:N\rightarrow\mathbb{R}^n$ como las cartas coordenadas de $M$ y $N$, respectivamente. Si $f:M\rightarrow N$ es una función entre ambas variedades,
+
+\begin{center}
+	\begin{tikzcd}
+		M \arrow[rr, "f"]                                                            &  & N \arrow[d, "\Psi"] \\
+		\mathbb{R}^m \arrow[rr, "\Psi\circ f \circ\phi^{-1}"] \arrow[u, "\phi^{-1}"] &  & \mathbb{R}^n       
+	\end{tikzcd}
+\end{center}
+se puede introducir el concepto de diferenciación sobre el mapa $f$, construyendo el mapa
+$$(\Psi\circ f\circ \phi^{-1}):\mathbb{R}^m\rightarrow\mathbb{R}^n,$$
+de modo que el operador $\frac{\partial f}{\partial x^\mu}$ quede definido como
+$$\frac{\partial f}{\partial x^\mu}:=\frac{\partial }{\partial x^\mu}(\Psi\circ f\circ \phi^{-1}),$$
+donde $\mu=1,\dots,m$.
+\subsection{Espacio tangente y cotangente}
+Tome $\mathcal{F}$ como el espacio de todas las funciones suaves $f:M\rightarrow\mathbb{R}$ ($\phi^{-1}\circ f$ es de clase $C^\infty$, siendo $\phi$ la carta coordenada de $M$). Cada curva $\gamma:\mathbb{R}\rightarrow M$ que pasa por algún punto $p\in M$ define un operador sobre el espacio, la derivada direccional, que mapea $f$ a $$\frac{\mathrm{d}f}{d\lambda}\Big|_{\lambda: \gamma(\lambda)=p}:=\frac{\mathrm{d}}{d\lambda}(f\circ\gamma)(\lambda)$$ (evaluada en $p$).
+\begin{center}
+	\begin{tikzcd}
+		\mathbb{R} \arrow[r, "\gamma"] \arrow[rr, "f\circ\gamma"', bend right] & M \arrow[r, "f"] & \mathbb{R}
+	\end{tikzcd}
+\end{center}
+\begin{defi}[Espacio tangente]
+	El espacio tangente $T_pM$ a un punto $p\in M$ es el espacio de los operadores derivadas direccionales dados por todas las curvas que pasan por el punto $p$. Este espacio resulta ser un espacio vectorial.
+\end{defi}
+El espacio tangente $T_pM$ posee una base natural, $\{\partial_\mu\}$. Cada uno de estos operadores está definido en términos de la curva generada por la carta coordenada del punto $p$. Es decir, si $(U,\phi)$ es una carta coordenada tal que $p\in U$, se toma $(\phi^{-1})^\mu:\mathbb{R}\rightarrow M$ como la restricción de la función $\phi^{-1}$ a una única variable, $x^\mu$, $\mu=1,\dots,m$, con el objetivo de que esta nueva función sea una curva sobre $M$ que pase por $p$, para que defina la derivada direccional $\partial_\mu.$
+
+Para ver que efectivamente es una base del espacio tangente $T_pM$, considere una variedad $m$-dimensional suave $M$, una carta coordenada $(U,\phi)$, una curva $\gamma:\mathbb{R}\rightarrow M$ y una función $f: M\rightarrow \mathbb{R}$.
+
+\begin{center}
+	\begin{tikzcd}
+		\mathbb{R} \arrow[rrdd, "\phi\circ\gamma"'] \arrow[rr, "\gamma"] \arrow[rrrr, "f\circ\gamma", bend left] &  & U\subseteq M \arrow[dd, "\phi"', bend right] \arrow[rr, "f"]                       &  & \mathbb{R} \\
+		&  &                                                                                    &  &            \\
+		&  & \mathbb{R}^m \arrow[uu, "\phi^{-1}"', bend right] \arrow[rruu, "f\circ\phi^{-1}"'] &  &           
+	\end{tikzcd}
+\end{center}
+Si $\lambda$ es el parámetro de la curva $\gamma$, se expande el operador $\frac{\mathrm{d}}{\mathrm{d}\lambda}$ en términos de los operadores $\partial_\mu$ aplicando la regla de la cadena:
+$$\frac{\mathrm{d}f}{\mathrm{d}\lambda}=\frac{\mathrm{d}}{\mathrm{d}\lambda}(f\circ\gamma)=\frac{\mathrm{d}}{\mathrm{d}\lambda}((f\circ\phi^{-1})\circ(\phi\circ\gamma))=\frac{\mathrm{d}(\phi\circ\gamma)^\mu}{\mathrm{d}\lambda}\frac{\partial(f\circ\phi^{-1})}{\partial x^\mu}=\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\partial_\mu f.$$
+Como la función $f$ es arbitraria,
+$$\frac{\mathrm{d}}{\mathrm{d}\lambda}=\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\partial_\mu,$$
+con lo que los operadores derivada direccional $\{\partial_\mu\}$ son una base para $T_pM$, conocida como base coordenada. Además, esto implica que el espacio tangente $T_pM$ tiene la misma dimensión de la variedad.
+
+
