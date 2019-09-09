@@ -54,8 +54,8 @@ T=[0.24, 0.62, 1, 1.88, 11.86, 29.46, 84.1, 164.8, 247.7]
 
 #Real Integration ================================
 total=6 #Planets taken
-for x in range(1):
-    delta_val=np.linspace(0, 0.02)
+for x in range(total):
+    delta_val=np.linspace(-1.050, -1.025)
     prec=[]
     for y in delta_val:
         function =(eta*to_integrate).replace(mu, mu_value[x]).replace(gamma,\
