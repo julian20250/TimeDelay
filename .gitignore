@@ -10,3 +10,8 @@ Referencias
 Formato
 *.doc
 *PDF.pdf
+*.sty
+.DS_Store
+*.bbl
+*.blg
+*.bst
