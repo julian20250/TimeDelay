@@ -1,0 +1,265 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsthm,amssymb,amsfonts,latexsym}
+\usepackage{amsmath}
+
+\usetheme{Warsaw}
+\usepackage{ragged2e}
+\apptocmd{\frame}{}{\justifying}{} % Allow optional arguments after frame.
+
+\newtheorem{defi}{Definición}[section]
+\newtheorem{theo}{Teorema}[section]
+\newtheorem{corol}{Corolario}[section]
+
+
+
+\setbeamertemplate{navigation symbols}{}
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+\setbeamertemplate{caption}[numbered]
+%\addtobeamertemplate{block begin}{}{\justifying}
+
+
+\title[Teoría Bayesiana]{Teoría Bayesiana}
+\author[Julián Jiménez-Cárdenas]{Julián Jiménez-Cárdenas$^{1}$}
+\institute{$^{1}$Universidad Nacional de Colombia, Bogotá. \and \texttt{juojimenezca@unal.edu.co}}
+\date{}
+
+\begin{document}
+
+	\frame{\titlepage}
+	\begin{frame}[allowframebreaks]
+
+		\tableofcontents		
+	\end{frame}
+	
+	\section{Preliminares}
+	\subsection{Espacio de Probabilidad}
+	\begin{frame}[allowframebreaks]{$\sigma$-álgebra}
+	\begin{defi}[Experimento Aleatorio]
+		Un experimento se dice aleatorio si su resultado no se puede determinar de antemano.
+	\end{defi}
+	\begin{defi}[Espacio de Muestra]
+		El conjunto $\Omega$ de todos los posibles resultados de un experimento aleatorio se llama espacio de muestra. Un elemento $\omega\in\Omega$ se llama resultado o muestra. $\Omega$ se dice discreto si es finito o contable.
+	\end{defi}	
+	\begin{defi}[$\sigma$-álgebra]
+		Tome $\Omega\neq\emptyset$. Una colección $\Im$ de subconjuntos de $\Omega$ se llama $\sigma-$álgebra sobre $\Omega$ si:
+		\begin{enumerate}
+			\item $\Omega\in\Im$,
+			\item Si $A\in\Im$, entonces $A^c\in\Im$ y,
+			\item Si $A_1,A_2,\dots\in\Im$, entonces $\bigcup_{i=1}^\infty A_i\in\Im$.
+		\end{enumerate}
+		Los elementos de $\Im$ se llaman eventos.
+	\end{defi}
+	\begin{theo}
+		Si $\Omega\neq\emptyset$ y $\Im_1,\Im_2,\dots$ son $\sigma-$álgebras sobre $\Omega$, entonces $\bigcap_{i=1}^\infty \Im_i$ es una $\sigma$-álgebra sobre $\Omega$.
+	\end{theo}		
+	
+	\begin{proof}
+		Como $\Omega\in\Im_j,$ para $j=1,2,\dots$, $\Omega\in\bigcap_{j=1}^\infty \Im_j$. Si $A\in\bigcap_{j=1}^\infty\Im_j$, $A\in\Im_j$, para $j=1,2,\dots$, de modo que $A^c\in\Im_j$, y $A^c\in\bigcap_{j=1}^\infty\Im_j$. Por último, si 
+		$$A_1,A_2,\dots\in\bigcap_{j=1}^\infty\Im_j,$$
+		para todo $j=1,2,\dots$, $A_1,A_2,\dots\in\Im_j$, de modo que
+		$$\bigcup_{i=1}^\infty A_i\in\Im_j\text{ y }\bigcup_{i=1}^\infty A_i\in\bigcap_{j=1}^\infty\Im_j.$$ 
+	\end{proof}
+	
+	\begin{defi}[$\sigma$-álgebra generada]
+		Tome $\Omega\neq\emptyset$ y $\mathcal{A}$ como una colección de subconjuntos de $\Omega$. Si $\mathcal{M}:=\{\Im:\Im\text{ es una }\sigma-\text{álgebra sobre }\Omega \text{ que contiene a } \mathcal{A}\},$
+		$$\sigma(\mathcal{A}):=\bigcap_{\Im\in \mathcal{M}}\Im$$
+		es la $\sigma-$álgebra más pequeña sobre $\Omega$ que contiene a $\mathcal{A}$. Esta $\sigma-$álgebra se conoce como $\sigma$-álgebra generada por $\mathcal{A}$.
+	\end{defi}
+	
+	\begin{defi}[Espacio de medida]
+		Tome $\Omega\neq\emptyset$ y sea $\Im$ una $\sigma$-álgebra sobre $\Omega$. La pareja $(\Omega,\Im)$ se llama espacio de medida.
+	\end{defi}
+	$\emptyset$ es el evento imposible. $\Omega$ es el evento seguro y $\{\omega\}$, con $\omega\in\Omega$ es un evento simple. Decimos que el evento $A$ ocurre después de llevar a cabo el experimento aleatorio si se obtiene un resultado en $A$, esto es, $A$ ocurre si el resultado es algún $\omega\in A$.
+	\begin{enumerate}
+		\item El evento $A\cup B$ ocurre si y sólo si $A$ ocurre, $B$ pasa, o ambos ocurren.
+		\item El evento $A\cap B$ ocurre si y sólo si $A$ y $B$ ocurren a la vez.
+		\item El evento $A^c$ ocurre si y sólo si $A$ no ocurre.
+		\item El evento $A-B$ ocurre si y sólo si $A$ ocurre pero $B$ no ocurre.
+	\end{enumerate}
+	\begin{defi}[Eventos mutuamente excluyentes]
+		Dos eventos $A$ y $B$ se dicen mutuamente excluyentes si $A\cap B=\emptyset$.
+	\end{defi}
+	
+	\end{frame}
+	
+	\begin{frame}[allowframebreaks]{Espacio de probabilidad}
+		\begin{defi}[Frecuencia relativa]
+		Para cada evento $A$, el número $f_r(A):=\frac{n(A)}{n}$ se llama la frecuencia relativa de $A$, donde $n(A)$ indica el número de veces que ocurre $A$ en $n$ repeticiones del experimento aleatorio.
+	\end{defi}
+	Cuando $n\rightarrow\infty$, se puede hablar de la probabilidad de que ocurra el evento $A$, normalizada de $0$ a $1$. La formalización de este concepto se encuentra en la idea del espacio de probabilidad.
+	
+	\begin{defi}[Espacio de probabilidad]
+		Tome $(\Omega,\Im)$ como un espacio de medida. Una función real $P$ sobre $\Im$ que satisface las siguientes condiciones:
+		\begin{enumerate}
+			\item $P(A)\geq0$ para todo $A\in\Im$ (no negativa),
+			\item $P(\Omega)=1$ (normalizada) y,
+			\item si $A_1,A_2,\dots$ son eventos mutuamente excluyentes en $\Im$, esto es, si
+			$$A_i\cap A_j=\emptyset \text{ para todo }i\neq j, \text{ entonces}$$
+			$$P\left(\bigcup_{i=1}^\infty A_i\right)=\sum_{i=1}^\infty P(A_i),$$
+		\end{enumerate}
+		se llama medida de probabilidad sobre $(\Omega,\Im)$. La tripleta $(\Omega,\Im,P)$ se llama espacio de probabilidad.
+	\end{defi}
+	\begin{theo}
+		Si $(\Omega,\Im,P)$ es un espacio de probabilidad, entonces
+		\begin{enumerate}
+			\item $P(\emptyset)=\emptyset$.
+			\item Si $A,B\in\Im$ y $A\cap B=\emptyset$, entonces $P(A\cup B)=P(A)+P(B).$
+			\item Para todo $A\in\Im$, $P(A^c)=1-P(A).$
+			\item Si $A\subseteq B$, entonces $P(A)\leq P(B)$ y $P(B-A)=P(B)-P(A).$ En particular, $P(A)\leq1$ para todo $A\in\Im$.
+			\item Para todo $A,B\in\Im$, $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.
+			
+		\end{enumerate}
+	\end{theo}
+	\begin{theo}
+	\begin{enumerate}
+	\setcounter{enumi}{5}
+		\item Tome $\{A_n\}_n\subseteq\Im$ como una sucesión creciente, esto es, $A_n\subseteq A_{n+1}, \forall n\in\mathbb{N}$; entonces
+			$$P\left(\lim_{m\rightarrow\infty}A_n\right)=\lim_{n\rightarrow\infty}P(A_n), \text{ donde } \lim_{n\rightarrow\infty} A_n:=\bigcup_{i=1}^\infty A_i.$$
+		\item Tome $\{A_n\}_n\subseteq\Im$ como una sucesión decreciente, esto es, $A_n\supseteq A_{n+1}, \forall n\in\mathbb{N}$; entonces
+			$$P\left(\lim_{m\rightarrow\infty}A_n\right)=\lim_{n\rightarrow\infty}P(A_n), \text{ donde } \lim_{n\rightarrow\infty} A_n:=\bigcap_{i=1}^\infty A_i.$$
+	\end{enumerate}
+	\end{theo}
+	\begin{proof}
+		\begin{enumerate}
+			\item $1=P(\Omega\cup\emptyset\cup\emptyset\cup\cdots)=P(\Omega)+P(\emptyset)+P(\emptyset)+\cdots=1+P(\emptyset)+\cdots \implies P(\emptyset)=0.$
+			\item $P(A\cup B)=P(A\cup B\cup\emptyset\cup\emptyset\cup\cdots)=P(A)+P(B).$
+			\item $P(A)+P(A^c)=P(A\cup A^c)=P(\Omega)=1\implies P(A^c)=1-P(A).$
+			\item Si $A\subseteq B$, $B=A\cup(B-A)$, de modo que $P(B)=P(A)+P(B-A).$ Como $P\geq0$, $P(B)\geq P(A)$ y $P(B-A)=P(B)-P(A).$ Si $B=\Omega,$ $P(A)\leq1.$
+			\item Use el hecho de que $A\cup B=[A-(A\cap B)]\cup[B-(A\cap B)]\cup[A\cap B]$.			
+		\end{enumerate}
+		
+	\end{proof}
+	\begin{proof}
+		\begin{enumerate}
+		\setcounter{enumi}{5}
+			\item Tome la sucesión $C_1=A_1,C_2=A_2-A_1,\dots,C_r=A_r-A_{r-1},\dots$. Es claro que
+			$$\bigcup_{i=1}^\infty C_i=\bigcup_{i=1}^\infty A_i.$$
+			Más aún, como $C_i\cap C_j=\emptyset\ \forall i\neq j,$ se sigue que
+			$$P\left(\bigcup_{i=1}^\infty A_i\right)=P\left(\bigcup_{n=1}^\infty C_n\right)=\sum_{n=1}^\infty P(C_n)=\lim_{n\rightarrow\infty} \sum_{k=1}^n P(C_k)$$ $$=\lim_{n\rightarrow\infty}P\left(\bigcup_{k=1}^n C_k\right)=\lim_{n\rightarrow\infty}P\left(A_n\right).$$
+			\item Tome la sucesión $\{B_n=A_n^c\}_n$ y aplique el resultado anterior.
+		\end{enumerate}
+	\end{proof}
+	\end{frame}
+	
+	\begin{frame}[allowframebreaks]{Notas}
+	Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,\dots,A_n\in\Im$:
+	\begin{align*}
+	P(A_1\cup A_2\cup \cdots\cup A_n)=&\sum_{i=1}^n P(A_i)-\sum_{i_1<i_2}P(A_{i_{1}}\cap A_{i_{2}})+\cdots \\    
+			& +(-1)^{r+1}\sum_{i_1<i_2<	\cdots<i_r}P(A_{i_1}\cap A_{i_2}\cap\cdots\cap A_{i_r})\\
+			&+\cdots+(-1)^{n+1}P(A_1\cap A_2\cap \cdots\cap A_n).
+	\end{align*}
+	\noindent\rule{8cm}{0.4pt}
+	
+	Tome $(\Omega,\Im,P)$ como un espacio de probabilidad con $\Omega$ finito o contable y $\Im =\mathbb{P}(\Omega)$. Tome $\emptyset\neq A \in\Im.$ Es claro que
+	
+	$$A=\bigcup_{\omega\in A} \{\omega\}, \text{ de modo que }$$
+	
+	$$P(A)=\sum_{\omega\in A} P(\omega), \text{ donde } P(\omega):=P(\{\omega\}).$$
+	Así, $P$ queda completamente definido por $p_j:=P(\omega_j)$, donde $\omega_j\in\Omega.$ El vector $|\Omega|-$dimensional $p:=(p_1,p_2,\dots)$ satisface las siguientes condiciones:
+	\begin{itemize}
+		\item $p_j\geq0$ y
+		\item $\sum_{j=1}^\infty p_j=1.$
+	\end{itemize}
+	Un vector que satisface las anteriores condiciones se llama \textbf{vector de probabilidad}.	
+	
+	\end{frame}
+	\subsection{Probabilidad Condicional e Independencia de Eventos}
+	\begin{frame}{Introducción}
+		Tome $B$ como un evento cuya opción de ocurrir debe ser medida bajo la suposición de que otro evento $A$ fue observado. Si el experimento se repite $n$ veces bajo las mismas circunstancias, entonces la frecuencia relativa de $B$ bajo la condición $A$ se define como
+		$$f_r(B|A):=\frac{n(A\cap B)}{n(A)}=\frac{\frac{n(A\cap B)}{n}}{\frac{n(A)}{n}}=\frac{f_r(A\cap B)}{f_r(A)}, \text{ si }n(A)>0.$$
+		Esto motiva la siguiente definición
+	\end{frame}
+	
+	\begin{frame}[allowframebreaks]{Probabilidad Condicional}
+		\begin{defi}[Probabilidad condicional]
+			Tome $(\Omega, \Im, P)$ como un espacio de probabilidad. Si $A,B\in\Im$, con $P(A)>0$, entonces la probabilidad del evento $B$ bajo la condición $A$ se define como sigue
+			$$P(B|A):=\frac{P(A\cap B)}{P(A).}$$
+		\end{defi}
+		El siguiente teorema provee algunas propiedades de la probabilidad condicional.
+		\begin{theo}[Medida de probabilidad condicional]
+			Tome $(\Omega, \Im, P)$ como un espacio de probabilidad y $A\in\Im$, con $P(A)>0$. Entonces:
+			\begin{enumerate}
+				\item $P(\cdot | A)$ es una medida de probabilidad sobre $\Omega$ centrada en $A$, esto es, $P(A|A)=1.$
+				\item Si $A\cap B=\emptyset$, entonces $P(B|A)=0$.
+				\item $P(B\cap C |A)=P(B|A\cap C)P(C|A)$ si $P(A\cap C)>0$.
+				\item Si $A_1,A_2,\dots,A_n\in\Im$, con $P(A_1\cap A_2\cap\cdots\cap A_{n-1})>0$, entonces
+				\begin{align*}
+				P(A_1\cap A_2\cap\cdots\cap A_n)=P(A_1)P(A_2|A_1)P(A_3|A_1\cap A_2)\cdots\\ P(A_n|A_1\cap A_2\cap \cdots\cap A_{n-1}).
+				\end{align*}
+			\end{enumerate}
+		\end{theo}
+		
+		\begin{proof}
+			\begin{enumerate}
+				\item Las tres propiedades de una medida de probabilidad deben ser verificadas.
+				\begin{enumerate}
+					\item Claramente, $P(B|A)\geq0$ para todo $B\in\Im$.
+					\item $P(\Omega | A)=\frac{P(\Omega\cap A}{P(A)}=\frac{P(A)}{P(A)}=1.$ También se tiene que $P(A|A)=1.$
+					\item Tome $A_1,A_2,\dots\in\Im$ una sucesión de conjuntos disyuntos. Entonces
+					\begin{align*}
+					P\left(\bigcup_{i=1}^\infty A_i | A\right)=\frac{P\left(A\cap \bigcup_{i=1}^\infty A_i\right)}{P(A)}=\frac{P\left(\bigcup_{i=1}^\infty A\cap A_i\right)}{P(A)}\\
+					=\sum_{i=1}^\infty \frac{P(A\cap A_i)}{P(A)}=\sum_{i=1}^\infty P(A_i | A).
+					\end{align*}
+				\end{enumerate}
+			\end{enumerate}
+		\end{proof}
+		\begin{proof}
+			\begin{enumerate}
+				\setcounter{enumi}{1}
+				\item Si $A\cap B=\emptyset$, $P(B|A)=\frac{P(A\cap B)}{P(A)}=\frac{P(\emptyset)}{P(A)}=0.$
+				\item $P(B\cap C|A)=\frac{P(A\cap B\cap C)}{P(A)}=\frac{P(B\cap C\cap A)}{P(A\cap C)}\frac{P(C\cap A)}{P(A)}=P(B|A\cap C)P(C| A).$
+				\item $P(A_1\cap\cdots\cap A_n)=\frac{P(A_1\cap\cdots\cap A_n)}{P(A_1\cap\cdots\cap A_{n-1})}\frac{P(A_1\cap\cdots\cap A_{n-1})}{P(A_1\cap\cdots\cap A_{n-2})}\cdots\frac{P(A_1\cap A_2)}{P(A_1)}P(A_1)=P(A_1)P(A_2|A_1)P(A_3|A_1\cap A_2)\cdots P(A_n|A_1\cap A_2\cap \cdots\cap A_{n-1}).$
+			\end{enumerate}
+		\end{proof}
+		Los siguientes resultados son vitales para aplicaciones posteriores.
+		\begin{theo}[Teorema de probabilidad total]
+			Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$, esto es, $A_i\cap A_j=\emptyset, \forall i\neq j$ y $\bigcup_{i=1}^\infty A_i=\Omega,$ tal que $P(A_i)>0$, para todo $A_i\in\Im$. Entonces, para todo $B\in\Im$:
+			$$P(B)=\sum_{i} P(B|A_i)P(A_i).$$
+		\end{theo}
+		\begin{proof}
+			Observe que
+			$$B=B\cap\Omega=B\cap\left( \bigcup_{i=1}^\infty A_i \right)=\bigcup_{i=1}^\infty B\cap A_i,$$
+			de modo que
+			$$P(B)=P\left(\bigcup_{i=1}^\infty B\cap A_i\right)=\sum_{i=1}^\infty P(B\cap A_i)=\sum_{i=1}^\infty P(B| A_i)P(A_i).$$
+		\end{proof}
+		Como corolario del teorema anterior, se obtiene un resultado conocido como \textbf{regla de Bayes}, que constituye la base para la \textbf{teoría Bayesiana}.
+		\begin{corol}[Regla de Bayes]
+			Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$ con $P(A_i)>0$, para todo $i$; entonces, para todo $B\in\Im$ con $P(B)>0:$
+			$$P(A_i | B)=\frac{P(A_i)P(B| A_i)}{\sum_j P(B|A_j)P(A_j)}, \forall i.$$
+		\end{corol}
+		\begin{proof}
+		$$P(A_i|B)=\frac{P(A_i\cap B)}{P(B)}=\frac{P(A_i)P(B|A_i)}{P(B)}=\frac{P(A_i)P(B| A_i)}{\sum_j P(B|A_j)P(A_j)}.$$
+		Con la partición $A_1=A, A_2=A^c$ se obtiene la forma usual de la regla de Bayes.
+	\end{proof}
+	\begin{defi}[Distribuciones a priori y a posteriori]
+		Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$, con $P(A_i)>0$, para todo $i$. Si $P(B)>0$, con $B\in\Im$, entonces $\{P(A_n)\}_n$ se llama distribución a priori (antes de que $B$ ocurra), y $\{P(A_n|B)\}_n$ se llama distribución a posteriori (después de que $B$ ocurra).
+	\end{defi}
+	Algunas veces, la ocurrencia de un evento $B$ no afecta la probabilidad de un evento $A$, es decir,
+	$$P(A|B)=P(A).$$
+	En este caso, se dice que el evento $A$ es independiente del evento $B$. Esto motiva la siguiente definición.
+	\begin{defi}[Eventos independientes]
+		Dos eventos $A$ y $B$ se dicen independientes si y sólo si
+		
+		$$P(A\cap B)=P(A)P(B).$$
+		Si esta condición no se tiene, se dice que los eventos son dependientes.
+	\end{defi}
+	\end{frame}
+	
+	\section{Referencias}
+	\begin{frame}
+	\frametitle{Referencias}
+
+	\nocite{*}
+	\bibliographystyle{plain}
+	\bibliography{referenciasExpo}
+
+	\end{frame}
+	%=======================================================
+	\end{document}
