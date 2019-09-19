@@ -123,4 +123,70 @@ Como la función $f$ es arbitraria,
 $$\frac{\mathrm{d}}{\mathrm{d}\lambda}=\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\partial_\mu,$$
 con lo que los operadores derivada direccional $\{\partial_\mu\}$ son una base para $T_pM$, conocida como base coordenada. Además, esto implica que el espacio tangente $T_pM$ tiene la misma dimensión de la variedad.
 
+Una de las ventajas de este punto de vista de los vectores como operadores diferenciales es que la ley de transformación es inmediata. Como los vectores de la base son $\hat{e}_{(\mu)}=\partial_{\mu}$, los vectores de la base en un nuevo sistema coordenado $x^{\mu'}$ están dadas por la regla de la cadena \cite{Carroll}
 
+$$\partial_{\mu^{\prime}}=\frac{\partial x^{\mu}}{\partial x^{\mu^{\prime}}} \partial_{\mu}$$
+
+La ley de transformación de vectores se introduce de tal forma que un vector del espacio tangente $V=V^\mu \partial_\mu$ permanezca invariante bajo un cambio de base, es decir,
+$$V^\mu\partial_\mu=V^{\mu'}\partial_{\mu'}=V^{\mu'}\frac{\partial x^\mu}{\partial x^{\mu'}}\partial_\mu,$$
+y como la matriz $\frac{\partial x^{\mu'}}{\partial x^{\mu}}$ es la inversa de $\frac{\partial x^\mu}{\partial x^{\mu'}}$, la ley de transformación es
+
+\begin{equation}
+	V^{\mu'}=\frac{\partial x^{\mu'}}{\partial x^{\mu}} V^\mu.
+\end{equation}
+\begin{defi}[Espacio cotangente]
+	El espacio cotangente $T^*_pM$ de una variedad $M$ en un punto $p\in M$ es el conjunto de los mapas lineales $\omega:T_pM\rightarrow \mathbb{R}$. Los elementos de este espacio se conocen como 1-formas.
+\end{defi}
+
+El ejemplo canónico de 1-forma es el gradiente de una función $f:M\rightarrow \mathbb{R}$, denotado por $\mathrm{d}f$. Su acción sobre un vector $\frac{\mathrm{d}}{\mathrm{d}\lambda}$ del espacio tangente es exactamente la derivada direccional sobre la función $f$:
+$$\mathrm{d}f\left( \frac{\mathrm{d}}{\mathrm{d}\lambda} \right)=\frac{\mathrm{d}f}{\mathrm{d}\lambda}\Big|_{p}.$$
+Justo como las derivadas parciales a lo largo de los ejes coordenados proveen una base natural para el espacio tangente, los gradientes de las funciones coordenadas $x^\mu$ proveen una base natural para el espacio cotangente $\{\mathrm{d}x^\mu\}$, conocida como base dual. Observe que, al aplicar $\mathrm{d}x^\mu$ a $\partial_\eta$ se obtiene que
+$$\mathrm{d}x^\mu(\partial_\nu)=\frac{\partial x^\mu}{\partial x^\nu}=\frac{\partial}{\partial x^\nu}(x^\mu\circ (x^\nu)^{-1})=\frac{\partial}{\partial x^\nu}((x^\mu\circ\phi^{-1})\circ(\phi\circ (x^\nu)^{-1})).$$
+\begin{center}
+\begin{tikzcd}
+\mathbb{R} \arrow[rr, "(x^\nu)^{-1}"] \arrow[rrdd, "\phi\circ(x^\nu)^{-1}"'] &  & M \arrow[dd, "\phi"]                                                      &  &                       \\
+                                                                             &  &                                                                           &  &                       \\
+                                                                             &  & \mathbb{R}^m \arrow[rr, "\phi^{-1}"] \arrow[rrdd, "x^\mu\circ\phi^{-1}"'] &  & M \arrow[dd, "x^\mu"] \\
+                                                                             &  &                                                                           &  &                       \\
+                                                                             &  &                                                                           &  & \mathbb{R}           
+\end{tikzcd}
+\end{center}
+
+Aplicando la regla de la cadena,
+$$\frac{\partial}{\partial x^\nu}((x^\mu\circ\phi^{-1})\circ(\phi\circ (x^\nu)^{-1}))=\frac{\partial(\phi\circ(x^\nu)^{-1})^\eta}{\partial x^\nu}\frac{\partial(x^\mu\circ\phi^{-1})}{\partial x^\eta}.$$
+Intuitivamente, $x^\mu\circ\phi^{-1}=x^\mu,$ donde $x^\mu$ del lado izquierdo de la igualdad es la $\mu$-ésima coordenada de la carta, y al lado derecho es la $\mu$-ésima componente de $\mathbb{R}^m$. Por otro lado, $(\phi\circ(x^\nu)^{-1})^\eta=x^\eta,$ con lo que
+$$\frac{\partial(\phi\circ(x^\nu)^{-1})^\eta}{\partial x^\nu}\frac{\partial(x^\mu\circ\phi^{-1})}{\partial x^\eta}=\frac{\partial x^\eta}{\partial x^\nu}\frac{\partial x^\mu}{\partial x^\eta}=\delta_\eta^\mu \frac{\partial x^\eta}{\partial x^\nu}=\frac{\partial x^\mu}{\partial x^\nu}=\delta_\nu^\mu.$$
+En resumen,
+\begin{equation}
+	\boxed{\mathrm{d}x^\mu(\partial_\nu)=\delta_\nu^\mu.}
+\end{equation}
+Esta condición determina que $\{\mathrm{d}x^\mu\}$ es una base para el espacio cotangente $T^*_p M$ \cite{Carroll}. De este modo, cualquier 1-forma $\omega$ se puede expandir en sus componentes: $\omega=\omega_\mu \mathrm{d}x^\mu$. Las propiedades de transformación de los vectores de la base dual y las componentes de una 1-forma se siguen de la misma forma que en el caso del espacio tangente:
+$$\mathrm{d}x^{\mu'}=\frac{\partial x^{\mu'}}{\partial x^\mu} \mathrm{d}x^\mu;\ \omega_{\mu'}=\frac{\partial x^\mu}{\partial x^{\mu'}}\omega_\mu.$$
+
+\begin{defi}[Espacio producto cartesiano]
+	Se define el espacio producto cartesiano $\Pi_l^k$ respecto a un punto $p\in M$ de la variedad como:
+	$$\Pi_l^k:=\underbrace{T^*_pM\times\cdots\times T^*_pM}_{l-\text{veces}}\times \underbrace{T_pM\times\cdots\times T_pM}_{k-\text{veces}}, \text{ es decir,}$$
+	$$\Pi_l^k=\{(\omega^1,\omega^2,\dots,\omega^l,\mathds{X}_1,\mathds{X}_2,\dots,\mathds{X}_k): \omega^i\in T^*_pM; \ \mathds{X}_i\in T_pM\}.$$
+	Este espacio es un espacio vectorial con la suma y el producto usuales.
+\end{defi}
+\begin{defi}[Tensores]
+	Un tensor $(k,l)$ $\mathds{T}:\Pi_l^k\rightarrow \mathbb{R}$ es un mapa multilineal (lineal en cada uno de sus argumentos). Este tensor se puede expandir en términos de las bases del espacio tangente y cotangente de la siguiente forma:
+	
+	$$\mathds{T}=?{T}^{\mu_1\cdots\mu_k}_{\nu_1\cdots{\nu_l}}? \partial_{\mu_1}\otimes \cdots\otimes \partial_{\mu_k}\otimes \mathrm{d}x^{\nu_1}\otimes\cdots\otimes \mathrm{d}x^{\nu_l},$$
+	donde $?{T}^{\mu_1\cdots\mu_k}_{\nu_1\cdots{\nu_l}}?$ son los coeficientes del tensor.
+\end{defi}
+De modo similar al caso de los vectores, los tensores transforman coordenadas en cada uno de sus índices de la siguiente forma:
+$$?T^{\mu_1'\cdots\mu_k'}_{\nu_1'\cdots\nu_l'}?=\frac{\partial x^{\mu_1'}}{\partial x^{\mu_1}}\cdots\frac{\partial x^{\mu_k'}}{\partial x^{\mu_k}}\frac{\partial x^{\nu_1}}{\partial x^{\nu_1'}}\cdots \frac{\partial x^{\nu_l}}{\partial x^{\nu_l'}}?{T}^{\mu_1\cdots\mu_k}_{\nu_1\cdots{\nu_l}}?.$$
+Infortunadamente, la derivada parcial de un tensor no es, en general, un tensor (no cumple esta regla de transformación de coordenadas). Esto motivará posteriormente la derivada covariante, que preservará el carácter tensorial tras aplicarse sobre un tensor.
+
+\begin{defi}[Tensor métrico]
+	El tensor métrico $?g_{\mu\nu}?$ es un tensor simétrico $(0,2)$, cuya representación matricial tiene determinante no nulo ($g=|g_{\mu\nu}|\neq0$), y satisface la relación
+	\begin{equation}\label{metricTensor}
+		?g^{\mu\nu}? ?g_{\nu\sigma}?= ?\delta^\mu_\sigma?.
+	\end{equation}
+	La simetría de $?g_{\mu\nu}?$ implica la simetría de $?g^{\mu\nu}?$, y la relación \eqref{metricTensor} permite que el tensor métrico se pueda usar para subir o bajar índices.
+\end{defi}
+\begin{defi}[Elemento de línea]
+	El elemento de línea se define de la siguiente forma
+	$$\mathrm{d}s^2=?g_{\mu\nu}? \mathrm{d}x^\mu \mathrm{d}x^\nu.$$
+\end{defi}

@@ -1,4 +1,4 @@
-\documentclass[12pt,spanish,openany,letterpaper,pagesize]{scrbook}
+\documentclass[12pt,openany,letterpaper,pagesize]{scrbook}
 %\documentclass[12pt,spanish,fleqn,openany,letterpaper,pagesize]{scrbook}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-noquoting]{babel}
@@ -8,7 +8,8 @@
 \usepackage{eepic}
 \usepackage{floatrow}
 \usepackage{stmaryrd}
-\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsmath,amssymb,amsfonts,latexsym, amsthm}
+
 \usepackage{threeparttable}
 \usepackage{amscd}
 \usepackage{here}
@@ -74,3 +75,7 @@
 %Espacio entre lineas
 \renewcommand{\baselinestretch}{1.1}
 
+\usepackage{tensind}
+
+\tensordelimiter{?}
+\usepackage{ dsfont }
