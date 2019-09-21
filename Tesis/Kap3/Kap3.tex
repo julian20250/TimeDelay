@@ -1,5 +1,5 @@
 \chapter{Estadística bayesiana}
-En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam}
+En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam}, \cite{rossi_2018}.
 \section{Preliminares}
 Antes de enunciar la regla de Bayes, es necesario definir lo que es un espacio de probabilidad, y la probabilidad condicional. Esta sección busca fundamentar las bases de la teoría de la probabilidad, para comprender a cabalidad temas posteriores.
 \subsection{Espacio de probabilidad}
@@ -199,4 +199,159 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 		Si esta condición no se tiene, se dice que los eventos son dependientes.
 	\end{defi}
 	
-	Con esta definición se pueden construir familias de eventos independientes, o familias de eventos independientes par a par, siendo esta última condición más fuerte que la primera.
+	En algunos casos, es necesario analizar la independencia de dos o más eventos. Para ello, se dan las siguientes definiciones.
+	\begin{defi}[Familia independiente]
+		Una familia de eventos $\{A_i: i\in I\}$ se dice independiente si
+		$$P\left(\bigcap_{i\in J} A_i\right)=\prod_{i\in J}P(A_i),$$
+		para cualquier subconjunto no vacío $J\subseteq I$.
+	\end{defi}
+	\begin{defi}[Eventos independientes par a par]
+		Una familia de eventos $\{A_i: i\in I\}$ se dice par a par independiente si
+		$$P(A_i\cap A_j)=P(A_i)P(A_j), \text{ para todo }i\neq j.$$
+	\end{defi}
+	
+	\subsection{Variables aleatorias}
+	En un experimento aleatorio, generalmente hay mayor interés en determinar ciertos valores numéricos asociados a los resultados del experimento aleatorio, que al resultado mismo del experimento aleatorio. Con esto en mente se define la variable aleatoria.
+
+	\begin{defi}[Variable aleatoria]
+	Tome $(\Omega, \Im, P)$ como un espacio de probabilidad. Una variable aleatoria es un mapa $X:\Omega\rightarrow \mathbb{R}$ tal que, para todo $A\in\mathbb{B}$, $X^{-1}(A)\in\Im$, donde $\mathbb{B}$ es la $\sigma$-álgebra de Borel sobre $\mathbb{R}$ ($\sigma$-álgebra más pequeña que contiene todos los intervalos de la forma $(-\infty, a]$).
+	
+	El conjunto de posibles valores de $X$ es $\mathbb{S}:=\{x\in\mathbb{R}:\exists \omega\in\Omega\text{ tal que }X(\omega)=x\}$, conocido como \textbf{soporte de la variable aleatoria }$X$.
+	\end{defi}
+	Si $X$ es una variable aleatoria definida sobre un  espacio de probabilidad $(\Omega, \Im, P)$, se introduce la notación
+	$$\{X\in B\}:=\{\omega\in\Omega: X(\omega)\in B\}, \text{ con }B\in\mathbb{B}.$$
+	\begin{defi}[Variable aleatoria discreta]
+		Una variable aleatoria $X$ se dice discreta cuando el soporte $\mathbb{S}$ de $X$ es un subconjunto finito o contable de $\mathbb{R}$. Para $x\in\mathbb{S}$, la función $f(x)=P(X=x):=P($ se llama función de densidad de probabilidad (pdf para abreviar).
+	\end{defi}
+	
+	\begin{defi}[Variable aleatoria continua]
+		Una variable aleatoria $X$ se dice continua si el soporte $\mathbb{S}$ de $X$ es la unión de uno o más intervalos y si existe una función no negativa y real $f(x)$ tal que $P(X\leq x)=\int_{-\infty}^x f(t)\mathrm{d}t.$ La función $f(x)$ se llama función de densidad de probabilidad (pdf).
+	\end{defi}
+	
+	Algunas propiedades de la \textit{pdf} discreta son las siguientes:
+	\begin{enumerate}
+		\item $f(x)\geq0, \forall x\in\mathbb{S}$ y $f(x)=0,\forall x\not\in \mathbb{S}$.
+		\item $\sum_{x\in\mathbb{S}}f(x)=1$.
+		\item $P(X\in B)=\sum_{x\in B} f(x).$
+	\end{enumerate}
+	Análogamente, para la \textit{pdf} continua:
+	\begin{enumerate}
+		\item $f(x)\geq0, \forall x\in\mathbb{S}$ y $f(x)=0,\forall x\not\in \mathbb{S}$.
+		\item $\int_{\mathbb{S}}f(x)\mathrm{d}x=1$.
+		\item $P(X\in B)=\int_{B}f(x)\mathrm{d}x.$
+	\end{enumerate}
+	\begin{defi}[Función de distribución acumulativa]
+		La función de distribución acumulativa (CDF, para abreviar) de una variable aleatoria se define como la función $F(x)=P(X\leq x)$.
+	\end{defi}
+	El siguiente teorema resume algunas propiedades importantes de una \textit{CDF}. 
+	
+	\begin{theo}
+		Si $X$ es una variable aleatoria, con \textit{CDF} $F(x)$, entonces:
+		\begin{enumerate}
+			\item $\lim_{x\rightarrow-\infty}F(x)=0$ y $\lim_{x\rightarrow\infty} F(x)=1.$
+			\item $F(x)$ es no decreciente; esto es, $F(x)\leq F(y)$, siempre que $x\leq y$.
+			\item $F(x)$ es continua por derecha.
+			\item $P(a< X \leq b)=F(b)-F(a).$
+		\end{enumerate}
+	\end{theo}
+	
+	\begin{proof}
+
+	\begin{enumerate}
+		
+		\item \textbf{Cuando $\mathbf{x\rightarrow-\infty}$}, para todo $n\in\mathbb{N}$, se satisface que
+		$$\{X\leq -n\} \supseteq \{X\leq -(n+1)\}, \text{ y en adición,}$$
+		$$\emptyset = \bigcap_{n=1}^\infty \{ X\leq -n\}, \text{ con lo que}$$
+		$$\lim_{x\rightarrow-\infty}F(x)=\lim_{n\rightarrow \infty}F(-n)=P(\emptyset)=0.$$
+		
+		\textbf{Cuando $\mathbf{x\rightarrow\infty}$}, para todo $n\in\mathbb{N}$, se satisface que
+		$$\{X\leq n\}\subseteq\{ X\leq n+1\}, \text{ y,}$$
+		$$\Omega=\bigcup_{n=1}^\infty \{ X\leq n\}, \text{ de modo que}$$
+		$$\lim_{x\rightarrow\infty} F(x)=\lim_{n\rightarrow\infty}=P(\Omega)=1.$$
+		
+		\item Si $x\leq y$, entonces
+		$$\{X\leq x\}\subseteq \{X\leq y\}, \textit{ con lo que}$$
+		$$F(x)=P(X\leq x)\leq P(X\leq y)=F(y).$$
+		
+		\item Tome $x\in\mathbb{R}$ fijo. Suponga que $\{x_n\}_{n\in\mathbb{N}}$ es una sucesión decreciente de números reales, cuyo límite va a $x$. Se puede ver que
+		$$\{X\leq x_1\}\supseteq\{X\leq x_2\}\supseteq\cdots, \text{ y}$$
+		$$\bigcap_{n=1}^\infty \{X\leq x_n\}=\{ X\leq x\}, \text{ de modo que}$$
+		$$\lim_{y\rightarrow x^+} F(y)=\lim_{n\rightarrow \infty} F(x_n)=\lim_{n\rightarrow\infty} P(X\leq x_n)=P(X\leq x)=F(x).$$
+		
+		\item Dado que $\Omega=\{X\leq a\}\cup\{a<X\leq b\}\cup \{X>b\},$
+		$$1=P(X\leq a)+P(a<X\leq b)+P(X>b),$$
+		$$\therefore P(a<X\leq b)=P(X\leq b)-P(X\leq a)=F(b)-F(a).$$
+	\end{enumerate}
+		
+	\end{proof}
+	
+	Los teoremas posteriores indican cómo determinar la \textit{pdf} a partir de la \textit{CDF} de una variable aleatoria.
+	\begin{theo}
+		Si $X$ es una variable aleatoria discreta con \textit{CDF} $F(x)$ y soporte $\mathbb{S}=\{x_0,x_1,\dots\}$, con $x_0<x_1<\cdots$, entonces, para $x_k\in\mathbb{S}$,
+		$$f(x_k)=F(x_k)-F(x_{k-1}).$$
+	\end{theo}
+	\begin{proof}
+		Para $k\geq 1$,
+		$$f(x_k)=P(X=x_k)=P(x_{k-1}<X\leq x_k)=F(x_k)-F(x_{k-1}).$$
+	\end{proof}
+	\begin{theo}
+		Para una variable aleatoria continua, $f(x)=\frac{\mathrm{d}F}{\mathrm{d}x}, \forall x\in\mathbb{R}.$
+	\end{theo}
+	\begin{proof}
+		La prueba se sigue directamente del teorema fundamental del cálculo.
+	\end{proof}
+	\subsection{Vectores aleatorios}
+	En la mayoría de los análisis estadísticos, más de una variable debe ser analizada al cabo de un experimento aleatorio. Cada observación se puede representar como un vector de observaciones, conocido como vector aleatorio.
+	
+	\begin{defi}[Vector aleatorio]
+		Un vector aleatorio $\vec{X}=(X_1,X_2,\dots,X_k)$ es un vector $k-$dimensional, donde $X_1,\dots,X_k$ son variables aleatorias. Un vector aleatorio se dice discreto cuando cada una de las variables aleatorias que lo conforman son discretas, y continuo cuando son continuas.
+	\end{defi}
+	
+	\begin{defi}[Variable aleatoria bivariada]
+		Un vector aleatorio bidimensional $\vec{X}=(X_1,X_2)$ se llama variable aleatoria bivariada.
+	\end{defi}
+	
+	De modo similar al caso de las variables aleatorias, los vectores aleatorios tienen \textit{pdf}, un soporte y una \textit{CDF}. El soporte de un vector aleatorio $k-$dimensional es el conjunto de valores que puede tomar, denotado por $\mathbb{S}_{\vec{X}}\subseteq\mathbb{R}^k.$
+	
+	\begin{defi}[Función de densidad de probabilidad adjunta discreta]
+		Tome $\vec{X}$ como un vector aleatorio discreto $k-$dimensional. La \textit{pdf} adjunta de $\vec{X}$ se define como
+		$$f(\vec{x}):=f(x_1,x_2,\dots,x_k)=P(X_1=x_1,X_2=x_2,\dots, X_k=x_k)$$
+		para $\vec{x}=(x_1,x_2,\dots,x_k)\in\mathbb{S}_{\vec{X}}.$
+	\end{defi}
+	La \textit{pdf} adjunta discreta tiene las siguientes propiedades:
+	\begin{enumerate}
+		\item $0\leq f(x_1,x_2,\dots,x_k)\leq1, \forall \vec{x}\in\mathbb{S}_{\vec{X}}.$
+		\item $\sum_{\vec{x}\in\mathbb{S}_{\vec{X}}}f(\vec{x})=1.$
+		\item Para cualquier subconjunto $B\subseteq \mathbb{S}_{\vec{X}},\ P(\vec{X}\in B)=\sum_{\{\vec{x}\in\mathbb{S}_{\vec{X}}:\vec{x}\in B\}}f(\vec{x}).$
+	\end{enumerate}
+	
+	\begin{defi}[Función de densidad de probabilidad adjunta continua]
+		Tome $\vec{X}$ como un vector aleatorio $k$-dimensional continuo. La \textit{pdf} continua de $\vec{X}$ se define como cualquier función no negativa $f(\vec{x})$ que satisfaga las siguientes propiedades:
+		\begin{enumerate}
+			\item $f(x_1,\dots,x_k)>0, \forall \vec{x}\in\mathbb{S}_{\vec{X}}.$
+			\item $\int_{\mathbb{S}_{\vec{X}}} f(x_1,\dots,x_k)\mathrm{d}x_1\cdots\mathrm{d}x_k=1.$
+			\item Para cualquier subconjunto $B\subset\mathbb{S}_{\vec{X}},\ P(\vec{X}\in B)=\int_{B}f(x_1,\dots,x_k)\mathrm{d}x_1\cdots\mathrm{d}x_k.$
+		\end{enumerate}
+	\end{defi}
+	Un vector aleatorio también tiene \textit{CDF}, conocida en este caso como función de distribución acumulativa adjunta o \textit{CDF} adjunta.
+	\begin{defi}[Función de distribución acumulativa adjunta]
+		Tome $\vec{X}=(X_1,X_2,\dots,X_k)$ como un vector aleatorio $k-$dimensional. La \textit{CDF} adjunta de $\vec{X}$ se define como
+		$$F(x_1,x_2,\dots,x_k)=P(X_1\leq x_1, X_2\leq x_2,\dots, X_k\leq x_k), \ \forall (x_1,\dots,x_k)\in\mathbb{R}^k.$$
+	\end{defi}
+	Las componentes de un vector aleatorio $\vec{X}$ son variables aleatorias, por lo que las \textit{pdf} de cada variable aleatoria $X_i$ de $\vec{X}$ se pueden derivar de la \textit{pdf} adjunta de $\vec{X}$.
+	\begin{defi}[Función de densidad de probabilidad marginal]
+		Tome $\vec{X}=(X_1,\dots,X_k)$ como un vector aleatorio $k-$dimensional. La función de densidad de probabilidad marginal de la variable aleatoria $X_i$ es
+		
+		\begin{center}
+		\begin{tabular}{cc}
+		$f_i(x_i)=\underbrace{\sum_{x_1\in\mathbb{S}_{X}}\cdots \sum_{x_k\in\mathbb{S}_{X_k}}}_{\text{quitando la suma sobre }x_i} f(x_1,\dots,x_k)$ & cuando $\vec{X}$ es discreta y\\
+		$f_i(x_i)=\underbrace{\int_{x_1\in\mathbb{S}_{X_1}}\cdots \int_{x_k\in\mathbb{S}_{X_k}}}_{\text{quitando la integral sobre }x_i} f(x_1,\dots,x_k)\prod_{n\neq i}\mathrm{d}x_n$ & cuando $\vec{X}$ es continua.
+		\end{tabular}
+		\end{center}
+	\end{defi}
+	También se puede definir la distribución condicional dada una variable aleatoria de forma similar al caso de la probabilidad condicional.
+	\begin{defi}[Función de densidad de probabilidad condicional]
+		Tome $\vec{X}(X_1,\dots,X_k)$ como un vector aleatorio $k-$dimensional. Para un valor fijo de $x_i$, donde $f_i(x_i)>0$, la función de densidad de probabilidad condicional para $\vec{Y}|X_i$; donde $\vec{Y}$ es un vector aleatorio $(k-1)-$dimensional con todas las variables aleatorias de $\vec{X}$, a excepción de $X_i$; es
+		$$f(\vec{y}|x_i)=\frac{f(x_1,\dots,x_k)}{f_i(x_i)},$$
+		donde $\vec{y}\in\mathbb{S}_{\vec{Y}}.$
+	\end{defi}
