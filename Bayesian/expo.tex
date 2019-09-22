@@ -210,6 +210,7 @@
 				\end{enumerate}
 			\end{enumerate}
 		\end{proof}
+		
 		\begin{proof}
 			\begin{enumerate}
 				\setcounter{enumi}{1}
@@ -218,6 +219,9 @@
 				\item $P(A_1\cap\cdots\cap A_n)=\frac{P(A_1\cap\cdots\cap A_n)}{P(A_1\cap\cdots\cap A_{n-1})}\frac{P(A_1\cap\cdots\cap A_{n-1})}{P(A_1\cap\cdots\cap A_{n-2})}\cdots\frac{P(A_1\cap A_2)}{P(A_1)}P(A_1)=P(A_1)P(A_2|A_1)P(A_3|A_1\cap A_2)\cdots P(A_n|A_1\cap A_2\cap \cdots\cap A_{n-1}).$
 			\end{enumerate}
 		\end{proof}
+		\end{frame}
+		
+		\begin{frame}[allowframebreaks]{Teorema probabilidad total}
 		Los siguientes resultados son vitales para aplicaciones posteriores.
 		\begin{theo}[Teorema de probabilidad total]
 			Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$, esto es, $A_i\cap A_j=\emptyset, \forall i\neq j$ y $\bigcup_{i=1}^\infty A_i=\Omega,$ tal que $P(A_i)>0$, para todo $A_i\in\Im$. Entonces, para todo $B\in\Im$:
@@ -229,6 +233,9 @@
 			de modo que
 			$$P(B)=P\left(\bigcup_{i=1}^\infty B\cap A_i\right)=\sum_{i=1}^\infty P(B\cap A_i)=\sum_{i=1}^\infty P(B| A_i)P(A_i).$$
 		\end{proof}
+		\end{frame}
+		
+		\begin{frame}[allowframebreaks]{Regla de Bayes}
 		Como corolario del teorema anterior, se obtiene un resultado conocido como \textbf{regla de Bayes}, que constituye la base para la \textbf{teoría Bayesiana}.
 		\begin{corol}[Regla de Bayes]
 			Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$ con $P(A_i)>0$, para todo $i$; entonces, para todo $B\in\Im$ con $P(B)>0:$
@@ -238,12 +245,18 @@
 		$$P(A_i|B)=\frac{P(A_i\cap B)}{P(B)}=\frac{P(A_i)P(B|A_i)}{P(B)}=\frac{P(A_i)P(B| A_i)}{\sum_j P(B|A_j)P(A_j)}.$$
 		Con la partición $A_1=A, A_2=A^c$ se obtiene la forma usual de la regla de Bayes.
 	\end{proof}
+	\end{frame}
+	
+	\begin{frame}{Distribuciones a priori y a posteriori}
 	\begin{defi}[Distribuciones a priori y a posteriori]
 		Tome $A_1,A_2,\dots$ como una partición finita o contable de $\Omega$, con $P(A_i)>0$, para todo $i$. Si $P(B)>0$, con $B\in\Im$, entonces $\{P(A_n)\}_n$ se llama distribución a priori (antes de que $B$ ocurra), y $\{P(A_n|B)\}_n$ se llama distribución a posteriori (después de que $B$ ocurra).
 	\end{defi}
 	Algunas veces, la ocurrencia de un evento $B$ no afecta la probabilidad de un evento $A$, es decir,
 	$$P(A|B)=P(A).$$
 	En este caso, se dice que el evento $A$ es independiente del evento $B$. Esto motiva la siguiente definición.
+	\end{frame}
+	
+	\begin{frame}[allowframebreaks]{Eventos Independientes}
 	\begin{defi}[Eventos independientes]
 		Dos eventos $A$ y $B$ se dicen independientes si y sólo si
 		
@@ -251,7 +264,172 @@
 		Si esta condición no se tiene, se dice que los eventos son dependientes.
 	\end{defi}
 	\end{frame}
+	\subsection{Variables aleatorias}
+	\begin{frame}[allowframebreaks]{Variables aleatorias}
+	\begin{defi}[Variable aleatoria]
+	Tome $(\Omega, \Im, P)$ como un espacio de probabilidad. Una variable aleatoria es un mapa $X:\Omega\rightarrow \mathbb{R}$ tal que, para todo $A\in\mathbb{B}$, $X^{-1}(A)\in\Im$, donde $\mathbb{B}$ es la $\sigma$-álgebra de Borel sobre $\mathbb{R}$ ($\sigma$-álgebra más pequeña que contiene todos los intervalos de la forma $(-\infty, a]$).
 	
+		El conjunto de posibles valores de $X$ es $\mathbb{S}:=\{x\in\mathbb{R}:\exists \omega\in\Omega\text{ tal que }X(\omega)=x\}$, conocido como \textbf{soporte de la variable aleatoria }$X$.
+	\end{defi}
+	
+	Si $X$ es una variable aleatoria definida sobre un  espacio de probabilidad $(\Omega, \Im, P)$, se introduce la notación
+	$$\{X\in B\}:=\{\omega\in\Omega: X(\omega)\in B\}, \text{ con }B\in\mathbb{B}.$$
+	
+		\begin{defi}[Variable aleatoria discreta]
+		Una variable aleatoria $X$ se dice discreta cuando el soporte $\mathbb{S}$ de $X$ es un subconjunto finito o contable de $\mathbb{R}$. Para $x\in\mathbb{S}$, la función $f(x)=P(X=x)$ se llama función de densidad de probabilidad (pdf para abreviar).
+	\end{defi}
+	
+	\begin{defi}[Variable aleatoria continua]
+		Una variable aleatoria $X$ se dice continua si el soporte $\mathbb{S}$ de $X$ es la unión de uno o más intervalos y si existe una función no negativa y real $f(x)$ tal que $P(X\leq x)=\int_{-\infty}^x f(t)\mathrm{d}t.$ La función $f(x)$ se llama función de densidad de probabilidad (pdf).
+	\end{defi}
+	\vspace{2cm}
+	Algunas propiedades de la \textit{pdf} discreta son las siguientes:
+	\begin{enumerate}
+		\item $f(x)\geq0, \forall x\in\mathbb{S}$ y $f(x)=0,\forall x\not\in \mathbb{S}$.
+		\item $\sum_{x\in\mathbb{S}}f(x)=1$.
+		\item $P(X\in B)=\sum_{x\in B} f(x).$
+	\end{enumerate}
+	Análogamente, para la \textit{pdf} continua:
+	\begin{enumerate}
+		\item $f(x)\geq0, \forall x\in\mathbb{S}$ y $f(x)=0,\forall x\not\in \mathbb{S}$.
+		\item $\int_{\mathbb{S}}f(x)\mathrm{d}x=1$.
+		\item $P(X\in B)=\int_{B}f(x)\mathrm{d}x.$
+	\end{enumerate}
+	\begin{defi}[Función de distribución acumulativa]
+		La función de distribución acumulativa (CDF, para abreviar) de una variable aleatoria se define como la función $F(x)=P(X\leq x)$.
+	\end{defi}
+	El siguiente teorema resume algunas propiedades importantes de una \textit{CDF}. 
+	
+	\begin{theo}
+		Si $X$ es una variable aleatoria, con \textit{CDF} $F(x)$, entonces:
+		\begin{enumerate}
+			\item $\lim_{x\rightarrow-\infty}F(x)=0$ y $\lim_{x\rightarrow\infty} F(x)=1.$
+			\item $F(x)$ es no decreciente; esto es, $F(x)\leq F(y)$, siempre que $x\leq y$.
+			\item $F(x)$ es continua por derecha.
+			\item $P(a< X \leq b)=F(b)-F(a).$
+		\end{enumerate}
+	\end{theo}
+	
+		\begin{theo}
+		Si $X$ es una variable aleatoria discreta con \textit{CDF} $F(x)$ y soporte $\mathbb{S}=\{x_0,x_1,\dots\}$, con $x_0<x_1<\cdots$, entonces, para $x_k\in\mathbb{S}$,
+		$$f(x_k)=F(x_k)-F(x_{k-1}).$$
+	\end{theo}
+	
+	\begin{theo}
+		Para una variable aleatoria continua, $f(x)=\frac{\mathrm{d}F}{\mathrm{d}x}, \forall x\in\mathbb{R}.$
+	\end{theo}
+	\end{frame}
+	\subsection{Vectores Aleatorios}	
+	\begin{frame}[allowframebreaks]{Vectores Aleatorios}
+	\begin{defi}[Vector aleatorio]
+		Un vector aleatorio $\vec{X}=(X_1,X_2,\dots,X_k)$ es un vector $k-$dimensional, donde $X_1,\dots,X_k$ son variables aleatorias. Un vector aleatorio se dice discreto cuando cada una de las variables aleatorias que lo conforman son discretas, y continuo cuando son continuas.
+	\end{defi}
+	
+	\begin{defi}[Variable aleatoria bivariada]
+		Un vector aleatorio bidimensional $\vec{X}=(X_1,X_2)$ se llama variable aleatoria bivariada.
+	\end{defi}
+	\vspace{2cm}
+	De modo similar al caso de las variables aleatorias, los vectores aleatorios tienen \textit{pdf}, un soporte y una \textit{CDF}. El soporte de un vector aleatorio $k-$dimensional es el conjunto de valores que puede tomar, denotado por $\mathbb{S}_{\vec{X}}\subseteq\mathbb{R}^k.$
+	
+	\begin{defi}[Función de densidad de probabilidad adjunta discreta]
+		Tome $\vec{X}$ como un vector aleatorio discreto $k-$dimensional. La \textit{pdf} adjunta de $\vec{X}$ se define como
+		$$f(\vec{x}):=f(x_1,x_2,\dots,x_k)=P(X_1=x_1,X_2=x_2,\dots, X_k=x_k)$$
+		para $\vec{x}=(x_1,x_2,\dots,x_k)\in\mathbb{S}_{\vec{X}}.$
+	\end{defi}
+	\vspace{2cm}
+	La \textit{pdf} adjunta discreta tiene las siguientes propiedades:
+	\begin{enumerate}
+		\item $0\leq f(x_1,x_2,\dots,x_k)\leq1, \forall \vec{x}\in\mathbb{S}_{\vec{X}}.$
+		\item $\sum_{\vec{x}\in\mathbb{S}_{\vec{X}}}f(\vec{x})=1.$
+		\item Para cualquier subconjunto $B\subseteq \mathbb{S}_{\vec{X}},\ P(\vec{X}\in B)=\sum_{\{\vec{x}\in\mathbb{S}_{\vec{X}}:\vec{x}\in B\}}f(\vec{x}).$
+	\end{enumerate}
+	
+	\begin{defi}[Función de densidad de probabilidad adjunta continua]
+		Tome $\vec{X}$ como un vector aleatorio $k$-dimensional continuo. La \textit{pdf} continua de $\vec{X}$ se define como cualquier función no negativa $f(\vec{x})$ que satisfaga las siguientes propiedades:
+		\begin{enumerate}
+			\item $f(x_1,\dots,x_k)>0, \forall \vec{x}\in\mathbb{S}_{\vec{X}}.$
+			\item $\int_{\mathbb{S}_{\vec{X}}} f(x_1,\dots,x_k)\mathrm{d}x_1\cdots\mathrm{d}x_k=1.$
+			\item Para cualquier subconjunto $B\subset\mathbb{S}_{\vec{X}},\ P(\vec{X}\in B)=\int_{B}f(x_1,\dots,x_k)\mathrm{d}x_1\cdots\mathrm{d}x_k.$
+		\end{enumerate}
+	\end{defi}
+	
+	\begin{defi}[Función de distribución acumulativa adjunta]
+		Tome $\vec{X}=(X_1,X_2,\dots,X_k)$ como un vector aleatorio $k-$dimensional. La \textit{CDF} adjunta de $\vec{X}$ se define como
+		$$F(x_1,x_2,\dots,x_k)=P(X_1\leq x_1, X_2\leq x_2,\dots, X_k\leq x_k)$$ $$\ \forall (x_1,\dots,x_k)\in\mathbb{R}^k.$$
+	\end{defi}
+	
+	\begin{defi}[Función de densidad de probabilidad marginal]
+		Tome $\vec{X}=(X_1,\dots,X_k)$ como un vector aleatorio $k-$dimensional. La función de densidad de probabilidad marginal de la variable aleatoria $X_i$ es, para los casos discreto y continuo:
+		
+
+		$$f_i(x_i)=\underbrace{\sum_{x_1\in\mathbb{S}_{X}}\cdots \sum_{x_k\in\mathbb{S}_{X_k}}}_{\text{quitando la suma sobre }x_i} f(x_1,\dots,x_k)$$
+		$$f_i(x_i)=\underbrace{\int_{x_1\in\mathbb{S}_{X_1}}\cdots \int_{x_k\in\mathbb{S}_{X_k}}}_{\text{quitando la integral sobre }x_i} f(x_1,\dots,x_k)\prod_{n\neq i}\mathrm{d}x_n$$ 
+	\end{defi}
+	
+	\begin{defi}[Función de densidad de probabilidad condicional]
+		Tome $\vec{X}(X_1,\dots,X_k)$ como un vector aleatorio $k-$dimensional. Para un valor fijo de $x_i$, donde $f_i(x_i)>0$, la función de densidad de probabilidad condicional para $\vec{Y}|X_i$; donde $\vec{Y}$ es un vector aleatorio $(k-1)-$dimensional con todas las variables aleatorias de $\vec{X}$, a excepción de $X_i$; es
+		$$f(\vec{y}|x_i)=\frac{f(x_1,\dots,x_k)}{f_i(x_i)},$$
+		donde $\vec{y}\in\mathbb{S}_{\vec{Y}}.$
+	\end{defi}
+	\begin{defi}[Colección independiente de variables aleatorias]
+	Una colección de variables aleatorias $\{ X_1,X_2,\dots, X_k\}$ se dice independiente cuando
+	$$F(x_1,x_2,\dots,x_k)=\prod_{i=1}^k F_i(x_i), \forall\vec{x}\in\mathbb{R}^k,$$
+	donde $F_i(x_i)$ es la \textit{CDF} marginal de la variable aleatoria $X_i$ (determinada a partir de la \textit{pdf} marginal: $F_i(x_i):=P(X_i\leq x_i)$).
+	\end{defi}
+	
+	\begin{defi}[Colección independiente de variables aleatorias]
+	También se puede definir la independencia entre variables aleatorias usando las pdf, en el sentido de que la misma colección de variables aleatorias se dice independiente cuando
+	$$f(x_1,x_2,\dots,x_k)=\prod_{i=1}^k f_i(x_i), \forall\vec{x}\in\mathbb{S}_{\vec{X}},$$
+	donde $f_i(x_i)$ es la pdf marginal asociada a la variable aleatoria $X_i$.
+	
+	\end{defi}
+	
+		\begin{defi}[Colección de variables aleatorias independientes idénticamente distribuidas]
+		Una colección de variables aleatorias $\{ X_1,X_2,\dots, X_k\}$ se dice independiente e idénticamente distribuidas (iid, para abreviar) si y sólo si $X_1,X_2,\dots,X_k$ son variables aleatorias independientes y la pdf de cada variable aleatoria es idéntica.
+	\end{defi}
+	
+	\end{frame}
+	\section{Función de Verosimilitud}
+	\begin{frame}{Estimación paramétrica}
+	\begin{enumerate}
+			\item Un modelo probabilístico $f(x,\theta)$, especificado con los valores de los parámetros desconocidos.
+			\item Un conjunto de posibles valores de $\theta$ bajo consideración, llamado el espacio de parámetros, denotado por $\Theta$.
+			\item Una muestra aleatoria de $n$ observaciones del modelo probabilístico.
+			\item Un conjunto de estimadores puntuales para los valores de los parámetros desconocidos, basados en la información contenida en la muestra aleatoria.
+			\item Las propiedades específicas de los estimadores que permiten evaluar la precisión y eficiencia del estimador.
+		\end{enumerate}
+	\end{frame}
+	
+	\begin{frame}[allowframebreaks]{Muestra y Verosimilitud}
+	\begin{defi}[Muestra]
+			Una colección de variables aleatorias $X_1,\dots,X_k$ se llama muestra de tamaño $n$. Una muestra de $n$ variables aleatorias independientes $X_1,\dots,X_n$ se llama muestra aleatoria.
+		\end{defi}
+		
+		\begin{defi}[Función de verosimilitud]
+			Para una muestra $X_1,\dots,X_n$, la función de verosimilitud $L(\theta|\vec{X})$ es la pdf adjunta de $\vec{X}=(X_1,\dots,X_n)$, es decir,
+$$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$			
+			La función logarítmica de verosimilitud $\ell(\theta)$ se define como el logaritmo de la función de verosimilitud.
+		\end{defi}
+		
+		Cuando $X_1,\dots,X_n$ es una muestra de variables aleatorias \textit{iid}, se puede escribir la función de verosimilitud como
+		$$L(\vec{\theta})=\prod_{i=1}^n f(x_i;\vec{\theta}),$$
+		
+		donde el carácter vectorial de $\vec{\theta}$ permite que las \textit{pdf} marginales de cada variable aleatoria puedan depender de varios parámetros a la vez.
+		\end{frame}
+		\begin{frame}[allowframebreaks]
+		
+		\begin{block}{Ley de verosimilitud}
+		Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x;\vec{\theta})$ y espacio de parámetros $\Theta$. Para $\vec{\theta}\in\Theta$, mientras mayor sea el valor de $L(\vec{\theta})$, el modelo probabilístico con parámetro $\vec{\theta}$ se ajusta más a los datos observados. Entonces, el grado con el cual la información de la muestra da soporte a un parámetro $\vec{\theta}_0\in\Theta$, en comparación con otro parámetro $\vec{\theta}_1\in\Theta$ es igual a la razón entre sus verosimilitudes
+		$$\Lambda(\vec{\theta}_0,\vec{\theta}_1)=\frac{L(\vec{\theta}_0)}{L(\vec{\theta}_1)}.$$
+		\end{block}
+		
+		\begin{defi}[Función de Score]
+			Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias con función de verosimilitud $L(\vec{\theta})$, para $\vec{\theta}\in\Theta$. Si la función de verosimilitud logarítmica $\ell(\vec{\theta})$ es diferenciable, la función de Score se define como
+			
+			$$\mathop{Sc}(\vec{\theta})=\nabla_{\vec{\theta}}\ \ell(\theta),$$
+			de tal modo que una condición necesaria para que $\vec{\theta}\in\Theta$ sea un máximo es que $\mathop{Sc}(\theta)=\vec{0}.$
+		\end{defi}
+	\end{frame}
 	\section{Referencias}
 	\begin{frame}
 	\frametitle{Referencias}
