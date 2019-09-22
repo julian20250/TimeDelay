@@ -221,7 +221,7 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 	Si $X$ es una variable aleatoria definida sobre un  espacio de probabilidad $(\Omega, \Im, P)$, se introduce la notación
 	$$\{X\in B\}:=\{\omega\in\Omega: X(\omega)\in B\}, \text{ con }B\in\mathbb{B}.$$
 	\begin{defi}[Variable aleatoria discreta]
-		Una variable aleatoria $X$ se dice discreta cuando el soporte $\mathbb{S}$ de $X$ es un subconjunto finito o contable de $\mathbb{R}$. Para $x\in\mathbb{S}$, la función $f(x)=P(X=x):=P($ se llama función de densidad de probabilidad (pdf para abreviar).
+		Una variable aleatoria $X$ se dice discreta cuando el soporte $\mathbb{S}$ de $X$ es un subconjunto finito o contable de $\mathbb{R}$. Para $x\in\mathbb{S}$, la función $f(x)=P(X=x)$ se llama función de densidad de probabilidad (pdf para abreviar).
 	\end{defi}
 	
 	\begin{defi}[Variable aleatoria continua]
@@ -333,7 +333,7 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 			\item Para cualquier subconjunto $B\subset\mathbb{S}_{\vec{X}},\ P(\vec{X}\in B)=\int_{B}f(x_1,\dots,x_k)\mathrm{d}x_1\cdots\mathrm{d}x_k.$
 		\end{enumerate}
 	\end{defi}
-	Un vector aleatorio también tiene \textit{CDF}, conocida en este caso como función de distribución acumulativa adjunta o \textit{CDF} adjunta.
+	
 	\begin{defi}[Función de distribución acumulativa adjunta]
 		Tome $\vec{X}=(X_1,X_2,\dots,X_k)$ como un vector aleatorio $k-$dimensional. La \textit{CDF} adjunta de $\vec{X}$ se define como
 		$$F(x_1,x_2,\dots,x_k)=P(X_1\leq x_1, X_2\leq x_2,\dots, X_k\leq x_k), \ \forall (x_1,\dots,x_k)\in\mathbb{R}^k.$$
@@ -355,3 +355,59 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 		$$f(\vec{y}|x_i)=\frac{f(x_1,\dots,x_k)}{f_i(x_i)},$$
 		donde $\vec{y}\in\mathbb{S}_{\vec{Y}}.$
 	\end{defi}
+	
+	Esta última definición motiva, como en el caso de los eventos independientes, el concepto de variables aleatorias independientes.
+	
+	\begin{defi}[Colección independiente de variables aleatorias]
+	Una colección de variables aleatorias $\{ X_1,X_2,\dots, X_k\}$ se dice independiente cuando
+	$$F(x_1,x_2,\dots,x_k)=\prod_{i=1}^k F_i(x_i), \forall\vec{x}\in\mathbb{R}^k,$$
+	donde $F_i(x_i)$ es la \textit{CDF} marginal de la variable aleatoria $X_i$ (determinada a partir de la \textit{pdf} marginal: $F_i(x_i):=P(X_i\leq x_i)$).
+	
+	También se puede definir la independencia entre variables aleatorias usando las pdf, en el sentido de que la misma colección de variables aleatorias se dice independiente cuando
+	$$f(x_1,x_2,\dots,x_k)=\prod_{i=1}^k f_i(x_i), \forall\vec{x}\in\mathbb{S}_{\vec{X}},$$
+	donde $f_i(x_i)$ es la pdf marginal asociada a la variable aleatoria $X_i$.
+	
+	\end{defi}
+	
+	\begin{defi}[Colección de variables aleatorias independientes idénticamente distribuidas]
+		Una colección de variables aleatorias $\{ X_1,X_2,\dots, X_k\}$ se dice independiente e idénticamente distribuidas (iid, para abreviar) si y sólo si $X_1,X_2,\dots,X_k$ son variables aleatorias independientes y la pdf de cada variable aleatoria es idéntica.
+	\end{defi}
+	
+	\section{Función de verosimilitud}
+		En la realidad, uno se encuentra en presencia de un experimento aleatorio del cual desconoce su función de densidad de probabilidad, dependiendo de las variables aleatorias asociadas a este. A través de una muestra lo suficientemente amplia, se desearía es reconstruir el modelo probabilístico que generó dicha muestra. Sin embargo, el problema resulta casi imposible de resolver sin especificar la forma de la función de densidad de probabilidad, por lo que se suele hacer es escoger una \textit{pdf} con ciertos parámetros a determinar, buscando el mejor ajuste posible respecto a la muestra. Las componentes de esta estimación paramétrica son las siguientes \cite{rossi_2018}
+		\begin{enumerate}
+			\item Un modelo probabilístico $f(x,\theta)$, especificado con los valores de los parámetros desconocidos.
+			\item Un conjunto de posibles valores de $\theta$ bajo consideración, llamado el espacio de parámetros, denotado por $\Theta$.
+			\item Una muestra aleatoria de $n$ observaciones del modelo probabilístico.
+			\item Un conjunto de estimadores puntuales para los valores de los parámetros desconocidos, basados en la información contenida en la muestra aleatoria.
+			\item Las propiedades específicas de los estimadores que permiten evaluar la precisión y eficiencia del estimador.
+		\end{enumerate}
+		A continuación se define lo que se entenderá por muestra.
+		\begin{defi}[Muestra]
+			Una colección de variables aleatorias $X_1,\dots,X_k$ se llama muestra de tamaño $n$. Una muestra de $n$ variables aleatorias independientes $X_1,\dots,X_n$ se llama muestra aleatoria.
+		\end{defi}
+		Con el concepto de muestra se puede introducir una de las herramientas más usadas para la estimación de los parámetros de un modelo probabilístico a través de una muestra dada: la función de verosimilitud.
+		\begin{defi}[Función de verosimilitud]
+			Para una muestra $X_1,\dots,X_n$, la función de verosimilitud $L(\theta|\vec{X})$ es la pdf adjunta de $\vec{X}=(X_1,\dots,X_n)$, es decir,
+$$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$			
+			La función logarítmica de verosimilitud $\ell(\theta)$ se define como el logaritmo de la función de verosimilitud.
+		\end{defi}
+		Cuando $X_1,\dots,X_n$ es una muestra de variables aleatorias \textit{iid}, se puede escribir la función de verosimilitud como
+		$$L(\vec{\theta})=\prod_{i=1}^n f(x_i;\vec{\theta}),$$
+		donde el carácter vectorial de $\vec{\theta}$ permite que las \textit{pdf} marginales de cada variable aleatoria puedan depender de varios parámetros a la vez.
+		
+		En un modelo paramétrico $f(\vec{x};\vec{\theta})$, la función de verosimilitud conecta los datos observados con dicho modelo, de tal modo que se puede hacer inferencias estadísticas sobre $\vec{\theta}$. Su importancia se resume en la ley de verosimilitud.
+		
+		\textbf{Ley de verosimilitud:} Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x;\vec{\theta})$ y espacio de parámetros $\Theta$. Para $\vec{\theta}\in\Theta$, mientras mayor sea el valor de $L(\vec{\theta})$, el modelo probabilístico con parámetro $\vec{\theta}$ se ajusta más a los datos observados. Entonces, el grado con el cual la información de la muestra da soporte a un parámetro $\vec{\theta}_0\in\Theta$, en comparación con otro parámetro $\vec{\theta}_1\in\Theta$ es igual a la razón entre sus verosimilitudes
+		$$\Lambda(\vec{\theta}_0,\vec{\theta}_1)=\frac{L(\vec{\theta}_0)}{L(\vec{\theta}_1)}.$$
+		
+		En particular, la información en la muestra coincide mejor con $\vec{\theta}_1$ que con $\vec{\theta}_0$ cuando $\Lambda<1$, y viceversa cuando $\Lambda>1.$
+		
+		Para encontrar el parámetro $\vec{\theta}$ para el cual la función de verosimilitud alcanza su mayor valor se introduce la función de Score.
+		
+		\begin{defi}[Función de Score]
+			Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias con función de verosimilitud $L(\vec{\theta})$, para $\vec{\theta}\in\Theta$. Si la función de verosimilitud logarítmica $\ell(\vec{\theta})$ es diferenciable, la función de Score se define como
+			
+			$$\mathop{Sc}(\vec{\theta})=\nabla_{\vec{\theta}}\ \ell(\theta),$$
+			de tal modo que una condición necesaria para que $\vec{\theta}\in\Theta$ sea un máximo es que $\mathop{Sc}(\theta)=\vec{0}.$
+		\end{defi}
