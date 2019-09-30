@@ -374,6 +374,7 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 	\end{defi}
 	
 	\section{Función de verosimilitud}
+	\subsection{Estadística}
 		En la realidad, uno se encuentra en presencia de un experimento aleatorio del cual desconoce su función de densidad de probabilidad, dependiendo de las variables aleatorias asociadas a este. A través de una muestra lo suficientemente amplia, se desearía es reconstruir el modelo probabilístico que generó dicha muestra. Sin embargo, el problema resulta casi imposible de resolver sin especificar la forma de la función de densidad de probabilidad, por lo que se suele hacer es escoger una \textit{pdf} con ciertos parámetros a determinar, buscando el mejor ajuste posible respecto a la muestra. Las componentes de esta estimación paramétrica son las siguientes \cite{rossi_2018}
 		\begin{enumerate}
 			\item Un modelo probabilístico $f(x,\theta)$, especificado con los valores de los parámetros desconocidos.
@@ -386,16 +387,67 @@ Aplicando el teorema anterior de forma inductiva, para algunos eventos $A_1,A_2,
 		\begin{defi}[Muestra]
 			Una colección de variables aleatorias $X_1,\dots,X_k$ se llama muestra de tamaño $n$. Una muestra de $n$ variables aleatorias independientes $X_1,\dots,X_n$ se llama muestra aleatoria.
 		\end{defi}
-		Con el concepto de muestra se puede introducir una de las herramientas más usadas para la estimación de los parámetros de un modelo probabilístico a través de una muestra dada: la función de verosimilitud.
+%Inicio nueva parte presentación =========================		
+		Con una muestra dada, se pueden estimar algunos parámetros de una población. Esta estimación se conoce como estadística.
+		
+		\begin{defi}[Estadística y estimador]
+			Dada una muestra $X_1,X_2,\dots,X_n$, una estadística $T=T(X_1,\dots,X_n)$ es una función de la muestra que no depende de ningún otro parámetro desconocido. Un estimador es una estadística que se usa para determinar una cantidad desconocida, y el estimado es el valor observado del estimador (evaluando la función en la muestra).
+		\end{defi}
+		
+		El comportamiento de un estimador y su efectividad para estimar un parámetro se puede medir a través de la distribución de probabilidad del estimador, conocida como distribución muestral.
+		
+		\begin{defi}[Distribución muestral]
+			Para una muestra $X_1,\dots, X_n$ y una estadística $T=T(X_1,\dots,X_n)$, la distribución muestral de la estadística $T$ es la distribución de probabilidad asociada a la variable aleatoria $T$. La pdf de la distribución muestral se denota como $f_T(t;\theta)$.
+		
+		\end{defi}
+		Antes de continuar, es necesario definir el concepto de valor esperado o media, requerido para medir la eficiencia de un estimador.
+		
+		\begin{defi}[Valor esperado]
+			Tome $X$ como una variable aleatoria con pdf $f(x)$ en $\mathbb{S}_X$. El valor esperado de la variable aleatoria $X$, denotado por $E(X)$, se define como 
+			$$E(X)=\sum_{x\in\mathbb{S}_X} xf(x)$$
+			cuando $X$ es una variable aleatoria discreta, y como
+			$$E(X)=\int_{x\in\mathbb{S}_X} xf(x)\mathrm{d}x$$
+			cuando $X$ es una variable aleatoria continua.
+		\end{defi}
+Cuando una estadística $T$ es usada para estimar un parámetro $\theta$, se espera que la media de dicha estadística sea cercano a $\theta$. Cuando se da la igualdad, $T$ se llama estimador imparcial del parámetro $\theta$.
+
+	\begin{defi}[Estimador imparcial]
+		Una estadística $T$ se dice estimador imparcial de un parámetro $\theta$ cuando $E(T)=\theta$, $\forall \theta\in\Theta$. Una estadística se conoce como estimador parcial de $\theta$ cuando $E(T)\neq \theta$, y la parcialidad de una estadística $T$ para estimar un parámetro $\theta$ se define como  $\mathop{Bias}(T;\theta)=E(T)-\theta.$ 
+	\end{defi}
+	
+	En algunos casos, cuando el estimador es parcial, se puede despreciar la parcialidad tomando una muestra lo suficientemente grande. Un estimador cuya parcialidad va a cero cuando $n\rightarrow\infty$ se conoce como estimador asintóticamente imparcial.
+	
+	\begin{defi}[Estimador asintóticamente imparcial]
+		Una estadística $T_n=T(X_1,\dots,X_n)$ se conoce como estimador asintóticamente imparcial de un parámetro $\theta$ cuando $$\lim_{n\rightarrow\infty}\mathop{Bias}(T_n;\theta)=0.$$
+	\end{defi}
+	
+	A pesar de que es importante que un estimador se aproxime a su respectivo parámetro, el valor esperado (la media) no mide la precisión ni la exactitud del estimador $T$. Para medir la precisión se introduce el \textbf{error estándar de una estadística} como la desviación estándar de la misma, es decir, 
+	$$\mathop{SE}(T):=\sqrt{\mathop{E}((T-E(T))^2)}:=\sqrt{\mathop{Var}(T)}.$$
+	
+	Por otro lado, para medir la exactitud de un estimador $T$ usado para estimar un parámetro $\theta$ se introduce el \textbf{error cuadrado medio} asociado a $T$.
+	$$\mathop{MSE(T;\theta)}=\mathop{E}((T-\theta)^2).$$
+	
+	Cuando se realiza una estimación paramétrica, la información acerca del parámetro desconocido $\theta\in\Theta$ está contenida en una muestra aleatoria de tamaño $n$ seleccionada a partir de una \textit{pdf} común $f(x;\theta)$. Una estadística que contiene toda la información relevante acerca de $\theta$ en una muestra se conoce como estadística suficiente \cite{rossi_2018}.
+	
+	\begin{defi}[Estadística suficiente]
+		Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x;\theta)$, para $\theta\in\Theta\subseteq\mathbb{R}^d$. Un vector de estadísticas $\vec{S}(\vec{X}):=(S_1(\vec{X}),\dots, S_k(\vec{X}))$ se dice que es una estadística suficiente $k-$dimensional para un parámetro $\theta$ si y sólo si la distribución condicional de $\vec{X}$ dado $S=s$ no depende de $\theta$, para ningún valor de $s$.
+	\end{defi}
+%=============================================
+		
+		Esta última definición no es útil en la práctica para determinar la suficiencia de una estadística. Para esta labor se introduce la función de verosimilitud, que junto con el teorema de factorización de Neyman-Fisher puede determinar si una estadística es suficiente.
 		\begin{defi}[Función de verosimilitud]
 			Para una muestra $X_1,\dots,X_n$, la función de verosimilitud $L(\theta|\vec{X})$ es la pdf adjunta de $\vec{X}=(X_1,\dots,X_n)$, es decir,
 $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$			
 			La función logarítmica de verosimilitud $\ell(\theta)$ se define como el logaritmo de la función de verosimilitud.
 		\end{defi}
 		Cuando $X_1,\dots,X_n$ es una muestra de variables aleatorias \textit{iid}, se puede escribir la función de verosimilitud como
-		$$L(\vec{\theta})=\prod_{i=1}^n f(x_i;\vec{\theta}),$$
-		donde el carácter vectorial de $\vec{\theta}$ permite que las \textit{pdf} marginales de cada variable aleatoria puedan depender de varios parámetros a la vez.
+		$$L(\theta)=\prod_{i=1}^n f(x_i;\theta),$$
 		
+		\begin{theo}[Teorema de factorización de Neyman-Fisher]
+			Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias iid con pdf $f(x;\theta)$, y espacio de parámetros $\Theta$. Una estadística $S(\vec{X})$ es suficiente para $\theta$ si y sólo si $L(\theta)$ se puede factorizar como
+			$$L(\theta)=g(S(\vec{x});\theta)h(\vec{x}),$$
+			donde $g(S(\vec{x});\theta)$ no depende de $\vec{x}=(x_1,\dots,x_n)$, excepto a través de $S(\vec{x})$, y $h(\vec{x})$ no depende de $\theta$.
+		\end{theo}
 		En un modelo paramétrico $f(\vec{x};\vec{\theta})$, la función de verosimilitud conecta los datos observados con dicho modelo, de tal modo que se puede hacer inferencias estadísticas sobre $\vec{\theta}$. Su importancia se resume en la ley de verosimilitud.
 		
 		\textbf{Ley de verosimilitud:} Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x;\vec{\theta})$ y espacio de parámetros $\Theta$. Para $\vec{\theta}\in\Theta$, mientras mayor sea el valor de $L(\vec{\theta})$, el modelo probabilístico con parámetro $\vec{\theta}$ se ajusta más a los datos observados. Entonces, el grado con el cual la información de la muestra da soporte a un parámetro $\vec{\theta}_0\in\Theta$, en comparación con otro parámetro $\vec{\theta}_1\in\Theta$ es igual a la razón entre sus verosimilitudes
@@ -411,3 +463,6 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 			$$\mathop{Sc}(\vec{\theta})=\nabla_{\vec{\theta}}\ \ell(\theta),$$
 			de tal modo que una condición necesaria para que $\vec{\theta}\in\Theta$ sea un máximo es que $\mathop{Sc}(\theta)=\vec{0}.$
 		\end{defi}
+		
+		\subsection{Estimación bayesiana}
+		
