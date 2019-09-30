@@ -390,6 +390,7 @@
 	
 	\end{frame}
 	\section{Función de Verosimilitud}
+	\subsection{Estadística}
 	\begin{frame}{Estimación paramétrica}
 	\begin{enumerate}
 			\item Un modelo probabilístico $f(x,\theta)$, especificado con los valores de los parámetros desconocidos.
@@ -400,11 +401,48 @@
 		\end{enumerate}
 	\end{frame}
 	
-	\begin{frame}[allowframebreaks]{Muestra y Verosimilitud}
+	\begin{frame}[allowframebreaks]{Muestra y Estadística}
 	\begin{defi}[Muestra]
 			Una colección de variables aleatorias $X_1,\dots,X_k$ se llama muestra de tamaño $n$. Una muestra de $n$ variables aleatorias independientes $X_1,\dots,X_n$ se llama muestra aleatoria.
 		\end{defi}
 		
+		\begin{defi}[Estadística y estimador]
+			Dada una muestra $X_1,X_2,\dots,X_n$, una estadística $T=T(X_1,\dots,X_n)$ es una función de la muestra que no depende de ningún otro parámetro desconocido. Un estimador es una estadística que se usa para determinar una cantidad desconocida, y el estimado es el valor observado del estimador (evaluando la función en la muestra).
+		\end{defi}
+		
+		\begin{defi}[Distribución muestral]
+			Para una muestra $X_1,\dots, X_n$ y una estadística $T=T(X_1,\dots,X_n)$, la distribución muestral de la estadística $T$ es la distribución de probabilidad asociada a la variable aleatoria $T$. La pdf de la distribución muestral se denota como $f_T(t;\theta)$.
+		
+		\end{defi}
+		
+		\begin{defi}[Valor esperado]
+			Tome $X$ como una variable aleatoria con pdf $f(x)$ en $\mathbb{S}_X$. El valor esperado de la variable aleatoria $X$, denotado por $E(X)$, se define como 
+			$$E(X)=\sum_{x\in\mathbb{S}_X} xf(x)$$
+			cuando $X$ es una variable aleatoria discreta, y como
+			$$E(X)=\int_{x\in\mathbb{S}_X} xf(x)\mathrm{d}x$$
+			cuando $X$ es una variable aleatoria continua.
+		\end{defi}
+		
+		\begin{defi}[Estimador imparcial]
+		Una estadística $T$ se dice estimador imparcial de un parámetro $\theta$ cuando $E(T)=\theta$, $\forall \theta\in\Theta$. Una estadística se conoce como estimador parcial de $\theta$ cuando $E(T)\neq \theta$, y la parcialidad de una estadística $T$ para estimar un parámetro $\theta$ se define como  $\mathop{Bias}(T;\theta)=E(T)-\theta.$ 
+	\end{defi}
+	
+	\begin{defi}[Estimador asintóticamente imparcial]
+		Una estadística $T_n=T(X_1,\dots,X_n)$ se conoce como estimador asintóticamente imparcial de un parámetro $\theta$ cuando $$\lim_{n\rightarrow\infty}\mathop{Bias}(T_n;\theta)=0.$$
+	\end{defi}
+	
+	Algunas variables útiles para determinar la precisión y exactitud del estimador son las siguientes:
+	
+	$$\mathop{SE}(T):=\sqrt{\mathop{E}((T-E(T))^2)}:=\sqrt{\mathop{Var}(T)}.$$
+	
+	$$\mathop{MSE(T;\theta)}=\mathop{E}((T-\theta)^2).$$
+	
+	Una estadística que contiene toda la información relevante acerca de $\theta$ en una muestra se conoce como estadística suficiente.
+	
+	\begin{defi}[Estadística suficiente]
+		Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x;\theta)$, para $\theta\in\Theta\subseteq\mathbb{R}^d$. Un vector de estadísticas $\vec{S}(\vec{X}):=(S_1(\vec{X}),\dots, S_k(\vec{X}))$ se dice que es una estadística suficiente $k-$dimensional para un parámetro $\theta$ si y sólo si la distribución condicional de $\vec{X}$ dado $S=s$ no depende de $\theta$, para ningún valor de $s$.
+	\end{defi}
+		%=================================
 		\begin{defi}[Función de verosimilitud]
 			Para una muestra $X_1,\dots,X_n$, la función de verosimilitud $L(\theta|\vec{X})$ es la pdf adjunta de $\vec{X}=(X_1,\dots,X_n)$, es decir,
 $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$			
@@ -412,9 +450,14 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 		\end{defi}
 		
 		Cuando $X_1,\dots,X_n$ es una muestra de variables aleatorias \textit{iid}, se puede escribir la función de verosimilitud como
-		$$L(\vec{\theta})=\prod_{i=1}^n f(x_i;\vec{\theta}),$$
+		$$L(\theta)=\prod_{i=1}^n f(x_i;\theta).$$
 		
-		donde el carácter vectorial de $\vec{\theta}$ permite que las \textit{pdf} marginales de cada variable aleatoria puedan depender de varios parámetros a la vez.
+		\begin{theo}[Teorema de factorización de Neyman-Fisher]
+			Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias iid con pdf $f(x;\theta)$, y espacio de parámetros $\Theta$. Una estadística $S(\vec{X})$ es suficiente para $\theta$ si y sólo si $L(\theta)$ se puede factorizar como
+			$$L(\theta)=g(S(\vec{x});\theta)h(\vec{x}),$$
+			donde $g(S(\vec{x});\theta)$ no depende de $\vec{x}=(x_1,\dots,x_n)$, excepto a través de $S(\vec{x})$, y $h(\vec{x})$ no depende de $\theta$.
+		\end{theo}
+		
 		\end{frame}
 		\begin{frame}[allowframebreaks]
 		
@@ -429,6 +472,30 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 			$$\mathop{Sc}(\vec{\theta})=\nabla_{\vec{\theta}}\ \ell(\theta),$$
 			de tal modo que una condición necesaria para que $\vec{\theta}\in\Theta$ sea un máximo es que $\mathop{Sc}(\theta)=\vec{0}.$
 		\end{defi}
+	\end{frame}
+	
+	\subsection{Estimación bayesiana}
+	
+	\begin{frame}[allowframebreaks]{Estimación bayesiana}
+		En la estimación paramétrica puntual bayesiana, el parámetro $\theta$ se trata como una variable aleatoria, con su propia \textit{pdf} $\pi(\theta;\lambda)$.
+		
+		Las inferencias de $\theta$ en la aproximación bayesiana están basadas en la distribución de $\theta$ dados los valores observados de una muestra aleatoria $\vec{x}=(x_1,\dots,x_n)$, llamada distribución posterior, y denotada por $f(\theta | \vec{x})$.
+		
+		Usando el teorema de Bayes y el teorema de la probabilidad total, en el caso de que $\theta$ es una variable aleatoria continua,
+		
+		$$f(\theta | \vec{x})=\frac{f(\vec{x},\theta;\lambda)}{f_{\vec{X}}(\vec{x})}=\frac{f(\vec{x}|\theta)\pi(\theta;\lambda)}{\int_{\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta;\lambda)\mathrm{d}\theta}.$$
+		
+		De modo similar, cuando $\theta$ es una variable aleatoria discreta,
+		
+		$$f(\theta|\vec{x})=\frac{f(\vec{x}|\theta)\pi(\theta;\lambda)}{\sum_{\theta\in\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta;\lambda)}.$$
+		
+		La distribución posterior combina la información disponible de $\theta$ en la distribución previa y la función de verosimilitud para producir una distribución actualizada que contiene toda la información disponible de $\theta$.
+		
+El siguiente teorema indica que la distribución posterior depende de la muestra $\vec{x}$ sólo bajo una estadística suficiente para $\theta$.
+		
+		\begin{theo}
+			Si $X_1,\dots,X_n$ es una muestra de variables independientes iid con pdf común $f(x|\theta)$, $S$ es una estadística suficiente para $\theta$, y $\pi(\theta;\lambda)$ una distribución previa para $\theta$, entonces la distribución posterior de $\theta$ dado $\vec{X}$ depende de la muestra sólo a través de una estadística suficiente $S$.
+		\end{theo}
 	\end{frame}
 	\section{Referencias}
 	\begin{frame}

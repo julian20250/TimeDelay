@@ -466,3 +466,33 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 		
 		\subsection{Estimación bayesiana}
 		
+		En la estimación paramétrica puntual bayesiana, el parámetro $\theta$ se trata como una variable aleatoria, con su propia \textit{pdf} $\pi(\theta;\lambda)$. Esta distribución recibe el nombre de distribución previa y $\lambda$ se llama hiperparámetro de la distribución previa. Cuando $\theta$ es una variable aleatoria, el modelo paramétrico $f(x;\theta)$ que genera la muestra aleatoria es la distribución condicional de $X$ dado $\theta$, por lo que la \textit{pdf} de $X$ se denotará como $f(x|\theta)$. 
+		
+		Las inferencias de $\theta$ en la aproximación bayesiana están basadas en la distribución de $\theta$ dados los valores observados de una muestra aleatoria $\vec{x}=(x_1,\dots,x_n)$, llamada distribución posterior, y denotada por $f(\theta | \vec{x})$ \cite{rossi_2018}. 		
+		
+		Usando el teorema de Bayes y el teorema de la probabilidad total, en el caso de que $\theta$ es una variable aleatoria continua,
+		
+		$$f(\theta | \vec{x})=\frac{f(\vec{x},\theta;\lambda)}{f_{\vec{X}}(\vec{x})}=\frac{f(\vec{x}|\theta)\pi(\theta;\lambda)}{\int_{\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta;\lambda)\mathrm{d}\theta}.$$
+		
+		De modo similar, cuando $\theta$ es una variable aleatoria discreta,
+		
+		$$f(\theta|\vec{x})=\frac{f(\vec{x}|\theta)\pi(\theta;\lambda)}{\sum_{\theta\in\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta;\lambda)}.$$
+		
+		La distribución posterior combina la información disponible de $\theta$ en la distribución previa y la función de verosimilitud para producir una distribución actualizada que contiene toda la información disponible de $\theta$.
+		
+		El siguiente teorema indica que la distribución posterior depende de la muestra $\vec{x}$ sólo bajo una estadística suficiente para $\theta$.
+		
+		\begin{theo}
+			Si $X_1,\dots,X_n$ es una muestra de variables independientes iid con pdf común $f(x|\theta)$, $S$ es una estadística suficiente para $\theta$, y $\pi(\theta;\lambda)$ una distribución previa para $\theta$, entonces la distribución posterior de $\theta$ dado $\vec{X}$ depende de la muestra sólo a través de una estadística suficiente $S$.
+		\end{theo}
+		
+		\begin{proof}
+		La prueba se hará únicamente para el una distribución previa discreta, puesto que en el caso continuo la prueba es similar, reemplazando la sumatoria por la integral.
+		
+		Tome $X_1,\dots,X_n$ como una muestra de variables aleatorias \textit{iid} con \textit{pdf} común $f(x|\theta)$, $S$ como una estadística suficiente para $\theta$, y $\pi(\theta;\lambda)$ como la distribución previa de $\theta$. Entonces, como $S$ es suficiente para $\theta$, por el teorema de factorización de Fisher-Neyman, la distribución adjunta de $X_1,\dots,X_n$ puede ser factorizada como $f(\vec{x}|\theta)=f(S;\theta)h(\vec{x})$, para algunas funciones $g$ y $h$.
+		
+		Entonces, la \textit{pdf} de la distribución posterior es
+		
+		$$f(\theta|\vec{x})=\frac{f(\vec{x}|\theta)\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta)}=\frac{g(S;\theta)h(\vec{x})\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta} g(S;\theta)h(\vec{x})\pi(\theta)}=\frac{g(S;\theta)\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta} g(S;\theta)\pi(\theta)},$$
+		que es una función de $S$ y $\theta$ únicamente. Entonces, $f(\theta|\vec{x})$ depende de $\vec{X}$ sólo a través de la estadística suficiente $S$.
+		\end{proof}
