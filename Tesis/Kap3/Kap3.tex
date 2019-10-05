@@ -1,5 +1,5 @@
 \chapter{Estadística bayesiana}
-En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam}, \cite{rossi_2018}.
+En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam,rossi_2018,speagle2019conceptual,kish_1995,brooks_gelman_jones_2011}.
 \section{Preliminares}
 Antes de enunciar la regla de Bayes, es necesario definir lo que es un espacio de probabilidad, y la probabilidad condicional. Esta sección busca fundamentar las bases de la teoría de la probabilidad, para comprender a cabalidad temas posteriores.
 \subsection{Espacio de probabilidad}
@@ -496,3 +496,119 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 		$$f(\theta|\vec{x})=\frac{f(\vec{x}|\theta)\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta}f(\vec{x}|\theta)\pi(\theta)}=\frac{g(S;\theta)h(\vec{x})\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta} g(S;\theta)h(\vec{x})\pi(\theta)}=\frac{g(S;\theta)\pi(\theta)}{\sum_{\theta\in\mathbb{S}_\theta} g(S;\theta)\pi(\theta)},$$
 		que es una función de $S$ y $\theta$ únicamente. Entonces, $f(\theta|\vec{x})$ depende de $\vec{X}$ sólo a través de la estadística suficiente $S$.
 		\end{proof}
+		
+		\section{Cadenas de Markov Monte Carlo}
+		La teoría comentada en la sección anterior estipula el número de muestras necesarias para tener una estadística suficiente, y da a conocer posibles funciones de costo para estimar la precisión y exactitud de un estimador dado. Por supuesto, se requiere un estimador para obtener los valores de los parámetros de un modelo probabilístico. Para ello, se usarán algoritmos relacionados con cadenas de Markov Monte Carlo (\textit{MCMC} para abreviar).
+		
+		Para empezar, recuerde que el teorema de Bayes estipula que, en el caso en el cual $\theta$ es una variable aleatoria continua:
+		
+		\begin{equation}
+			P(\theta)=\frac{L(\theta)\pi(\theta)}{\int_{\theta\in\mathbb{S}_\theta}L(\theta)\pi(\theta)\mathrm{d}\theta}=\frac{L(\theta)\pi(\theta)}{Z},
+		\end{equation}
+		donde $P(\theta):=f(\theta|\vec{x})$ es la distribución posterior, $L(\theta)=f(\vec{x}|\theta)$ es la función de verosimilitud, $\pi(\theta)$ es la distribución previa y la constante $Z$ se conoce como evidencia.
+		
+		Considere ahora una función $f(\theta)$ del parámetro o parámetros del modelo que va a $\mathbb{R}$. El valor esperado de esta función sobre todo el soporte de $\theta$ es
+		\begin{equation}
+			\underbrace{E_P[f(\theta)]}_{\text{valor esperado respecto a }P}=\int_{\theta\in\mathbb{S}_\theta} f(\theta)P(\theta)\mathrm{d}\theta.
+		\end{equation}
+		Esta integral se puede aproximar usando rejillas. Por ejemplo, en el caso en el que el modelo tiene un único parámetro $\theta\in\mathbb{S}_\theta\subseteq\mathbb{R}$, se puede construir una partición del soporte de $\theta$ (finita o infinita). Acá se supondrá un soporte acotado, pero el razonamiento para un soporte no acotado es similar. Considere entonces la partición $\mathcal{P}=\{\theta_1<\theta_2<\dots<\theta_{n+1}\}$. Definiendo $\Delta\theta_i=\theta_{i+1}-\theta_i$ como el desplazamiento entre los elementos de la partición y $\overline{\theta_i}=\frac{\theta_{i+1}+\theta_i}{2}$ como el punto medio entre $\theta_{i+1}$ y $\theta_i$, el valor esperado de $f(\theta)$ se puede aproximar de la siguiente forma:
+		\begin{equation}\label{firstAproximation}
+			E_P[f(\theta)]\approx \sum_{i=1}^n f(\overline{\theta_i})P(\overline{\theta_i})\Delta \theta_i.
+		\end{equation}
+		
+		La generalización a más dimensiones es directa: se descompone el soporte $\mathbb{S}_\theta\subseteq\mathbb{R}^N$ en $n$ cuboides $N-$dimensionales. La contribución de cada uno de estos cuboides es proporcional al producto del peso $f(\overline{\theta_i})P(\overline{\theta_i})$ (donde $\overline{\theta_i}$ es el centro geométrico del $i-$ésimo cuboide) y al volumen
+		$$\Delta \theta_i=\prod_{j=1}^N \Delta \theta_{i,j},$$
+		donde $\Delta\theta_{i,j}$ es el ancho del $i-$ésimo cuboide en la $j$-ésima dimensión. Así, la ecuación para el valor esperado de $f(\theta)$ tiene la misma forma que \eqref{firstAproximation}. Más aún, escribiendo el valor esperado de la siguiente forma
+		$$E_P[f(\theta)]=\int_{\theta\in\mathbb{S}_\theta} f(\theta)P(\theta)\mathrm{d}\theta=\frac{\int_{\theta\in\mathbb{S}_\theta} f(\theta)P(\theta)\mathrm{d}\theta}{\underbrace{\int_{\theta\in\mathbb{S}_\theta} P(\theta)\mathrm{d}\theta}_{1}}=\frac{\int_{\theta\in\mathbb{S}_\theta} f(\theta)ZP(\theta)\mathrm{d}\theta}{\int_{\theta\in\mathbb{S}_\theta} ZP(\theta)\mathrm{d}\theta}$$
+		y tomando $\tilde{P}(\theta)=ZP(\theta)$, se puede aproximar la evidencia a través del mismo procedimiento, dado que $Z=\int_{\theta\in\mathbb{S}_\theta}\tilde{P}(\theta)\mathrm{d}\theta$:
+		
+		$$E_P[f(\theta)]=\frac{\int_{\theta\in\mathbb{S}_\theta} f(\theta)\tilde{P}(\theta)\mathrm{d}\theta}{\int_{\theta\in\mathbb{S}_\theta} \tilde{P}(\theta)\mathrm{d}\theta}\approx \frac{\sum_{i=1}^nf(\overline{\theta_i})\tilde{P}(\overline{\theta_i})\Delta \theta_i}{\sum_{i=1}^n \tilde{P}(\overline{\theta_i})\Delta \theta_i}.$$
+		
+		Esta sustitución a la distribución posterior no normalizada $\tilde{P}(\theta)$ es crucial para calcular valores esperados en la práctica, puesto que es posible calcular directamente $\tilde{P}(\theta)=L(\theta)\pi(\theta)$, sin conocer $Z$. En el caso de que se necesite $Z$, se puede aproximar numéricamente a través de rejillas, como se vio anteriormente.
+		
+		Una desventaja de la aproximación a este problema por medio de rejillas es el crecimiento exponencial de la cantidad de cubos necesarios para cubrir el soporte cuando aumenta su dimensión. Otra desventaja es que, al no conocer la forma de la distribución posterior, la contribución de cada parte de la rejilla puede ser altamente inexacta, dependiendo de su estructura. Si no se escogen bien los cuboides de la rejilla se podría terminar con muchos puntos localizados en regiones donde $\tilde{P}(\theta)$ o $f(\theta)\tilde{P}(\theta)$ son relativamente pequeños, lo que implicaría que su suma podría estar dominada por un pequeño número de puntos con pesos muy grandes. Para resolver esta desventaja, se busca incrementar la resolución de la rejilla en regiones donde la distribución posterior es grande y disminuirla en las otras regiones para evitar este efecto \cite{speagle2019conceptual}.
+		
+		Para resolver esta última desventaja (teóricamente), se introducirá la idea de \textbf{media pesada muestral} de un conjunto de $\{f_1,\dots,f_n\}$ observaciones con peso $\{\omega_1,\dots,\omega_n\}$ de la siguiente forma:
+		\begin{equation}
+			f_{mean}=\frac{\sum_{i=1}^n \omega_i f_i}{\sum_{i=1}^n\omega_i}.
+\end{equation}			
+
+	Si se toma $f_i:=f(\overline{\theta_i})$ y $\omega_i:=\tilde{P}(\overline{\theta_i})\Delta \theta_i$, se observa que el valor esperado se puede escribir de manera aproximada como una media pesada muestral. De esta forma, es necesario encontrar una forma eficiente de calcular dicha media pesada muestral para evitar la desventaja comentada. El \textbf{tamaño de muestra efectivo} $n_{eff}$ es una primera aproximación, basada en el hecho de que no todas las muestras dan la misma información. En teoría, uno puede encontrar una manera de aproximar $E_P[f(\theta)]$ de mejor o igual forma de la que se tiene en términos de una media pesada muestral de tamaño $n$ usando un número más pequeño de muestras $n_{eff}$ si se es capaz de localizarlos más eficientemente.
+	
+	De manera formal, se define $n_{eff}$ del siguiente modo\cite{kish_1995}:
+	\begin{equation}
+		n_{eff}=\frac{\left(\sum_{i=1}^n \omega_i \right)^2}{\sum_{i=1}^n\omega_i^2}.
+	\end{equation}
+	Intuitivamente, el mejor caso es cuando todos los pesos son iguales ($\omega_i=\omega$), donde
+	$$n^{best}_{eff}=\frac{(n\omega)^2}{n\omega^2}=n,$$
+	y el peor caso es cuando todo el peso está concentrado en una única muestra, ($\omega_j=\omega$, para algún $j$ y $\omega_i=0$ en otro caso):
+	$$n^{worst}_{eff}=\frac{\omega^2}{\omega^2}=1.$$
+	
+	El mejor caso hace referencia a cuando todos los elementos de la rejilla tienen aproximadamente la misma contribución en la integral, mientras que el peor caso hace referencia a cuando la integral entera está contenida en un único cuboide de la rejilla.
+	
+	Se debe procurar entonces que los pesos tiendan a ser una constante. En teoría, si se conoce la distribución posterior lo suficientemente bien, para $n$ lo suficientemente grande, se podría ajustar $\Delta\theta_i$ para que los pesos $\omega_i=\tilde{P}(\overline{\theta_i})\Delta\theta_i$ sean uniformes a cierto nivel de precisión. Esta uniformidad ocurre cuando
+	
+	$$\Delta\theta_i \propto \frac{1}{\tilde{P}(\overline{\theta_i})}, \text{ para todo } i.$$
+	
+	Cuando $n\rightarrow \infty$, el espaciamiento $\Delta\theta$ cambia como función de $\theta$. Esto motiva la definición de la densidad de puntos $Q(\theta)$, conocida como \textbf{distribución propuesta}, basada en la resolución variable $\Delta\theta(\theta)$ en la rejilla infinita como función de $\theta$:
+	$$Q(\theta) \propto \frac{1}{\Delta\theta(\theta)}.$$
+	Usando $Q(\theta),$ se puede reescribir el valor esperado como
+	$$E_P[f(\theta)]=\frac{\int_{\theta\in\mathbb{S}_\theta} f(\theta) \tilde{P}(\theta)\mathrm{d}\theta}{\int_{\theta\in\mathbb{S}_\theta} \tilde{P}(\theta)\mathrm{d}\theta}=\frac{\int_{\theta\in\mathbb{S}_\theta} f(\theta) \frac{\tilde{P}(\theta)}{Q(\theta)} Q(\theta)\mathrm{d}\theta}{\int_{\theta\in\mathbb{S}_\theta} \frac{\tilde{P}(\theta)}{Q(\theta)} Q(\theta)\mathrm{d}\theta}=\frac{E_Q[f(\theta)\tilde{P}(\theta)/Q(\theta)]}{E_Q[\tilde{P}(\theta)/Q(\theta)]}.$$
+	
+	En palabras, la rejilla de $n$ elementos en el límite de infinita resolución se manifiesta en una nueva distribución $Q(\theta)$, con la cual se puede escribir el valor esperado $E_P[f(\theta)]$ en términos de los valores esperados $E_Q[f(\theta)\tilde{P}(\theta)/Q(\theta)]$ y $E_Q[\tilde{P}(\theta)/Q(\theta)]$. La practicidad de esto radica en el hecho de que se pueden calcular estas últimos valores esperados generando una muestra aleatoria de $n$ elementos a partir de $Q(\theta)$.
+	
+	Como no se sabe la forma exacta de $P(\theta)$ de antemano, se desconoce cuál rejilla proveerá un estimado óptimo para $E_P[f(\theta)]$. Una de las formas de calcular este valor esperado es usando la distribución propuesta $Q(\theta)$, generando muestras a partir de ella. Esto motiva a escoger $Q(\theta)$ de manera que se puedan generar muestras de manera fácil y directa. Generando $n$ muestras $\{\theta_1,\dots,\theta_n\}$ de esta distribución, con pesos asociados $q_i$ y definiendo
+	\begin{center}
+	\begin{tabular}{cc}
+	$f(\theta_i)=f_i,$& $\tilde{\omega_i}:=\tilde{\omega}(\theta_i)=\tilde{P}(\theta_i)/Q(\overline{\theta_i}),$
+	\end{tabular}
+	\end{center}
+	
+	el valor esperado se puede aproximar como
+	
+	$$E_P[f(\theta)]=\frac{E_Q[f(\theta)\tilde{P}(\theta)/Q(\theta)]}{E_Q[\tilde{P}(\theta)/Q(\theta)]}\approx \frac{\sum_{i=1}^n f_i\tilde{\omega_i}q_i}{\sum_{i=1}^n \tilde{\omega_i}q_i}.$$
+	
+	Si además se toma $Q(\theta)$ de modo que las muestras sean \textit{iid}, los correspondientes pesos $q_i$ se reducen a $1/n,$ de manera que
+	
+	$$E_P[f(\theta)]\approx \frac{n^{-1}\sum_{i=1}^n f_i\tilde{\omega_i}}{n^{-1}\sum_{i=1}^n \tilde{\omega_i}}.$$
+	El denominador de la última expresión es nuevamente una aproximación directa de la evidencia,
+	
+	$$Z=\int_{\theta\in\mathbb{S}_\theta} \tilde{P}(\theta)\mathrm{d}\theta\approx n^{-1}\sum_{i=1}^n \tilde{\omega_i}.$$
+	De este modo, los pasos a seguir para calcular el valor esperado son los siguientes.
+	\begin{enumerate}
+		\item Se debe generar $n$ muestras \textit{iid} $\{\theta_1,\dots,\theta_n\}$ a partir de $Q(\theta)$.
+		\item Se calculan sus correspondientes pesos $\tilde{\omega_i}=\tilde{P}(\theta_i)/Q(\theta_i).$
+		\item Se estima $E_P[f(\theta)]$ aproximando $E_Q[f(\theta)\tilde{P}(\theta)/Q(\theta)]$ y $E_Q[\tilde{P}(\theta)/Q(\theta)]$ a través de los pesos de las muestras.
+	\end{enumerate}
+	Los métodos \textit{MCMC} buscan generar muestras de tal modo que los pesos asociados $\{\tilde{\omega_1},\dots, \tilde{\omega_n}\}$ son constantes. $Q(\theta)$ juega un papel fundamental para lograr este cometido, y para ilustrar, considere los siguientes casos.
+	
+	\begin{itemize}
+		\item Tome $Q(\theta)=Q^{unif}(\theta)$, definida sobre un cuboide de volumen $V$, de la siguiente manera
+		\[   
+Q^{unif}(\theta) = 
+     \begin{cases}
+		1/V, &\quad\text{ si }\theta\text{ está dentro del cuboide o}\\
+		0	&\quad\text{ en otro caso.}
+     \end{cases}
+\]
+Los pesos en este caso serán proporcionales a la distribución posterior:
+$$\tilde{\omega_i}^{unif}=\frac{\tilde{P}(\theta_i)}{Q^{unif}(\theta_i)}=V\tilde{P}(\theta_i)\propto P(\theta_i).$$
+	\item Tome $Q(\theta)=Q^{prior}(\theta)=\pi(\theta)$ como la distribución previa de $\theta$. Los pesos en este caso se pueden calcular mediante la función de verosimilitud.
+	$$\tilde{\omega_i}^{prior}=\frac{\tilde{P}(\theta_i)}{Q^{prior}(\theta_i)}=\frac{ZP(\theta_i)}{\pi(\theta_i)}=\frac{L(\theta_i)\pi(\theta_i)}{\pi(\theta_i)}=L(\theta_i).$$
+	\item Tome $Q(\theta)=Q^{post}(\theta)=P(\theta)$ como la distribución posterior de $\theta$, de modo que los pesos serán constantes e iguales a la evidencia $Z$:
+	$$\tilde{\omega_i}^{post}=\frac{\tilde{P}(\theta_i)}{Q^{post}(\theta_i)}=\frac{ZP(\theta_i)}{P(\theta_i)}=Z.$$
+	\end{itemize}
+	Siguiendo la idea del último caso, si uno desea que sus pesos sean constantes, se debe procurar que $Q(\theta)$ sea lo más cercana posible a $P(\theta)$. Los modelos \textit{MCMC} buscan generar muestras con pesos proporcionales a la distribución posterior, para obtener un estimado óptimo del valor esperado.
+	
+	Los modelos \textit{MCMC} logran esto creando una cadena de valores de parámetros correlacionados $\{\theta_1\rightarrow\cdots\rightarrow\theta_n\}$ al cabo de $n$ iteraciones de tal modo que el número $m(\theta)$ de iteraciones hechas en cada región particular $\delta_\theta$, centrada en $\theta$ es proporcional a la densidad posterior $P(\theta)$. En otras palabras, la densidad de muestras generadas por el modelo \textit{MCMC}
+	$$\rho(\theta):=\frac{m(\theta)}{n}$$
+	en la posición $\theta$ integrada sobre $\delta_\theta$ es aproximadamente
+	$$\int_{\theta\in\delta_\theta}P(\theta)\mathrm{d}\theta\approx \int_{\theta\in\delta_\theta}\rho(\theta)\mathrm{d}\theta\approx n^{-1}\sum_{j=1}^n\mathbb{1}[\theta_j\in\delta_\theta],$$
+	donde $\mathbb{1}[\cdot]$ es la función indicadora, equivalente a 1 si la condición a la que está siendo evaluada es verdadera, y cero si es falsa. La densidad de muestras se puede aproximar de esta forma contando el número de muestras dentro de $\delta_\theta$ y normalizando por el número total de muestras $n$.
+	
+	Cuando $n\rightarrow\infty$, se garantiza que $\rho(\theta)\rightarrow P(\theta)$ en cualquier punto $\theta$ \cite{brooks_gelman_jones_2011}. Con una aproximación razonable de $\rho(\theta)$, se pueden usar las muestras $\{\theta_1\rightarrow\cdots\rightarrow\theta_n\}$ generadas por $\rho(\theta)$ para estimar la evidencia
+	$$Z=\int_{\theta\in\mathbb{S}_\theta}\frac{\tilde{P}(\theta)}{\rho(\theta)}\rho(\theta)\mathrm{d}\theta =E_\rho[\tilde{P}(\theta)/\rho(\theta)]\approx n^{-1}\sum_{i=1}^n \frac{\tilde{P}(\theta_i)}{\rho(\theta_i)}.$$
+	
+	Además, como el modelo \textit{MCMC} produce una serie de $n$ muestras de la distribución posterior, el valor esperado de $f(\theta)$ se reduce a
+	$$E_P[f(\theta)]\approx\frac{n^{-1}\sum_{i=1}^n f_i\tilde{\omega_i}}{n^{-1}\sum_{i=1}^n \tilde{\omega_i}}=\frac{n^{-1}\sum_{i=1}^n f_i}{n^{-1}\sum_{i=1}^n 1}=n^{-1}\sum_{i=1}^n f_i,$$
+	que es la expresión del promedio aritmético de los valores $f_i=f(\theta_i).$
