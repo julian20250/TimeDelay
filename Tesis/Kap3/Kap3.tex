@@ -1,5 +1,5 @@
 \chapter{Estadística bayesiana}
-En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam,rossi_2018,speagle2019conceptual,kish_1995,brooks_gelman_jones_2011}.
+En este capítulo se hace una breve introducción a la teoría bayesiana, con el fin de obtener las herramientas necesarias para ajustar los parámetros de un modelo dado a través de un conjunto de datos experimentales. Algunas referencias clave de este capítulo son \cite{Arunachalam,rossi_2018,speagle2019conceptual,kish_1995,brooks_gelman_jones_2011,doi:10.1063/1.1699114}.
 \section{Preliminares}
 Antes de enunciar la regla de Bayes, es necesario definir lo que es un espacio de probabilidad, y la probabilidad condicional. Esta sección busca fundamentar las bases de la teoría de la probabilidad, para comprender a cabalidad temas posteriores.
 \subsection{Espacio de probabilidad}
@@ -560,7 +560,7 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 	Como no se sabe la forma exacta de $P(\theta)$ de antemano, se desconoce cuál rejilla proveerá un estimado óptimo para $E_P[f(\theta)]$. Una de las formas de calcular este valor esperado es usando la distribución propuesta $Q(\theta)$, generando muestras a partir de ella. Esto motiva a escoger $Q(\theta)$ de manera que se puedan generar muestras de manera fácil y directa. Generando $n$ muestras $\{\theta_1,\dots,\theta_n\}$ de esta distribución, con pesos asociados $q_i$ y definiendo
 	\begin{center}
 	\begin{tabular}{cc}
-	$f(\theta_i)=f_i,$& $\tilde{\omega_i}:=\tilde{\omega}(\theta_i)=\tilde{P}(\theta_i)/Q(\overline{\theta_i}),$
+	$f(\theta_i)=f_i,$& $\tilde{\omega_i}:=\tilde{\omega}(\theta_i)=\tilde{P}(\theta_i)/Q(\theta_i),$
 	\end{tabular}
 	\end{center}
 	
@@ -580,7 +580,7 @@ $$L(\theta|\vec{X})=f(x_1,\dots,x_n;\theta)$$
 		\item Se calculan sus correspondientes pesos $\tilde{\omega_i}=\tilde{P}(\theta_i)/Q(\theta_i).$
 		\item Se estima $E_P[f(\theta)]$ aproximando $E_Q[f(\theta)\tilde{P}(\theta)/Q(\theta)]$ y $E_Q[\tilde{P}(\theta)/Q(\theta)]$ a través de los pesos de las muestras.
 	\end{enumerate}
-	Los métodos \textit{MCMC} buscan generar muestras de tal modo que los pesos asociados $\{\tilde{\omega_1},\dots, \tilde{\omega_n}\}$ son constantes. $Q(\theta)$ juega un papel fundamental para lograr este cometido, y para ilustrar, considere los siguientes casos.
+	Los métodos \textit{MCMC} buscan generar muestras de tal modo que los pesos asociados $\{\tilde{\omega_1},\dots, \tilde{\omega_n}\}$ sean constantes. $Q(\theta)$ juega un papel fundamental para lograr este cometido, y para ilustrar, considere los siguientes casos.
 	
 	\begin{itemize}
 		\item Tome $Q(\theta)=Q^{unif}(\theta)$, definida sobre un cuboide de volumen $V$, de la siguiente manera
@@ -612,3 +612,29 @@ $$\tilde{\omega_i}^{unif}=\frac{\tilde{P}(\theta_i)}{Q^{unif}(\theta_i)}=V\tilde
 	Además, como el modelo \textit{MCMC} produce una serie de $n$ muestras de la distribución posterior, el valor esperado de $f(\theta)$ se reduce a
 	$$E_P[f(\theta)]\approx\frac{n^{-1}\sum_{i=1}^n f_i\tilde{\omega_i}}{n^{-1}\sum_{i=1}^n \tilde{\omega_i}}=\frac{n^{-1}\sum_{i=1}^n f_i}{n^{-1}\sum_{i=1}^n 1}=n^{-1}\sum_{i=1}^n f_i,$$
 	que es la expresión del promedio aritmético de los valores $f_i=f(\theta_i).$
+	
+	\subsection{Algoritmo de Metropolis-Hastings}
+	Se desea generar muestras $\theta_i\rightarrow\theta_{i+1}$ de modo que la distribución de las muestras finales $\rho(\theta)$ sea estacionaria cuando $n\rightarrow\infty$ (que converja) y sea igual a $P(\theta)$. La primera condición se puede satisfacer usando el \textbf{balance detallado}, que refiere a la idea de que la probabilidad sea conservada cuando uno se mueve de una posición a otra (es decir, el proceso es reversible). Formalmente, esto implica que
+	$$M(\theta_{i+1}|\theta_i)M(\theta_i)=M(\theta_{i+1},\theta_{i})=M(\theta_i|\theta_{i+1})M(\theta_{i+1}),$$
+	donde $M(\theta_{i+1}|\theta_i)$ es la probabilidad de moverse de $\theta_i$ a $\theta_{i+1}$ y $M(\theta_{i+1}|\theta_i)$ es la probabilidad de moverse de $\theta_{i+1}$ a $\theta_i$. Reescribiendo esta última igualdad:
+	
+	\begin{equation}\label{eq:detailedBalance}
+	\frac{M(\theta_{i+1}|\theta_i)}{M(\theta_{i}|\theta_{i+1})}=\frac{M(\theta_{i+1})}{M(\theta_i)}=\frac{P(\theta_{i+1})}{P(\theta_i)}.
+	\end{equation}
+	
+	La última igualdad hace referencia al hecho de que la distribución con la que se buscan generar las muestras es la posterior, $P(\theta)$.
+	
+	Es necesario construir un procedimiento que permita moverse a una nueva posición calculando esta probabilidad $M$. Para ello, se propone una nueva posición $\theta_i\rightarrow\theta'_{i+1}$ usando la distribución propuesta $Q(\theta'_{i+1}|\theta_i)$. Se decide si aceptar ($\theta_{i+1}=\theta'_{i+1}$) o rechazar ($\theta_{i+1}=\theta_{i}$) esta nueva posición con una \textbf{probabilidad de transición} $T(\theta'_{i+1}|\theta_i)$. Combinando ambas distribuciones, se obtiene la probabilidad de moverse a una nueva posición
+	$$M(\theta_{i+1}|\theta_i)=Q(\theta_{i+1}|\theta_i)T(\theta_{i+1}|\theta_i).$$
+	El problema estaría completamente determinado si se conoce la probabilidad de transición $T(\theta'_{i+1}|\theta_i)$. Para encontrarla, se hace uso de la condición de balance detallado \eqref{eq:detailedBalance}.
+	$$\frac{T(\theta_{i+1}|\theta_i)}{T(\theta_{i}|\theta_{i+1})}=\frac{P(\theta_{i+1})}{P(\theta_i)}\frac{Q(\theta_{i}|\theta_{i+1})}{Q(\theta_{i+1}|\theta_i)}.$$
+	El criterio de Metropolis \cite{doi:10.1063/1.1699114}:
+	$$T(\theta_{i+1}|\theta_i)=\min \left[ 1, \frac{P(\theta_{i+1})}{P(\theta_i)}\frac{Q(\theta_{i}|\theta_{i+1})}{Q(\theta_{i+1}|\theta_i)} \right]$$
+	satisface esta condición, por lo que el algoritmo para generar la muestra es el siguiente:
+	\begin{enumerate}
+		\item Se propone una nueva posición $\theta_i\rightarrow\theta'_{i+1}$, generando una muestra de la distribución propuesta $Q(\theta'_{i+1}|\theta_i)$.
+		\item Se calcula la probabilidad de transición $T(\theta'_{i+1}|\theta_i)$.
+		\item Se genera un número aleatorio $u_{i+1}$ a partir de una distribución uniforme entre 0 y 1.
+		\item Si $u_{i+1}\leq T(\theta'_{i+1}|\theta_i)$, se acepta el movimiento y se toma $\theta_{i+1}=\theta_i$. Si $u_{i+1}> T(\theta'_{i+1}|\theta_i)$, se rechaza el movimiento y se toma $\theta_{i+1}=\theta_i$.
+		\item Se incrementa $i=i+1$ y se repite el proceso.
+	\end{enumerate}
