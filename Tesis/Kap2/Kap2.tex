@@ -190,3 +190,268 @@ Infortunadamente, la derivada parcial de un tensor no es, en general, un tensor 
 	El elemento de línea se define de la siguiente forma
 	$$\mathrm{d}s^2=?g_{\mu\nu}? \mathrm{d}x^\mu \mathrm{d}x^\nu.$$
 \end{defi}
+\section{Curvatura}
+\subsection{Derivada covariante}
+Como se comentó en la sección anterior, es necesario definir un operador derivada (denotado por $\nabla$), que lleve a cabo las operaciones de la derivada parcial usual, pero de manera independiente de las coordenadas, y que a su vez preserve el carácter tensorial tras ser aplicada a un tensor. $\nabla$ debe ser un mapa de los tensores $(k,l)$ a los tensores $(k.l+1)$ que guarda las siguientes propiedades
+\begin{enumerate}
+	\item Linealidad: $\nabla(T+S)=\nabla T+\nabla S$.
+	\item Ley del producto de Leibniz: $\nabla(T\otimes S)=(\nabla T)\otimes S+T\otimes(\nabla S).$
+\end{enumerate}
+Si $\nabla$ obedece la regla de la cadena, $\nabla$ se puede escribir como una derivada parcial más alguna transformación lineal \cite{Thorne}. Entonces, se toma primero la derivada parcial y se aplica una corrección lineal para hacer el resultado covariante. Se propone entonces, para un vector del espacio tangente:
+\begin{equation}
+\nabla_\mu V^\nu= \partial_\mu V^\nu+?\Gamma^\nu_{\mu\lambda}? V^\lambda,
+\end{equation}
+donde $?\Gamma^\nu_{\mu\lambda}?$ son las componentes de la matriz (no es un tensor, porque no transforma como tal) que se encarga de realizar la corrección. Todas estas componentes reciben el nombre de símbolos de Christoffel.
+
+De modo similar al caso del vector del espacio tangente, la derivada covariante de una 1-forma se puede expresar como una derivada parcial más alguna transformación lineal:
+$$\nabla_\mu \omega_\nu=\partial_\mu \omega_\nu+ ?\Xi^\lambda_{\mu\nu}?\omega_\lambda,$$
+donde $?\Xi^\lambda_{\mu\nu}?$ podría ser distinta, en general, de $?\Gamma^\lambda_{\mu\nu}?$. Se exigen además las siguientes propiedades para la derivada covariante:
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	\item Conmutación bajo contracciones: $\nabla_\mu(?T^\lambda_{\lambda\rho}?)=(\nabla T?)_\mu^\lambda_{\lambda\rho}?$.
+	\item Se reduce a la derivada parcial en el caso de escalares: $\nabla_\mu\phi=\partial_\mu\phi.$
+\end{enumerate}
+No hay forma de derivar estas propiedades, simplemente se exige que sean ciertas \cite{Carroll}. A continuación se verán las implicaciones de estas propiedades. Si $\omega_\mu$ es una 1-forma y $V^mu$ es un vector, se puede tomar la derivada covariante del escalar definido por $\omega_\lambda V^\lambda$, obteniendo
+\begin{dmath}\label{equivGamma}
+	\nabla_\mu(\omega_\lambda V^\lambda) = (\nabla_\mu \omega_\lambda)V^\lambda+\omega_\lambda( \nabla_\mu V^\lambda) = (\partial_\mu \omega_\lambda + ?\Xi^\sigma_{\mu\lambda}?\omega_\sigma)V^\lambda+\omega_\lambda(\partial_\mu V^\lambda+?\Gamma^\lambda_{\mu\sigma}? V^\sigma) = (\partial_\mu \omega_\lambda)V^\lambda+?\Xi^\sigma_{\mu\lambda}? \omega_\sigma V^\lambda + \omega_\lambda(\partial_\mu V^\lambda)+\omega_\lambda ?\Gamma^\lambda_{\mu\sigma} V^\sigma?. 
+\end{dmath}
+Por otro lado, como $\omega_\lambda V^\lambda$ es un escalar,
+\begin{equation}\label{equivGamma2}
+	\nabla_\mu(\omega_\lambda V^\lambda)=\partial_\mu(\omega_\lambda V^\lambda)=(\partial_\mu\omega_\lambda) V^\lambda+\omega_\lambda(\partial_\mu V^\lambda).
+\end{equation}
+Igualando \eqref{equivGamma} y \eqref{equivGamma2}, se obtiene que
+$$?\Xi^\sigma_{\mu\lambda}?=-?\Gamma^\sigma_{\mu\lambda}?.$$ 
+De esta forma, el resultado tras aplicar la derivada covariante sobre una 1-forma es
+\begin{equation}
+	\nabla_\mu \omega_\nu=\partial_\mu \omega_\nu- ?\Gamma^\lambda_{\mu\nu}?\omega_\lambda.
+\end{equation}
+La generalización para un tensor $(k,l)$ es
+\begin{dmath}
+	\nabla_\sigma ?T^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_l}?=\partial_\sigma ?T^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_l}?+?\Gamma^{\mu_1}_{\sigma\lambda}??T^{\lambda\cdots\mu_k}_{\nu_1\cdots\nu_l}?+\cdots+?\Gamma^{\mu_k}_{\sigma\lambda}??T^{\mu_1\cdots\lambda}_{\nu_1\cdots\nu_l}?-?\Gamma^\lambda_{\sigma\nu_1}??T^{\mu_1\cdots\mu_k}_{\lambda\cdots\nu_l}?-\cdots-?\Gamma^\lambda_{\sigma\nu_l}??T^{\mu_1\cdots\mu_k}_{\nu_1\cdots\lambda}?.
+\end{dmath}
+Generalmente se abrevia la derivada covariante de la siguiente manera:
+$$\nabla_\sigma ?T^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_l}?=?T^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_l;\sigma}?.$$
+Par construir esta derivada covariante es necesario agregar una conexión a la variedad, que transforme de tal forma que anule los términos que impiden la transformación tensorial de la derivada parcial usual. 
+
+En lo que refiere a la unicidad, se garantiza si se suponen las siguientes condiciones:
+\begin{itemize}
+	\item libre de torsión: $?\Gamma^\lambda_{\mu\nu}?=?\Gamma^\lambda_{(\mu\nu)}?$ (la conexión es simétrica) y
+	\item compatibilidad con la métrica: $\nabla_\rho ?g_{\mu\nu}?=0.$
+\end{itemize}
+Para demostrar este hecho, considere las tres permutaciones posibles de la compatibilidad con la métrica.
+\begin{equation}\label{compa1}
+\nabla_\rho ?g_{\mu\nu}? =\partial_\rho?g_{\mu\nu}?-?\Gamma^\lambda_{\rho\mu}? ?g_{\lambda\nu}?-?\Gamma^\lambda_{\rho\nu}? ?g_{\mu\lambda}?=0,
+\end{equation}
+\begin{equation}\label{compa2}
+\nabla_\mu ?g_{\nu\rho}? =\partial_\mu?g_{\nu\rho}?-?\Gamma^\lambda_{\mu\nu}? ?g_{\lambda\rho}?-?\Gamma^\lambda_{\mu\rho}? ?g_{\nu\lambda}?=0,
+\end{equation}
+\begin{equation}\label{compa3}
+\nabla_\nu ?g_{\rho\mu}? =\partial_\nu?g_{\rho\mu}?-?\Gamma^\lambda_{\nu\rho}? ?g_{\lambda\mu}?-?\Gamma^\lambda_{\nu\mu}? ?g_{\rho\lambda}?=0.
+\end{equation}
+Realizando la operación \eqref{compa1}-\eqref{compa2}-\eqref{compa3}, y aplicando la simetría de la conexión, se obtiene lo siguiente
+$$\partial_\rho ?g_{\mu\nu}?-\partial_\mu ?g_{\nu\rho}?-\partial_\nu ?g_{\rho\mu}?+2 ?\Gamma^\lambda_{\mu\nu}? ?g_{\lambda\rho}?=0,$$
+de modo que al despejar $?\Gamma^\lambda_{\mu\nu}?$ con la ayuda de la métrica inversa $?g^{\sigma\rho}?$ se tiene que
+
+\begin{equation}\label{conectionChristoffel}
+?\Gamma^\sigma_{\mu\nu}?=\frac{1}{2}?g^{\sigma\rho}?[\partial_\mu ?g_{\nu\rho}?+\partial_\nu ?g_{\rho\mu}?-\partial_\rho ?g_{\mu\nu}?].
+\end{equation}
+Esta última fórmula prueba tanto la existencia como la unicidad y se conoce como conexión de Christoffel, conexión de Levi-Civita o conexión Riemanniana. Los coeficientes de conexión se conocen como símbolos de Christoffel.
+
+Una manera de escribir la contracción $?\Gamma^\mu_{\mu\lambda}?$ de los símbolos de Christoffel se basa en la siguiente propiedad que cumple cualquier matriz $M$ \cite{bishop_goldberg_1980}
+$$\mathop{Tr}(M^{-1}\partial_\lambda M)=\partial_\lambda \mathop{ln} \mathop{det} M,$$
+con la cual
+\begin{equation}
+?\Gamma^\mu_{\mu\lambda}?=\frac{1}{\sqrt{|g|}}\partial_\lambda\sqrt{|g|},
+\end{equation}
+donde $|g|=\mathop{det}g.$ Con esta forma de escribir $?\Gamma^\mu_{\mu\lambda}?$, se tiene que cualquier derivada covariante de un vector $V^\mu$ se puede reescribir de la siguiente forma
+\begin{equation}
+\nabla_\mu V^\mu=\frac{1}{\sqrt{|g|}}\partial_\mu(\sqrt{|g|}V^\mu).
+\end{equation}
+
+\subsection{Transporte paralelo}
+Un concepto recurrente en el espacio plano es el transporte paralelo, que busca mantener un vector (tensor) constante conforme uno se mueve a través de una trayectoria. Dada una curva $x^\mu(\lambda)$, el requerimiento de la constancia de un tensor $T$ a lo largo de la curva en el espacio plano es $$\frac{\mathrm{d}T}{\mathrm{d}\lambda}=\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\frac{\partial T}{\partial x^\mu}=0.$$ De este modo, en analogía con el caso planar, se define la derivada covariante a lo largo de una trayectoria $x(\lambda)$  sobre la variedad como el operador
+\begin{equation}
+\frac{\mathrm{D}}{\mathrm{D}\lambda}\equiv \frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\nabla_\mu.
+\end{equation}
+Con ello, se define el transporte paralelo del tensor $T$ a lo largo de la trayectoria $x(\lambda)$ bajo el requerimiento de que, a lo largo de dicha trayectoria:
+\begin{equation}\label{3.31}
+\left(\frac{\mathrm{D}T}{\mathrm{D}\lambda}\right)\indices{^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_\ell}}\equiv \frac{\mathrm{d}x^\sigma}{\mathrm{d}\lambda}\nabla_\sigma T\indices{^{\mu_1\cdots\mu_k}_{\nu_1\cdots\nu_\ell}}=0.
+\end{equation}
+Esta última ecuación recibe el nombre de \textbf{ecuación de transporte paralelo}. Para un vector $V^\mu$ toma la forma
+\begin{equation}
+	\frac{\mathrm{d}V^\mu}{\mathrm{d}\lambda}+\Gamma\indices{^\mu_{\sigma\rho}}\frac{\mathrm{d}x^\sigma}{\mathrm{d}\lambda}V^\rho=0.
+\end{equation}
+Se puede ver la ecuación de transporte paralelo como una ecuación diferencial de primer orden que define un problema de valor inicial: dado un tensor en algún punto del camino, hay una única continuación del tensor a otros puntos a través del camino tal que la continuación satisface \eqref{3.31}. Se dice entonces que el tensor es transportado paralelamente.
+
+Por supuesto, la noción de transporte paralelo depende de la conexión, por lo que diferentes conexiones llevan a distintas soluciones. Si la conexión es compatible con la métrica:
+$$\frac{\mathrm{D}g_{\mu\nu}}{\mathrm{D}\lambda}=\frac{\mathrm{d}x^\sigma}{\mathrm{d}\lambda}\nabla_\sigma g_{\mu\nu}=0,$$
+lo que implica que la métrica es transportada paralelamente. Una propiedad interesante que satisface una métrica transportada paralelamente es que el producto interno dos vectores paralelamente transportados es preservado a lo largo de la trayectoria. Esto es, si $V^\mu$ y $W^\mu$ son dos vectores paralelamente transportados, se tiene que
+$$\frac{\mathrm{D}}{\mathrm{D}\lambda}\left( g_{\mu\nu}V^\mu W^\nu\right)=\left(\frac{\mathrm{D}}{\mathrm{D}\lambda}g_{\mu\nu}\right)V^\mu W^\nu+g_{\mu\nu}\left(\frac{\mathrm{D}}{\mathrm{D}\lambda}V^\mu\right)W^\nu+g_{\mu\nu}V^\mu \left(\frac{\mathrm{D}}{\mathrm{D}\lambda}W^\nu\right)=0,$$
+de donde se deduce que el transporte paralelo con respecto a una conexión compatible con la métrica preserva la norma de vectores.
+
+Se define ahora una \textbf{geodésica} como una trayectoria que transporta paralelamente su propio vector tangente. El vector tangente a una trayectoria $x(\lambda)$ es $\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}$, de modo que la condición de transporte paralelo para este vector es
+\begin{equation}
+\frac{\mathrm{D}}{\mathrm{D}\lambda}\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}=0,
+\end{equation}
+o de manera alternativa,
+\begin{equation}\label{geodesicEquation}
+	\frac{\mathrm{d}^2x^\mu}{\mathrm{d}\lambda^2}+\Gamma\indices{^\mu_{\rho\sigma}}\frac{\mathrm{d}x^\rho}{\mathrm{d}\lambda}\frac{\mathrm{d}x^\sigma}{\mathrm{d}\lambda}=0.
+\end{equation}
+Esta última expresión recibe el nombre de \textbf{ecuación de la geodésica}. También se puede obtener esta expresión a través de un principio variacional sobre la acción $\sqrt{-g_{\mu\nu}\frac{\mathrm{d}x^\mu}{\mathrm{d}\lambda}\frac{\mathrm{d}x^\nu}{\mathrm{d}\lambda}}$, para trayectorias tipo tiempo \cite{Carroll}.
+
+\subsection{Tensor de Riemann}
+La curvatura se cuantifica mediante el tensor de Riemann, que se deriva de la conexión. La idea detrás de la medición de la curvatura es que se tiene una idea natural de planitud de la conexión: la conexión de Christoffel convencional asociada a la métrica Minkowskiana o euclideana tiene varias propiedades que se pueden ver como manifestaciones de planitud. Algunas de ellas son las siguientes:
+\begin{itemize}
+	\item El transporte paralelo alrededor de una trayectoria cerrada deja el vector invariante.
+	\item Las derivadas covariantes de tensores conmutan.
+	\item Las geodésicas que inician paralelas siguen siendo paralelas.
+\end{itemize}
+El tensor de Riemann surge cuando se estudia cómo cambian estas propiedades en contextos más generales. Una manera convencional de introducir el tensor de Riemann es considerar transportes paralelos alrededor de un loop infinitesimal. Imagine que se transporta paralelamente un vector $V^\sigma$ alrededor de un loop cerrado definido por dos vectores $A^\nu$ y $B^\mu$ (ver figura \ref{fig:loops}). Como se sabe que la acción del transporte paralelo es independiente de las coordenadas, debe haber algún tensor que diga cómo cambia el vector cuando vuelve a su punto inicial.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\filldraw [black] (0,0) circle (2pt) node[below] {$(0,0)$};
+\filldraw [black] (1,3.) circle (2pt) node[above] {$(0,\delta b)$};
+\filldraw [black] (5,3.) circle (2pt) node[above] {$(\delta a,\delta b)$};
+\filldraw [black] (4,0) circle (2pt) node[below] {$(\delta a,0)$};
+\draw[->] (3.5,1.5) arc (0:220:1);
+\draw[->] (0,0) -- (1,2.9) node[midway, left] {$B^\nu$};
+\draw[->] (1,3) -- (4.9,3) node[midway, above] {$A^\mu$};
+\draw[->] (0,0) -- (3.9,0) node[midway, below] {$A^\mu$};
+\draw[->] (4,0) -- (5,2.9) node[midway, right] {$B^\nu$};
+\end{tikzpicture}
+\end{center}
+
+\caption{Esquema de transporte paralelo del vector $V^\sigma$ alrededor de un loop cerrado definido por los vectores $A^\nu$ y $B^\mu$, y las longitudes infinitesimales de los lados del loop son $\delta a$ y $\delta b$.}
+\label{fig:loops}
+\end{figure}
+
+Se tendrá entonces una transformación lineal sobre el vector, de modo que el tensor encargado de esta corrección tendrá un índice superior y otro inferior. Por otro lado, este tensor dependerá de los vectores $A$ y $B$ que determinan el loop, por lo que tendrá otros dos índices inferiores adicionales para contraer $A^\nu$ y $B^\mu$. Más aún, el tensor debe ser antisimétrico en estos dos índices, porque intercambiarlos corresponde a recorrer el loop al revés. Se espera entonces que la expresión para el cambio $\delta V^\rho$ experimentado por este vector cuando es transportado paralelamente por el loop sea de la forma \cite{Carroll}
+\begin{equation}\label{alternativeRiemann}
+	\delta V^\rho\equiv (\delta a)(\delta b)A^\nu B^\mu R\indices{^\rho_{\sigma\mu\nu}}V^\rho,
+\end{equation}
+donde $R\indices{^\rho_{\sigma\mu\nu}}$ es un tensor $(1,3)$ conocido como \textbf{tensor de Riemann} (o tensor de curvatura), antisimétrico en sus dos últimos índices:
+$$R\indices{^\rho_{\sigma\mu\nu}}=-R\indices{^\rho_{\sigma\nu\mu}}.$$
+Para encontrar $R\indices{^\rho_{\sigma\mu\nu}}$ en términos de los coeficientes de la conexión, se usa la conmutación de las derivadas covariantes, que mide la diferencia entre el transporte paralelo de un tensor a través de una curva infinitesimal y luego a través de otra, contra el orden opuesto.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\filldraw [black] (0,0) circle (2pt);
+\filldraw [black] (1,3.) circle (2pt);
+\filldraw [black] (5,3.) circle (2pt);
+\filldraw [black] (4,0) circle (2pt);
+
+\draw[->] (0,0) -- (1,2.9) node[midway, left] {$\nabla_\nu$};
+\draw[->] (1,3) -- (4.9,3) node[midway, above] {$\nabla_\mu$};
+\draw[->] (0,0) -- (3.9,0) node[midway, below] {$\nabla_\mu$};
+\draw[->] (4,0) -- (5,2.9) node[midway, right] {$\nabla_\nu$};
+\end{tikzpicture}
+\end{center}
+
+\caption{Conmutación de las derivadas covariantes.}
+\label{fig:CovariantLoops}
+\end{figure}
+Así, si calcula el conmutador de las derivadas covariantes $[\nabla_\mu,\nabla_\nu]$, aplicado sobre un vector $V^\rho$, se obtiene que
+\begin{dmath}
+[\nabla_\mu,\nabla_\nu]V^\rho=\left(\partial_\mu \Gamma\indices{^\rho_{\nu\sigma}}-\partial_\nu \Gamma\indices{^\rho_{\mu\sigma}}+\Gamma\indices{^\rho_{\mu\lambda}}\Gamma\indices{^\lambda_{\nu\sigma}}-\Gamma\indices{^\rho_{\nu\lambda}}\Gamma\indices{^\lambda_{\mu\sigma}}\right)V^\sigma -\left(\Gamma\indices{^\lambda_{\mu\nu}}-\Gamma\indices{^\lambda_{\mu\sigma}}\right)\left(\partial_\lambda V^\rho+\Gamma\indices{^\rho_{\lambda\sigma}} V^\sigma\right) = \left(\partial_\mu \Gamma\indices{^\rho_{\nu\sigma}}-\partial_\nu \Gamma\indices{^\rho_{\mu\sigma}}+\Gamma\indices{^\rho_{\mu\lambda}}\Gamma\indices{^\lambda_{\nu\sigma}}-\Gamma\indices{^\rho_{\nu\lambda}}\Gamma\indices{^\lambda_{\mu\sigma}}\right)V^\sigma -2\Gamma\indices{^\lambda_{[\mu\nu]}}\nabla_\lambda V^\rho.
+\end{dmath}
+De este modo, se reescribe el conmutador como
+\begin{equation}
+[\nabla_\mu,\nabla_\nu]=R\indices{^\rho_{\sigma\mu\nu}}-T\indices{^\lambda_{\mu\nu}}\nabla_\lambda,
+\end{equation}
+donde $T\indices{^\lambda_{\mu\nu}}$ es la antisimetrización sobre los índices inferiores de los símbolos de Christoffel, y se identifica el tensor de Riemann con
+\begin{equation}\label{riemannDefinition}
+R\indices{^\rho_{\sigma\mu\nu}}=\partial_\mu \Gamma\indices{^\rho_{\nu\sigma}}-\partial_\nu \Gamma\indices{^\rho_{\mu\sigma}}+\Gamma\indices{^\rho_{\mu\lambda}}\Gamma\indices{^\lambda_{\nu\sigma}}-\Gamma\indices{^\rho_{\nu\lambda}}\Gamma\indices{^\lambda_{\mu\sigma}}.
+\end{equation}
+Se puede demostrar que la definición del tensor de Riemann dada en \eqref{alternativeRiemann} es equivalente a \eqref{riemannDefinition} \cite{wald_2010}. Por otro lado, este tensor es efectivamente un tensor, a pesar de estar conformado de elementos que no son tensores.
+
+Algunas ecuaciones importantes que satisface el tensor de Riemann son las siguientes,
+\begin{equation}\label{susceptibilityContracted}
+\nabla_\lambda R_{\rho\sigma\mu\mu}+\nabla_\rho R_{\sigma\lambda\mu\nu}+\nabla_\sigma R_{\lambda\rho\mu\nu}=0,
+\end{equation}
+\begin{equation}
+\nabla_{[\lambda}R_{\rho\sigma]\mu\nu}=0.
+\end{equation}
+Esta última ecuación se conoce como identidad de Bianchi. Por otro lado, algunas contracciones importantes del tensor de Riemann son el tensor de Ricci
+\begin{equation}\label{ricciTensor}
+	R_{\mu\nu}=R\indices{^\lambda_{\mu\lambda\nu}},
+\end{equation}
+que resulta ser simétrico; y el escalar de Ricci
+
+\begin{equation}\label{ricciScalar}
+	R=R\indices{^\mu_\mu}=g^{\mu\nu}R_{\mu\nu}.
+\end{equation}
+Una expresión especialmente útil se obtiene al contraer dos veces \eqref{susceptibilityContracted}.
+
+\begin{dmath*}
+0=g^{\nu\sigma}g^{\mu\lambda}\left(\nabla_\lambda R_{\rho\sigma\mu\mu}+\nabla_\rho R_{\sigma\lambda\mu\nu}+\nabla_\sigma R_{\lambda\rho\mu\nu}\right) = g^{\nu\sigma}\left(\nabla^\mu R_{\rho\sigma\mu\nu-\nabla_\rho} R\indices{^\mu_{\sigma\mu\nu}}+\nabla_\sigma R\indices{^\mu_{\rho\mu\nu}}\right) = -\nabla^\mu\left( R\indices{^\nu_{\rho\mu\nu}}\right)-\nabla_\rho R+\nabla^nu R_{\rho\nu} = \nabla^\mu R_{\rho\mu}-\nabla_\rho R+\nabla^\nu R_{\rho\nu}.
+\end{dmath*}
+En el desarrollo anterior se usó la compatibilidad con la métrica para introducirla dentro de las derivadas covariantes, para subir y bajar índices. De este modo,
+\begin{equation}\label{interest}
+\frac{1}{2}\nabla_\rho R=\nabla^\mu R_{\rho\mu}.
+\end{equation}
+Si se define el tensor de Einstein (simétrico) como 
+\begin{equation}
+	G_{\mu\nu}=R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu},
+\end{equation}
+es claro por \eqref{interest} que
+\begin{equation}
+	\nabla^\mu G_{\mu\nu}=0.
+\end{equation}
+\section{Gravitación}
+Los postulados fundamentales de la relatividad son los siguientes:
+	\begin{enumerate}
+		\item En presencia de gravedad, el espacio-tiempo luce como una variedad curvada 4-dimensional (con componentes del tensor de Riemann en general no nulas).
+		\item No hay forma de distinguir la aceleración uniforme de un campo gravitacional externo.
+		\item Las partículas libres se mueven a lo largo de geodésicas.
+	\end{enumerate}  
+Se define ahora el límite Newtoniano por los siguientes tres requerimientos: las partículas se mueven lentamente (con respecto a la velocidad de la luz), el campo gravitacional es plano (puede considerarse como una perturbación del espacio plano) y el campo gravitacional es estático (no varía en el tiempo). Tomando el tiempo propio $\tau$ como parámetro afín, la ecuación de la geodésica \eqref{geodesicEquation} es
+\begin{equation}
+\frac{\mathrm{d}^2x^\mu}{\mathrm{d}\tau^2}+\Gamma\indices{^\mu_{\rho\sigma}}\frac{\mathrm{d}x^\rho}{\mathrm{d}\tau}\frac{\mathrm{d}x^\sigma}{\mathrm{d}\tau}=0.
+\end{equation}
+Moverse lentamente implica que la partícula avanza más en el tiempo que en el espacio. Matemáticamente, esta condición se escribe como
+\begin{equation}
+	\frac{\mathrm{d} x^{i}}{\mathrm{d}\tau}<<\frac{\mathrm{d} t}{\mathrm{d}\tau},
+\end{equation}
+donde $i=1,2,3.$ De este modo, la ecuación de la geodésica queda escrita como
+\begin{equation}\label{geodesicNewtonian}
+\frac{\mathrm{d}^2x^\mu}{\mathrm{d}\tau^2}+\Gamma\indices{^\mu_{00}}\left(\frac{\mathrm{d}t}{\mathrm{d}\tau}\right)^2=0.
+\end{equation}
+Ahora, los símbolos de Christoffel de la forma $\Gamma\indices{^\mu_{00}}$ son, usando \eqref{conectionChristoffel}, y teniendo en cuenta que el campo es estático:
+$$\Gamma\indices{^\mu_{00}}=\frac{1}{2}g^{\mu\lambda}\left( \partial_0 g_{\lambda0}+\partial_0 g_{0\lambda}-\partial_\lambda g_{00}\right)=-\frac{1}{2}g^{\mu\lambda}\partial_\lambda g_{00}.$$
+Finalmente, como el campo gravitacional es débil, se puede descomponer la métrica en dos componentes: la métrica de Minkowski $\eta_{\mu\nu}=\mathop{diag}(-1,0,0,0)$ más una perturbación $h_{\mu\nu},$ de modo que
+$$g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}.$$
+A primer orden de $h$, se puede usar la métrica de Minkowski para subir y bajar índices. Así,
+\begin{equation}
+	\Gamma\indices{^\mu_{00}}=-\frac{1}{2}\eta^{\mu\lambda}\partial_\lambda h_{00}.
+\end{equation}
+La ecuación geodésica \eqref{geodesicNewtonian} es entonces
+\begin{equation}
+\frac{\mathrm{d}^2x^\mu}{\mathrm{d}\tau^2}=\frac{1}{2}g^{\mu\lambda}\partial_{\lambda}h_{00} \left( \frac{\mathrm{d} t}{\mathrm{d} \tau}\right)^2.
+\end{equation}
+Como el campo es estático, $\partial_0 h_{00}=0,$ y la componente $\mu=0$ de esta ecuación es
+$$\frac{\mathrm{d}^2 t}{\mathrm{d}\tau^2}=0,$$
+lo que implica que $\frac{\mathrm{d} t}{\mathrm{d} \tau}$ es una constante. Respecto a las componentes espaciales $i=1,2,3,$
+\begin{equation}
+\frac{\mathrm{d}^2x^i}{\mathrm{d}\tau^2}=\frac{1}{2}\left( \frac{\mathrm{d} t}{\mathrm{d} \tau}\right)^2 \partial_{i}h_{00}. 
+\end{equation}
+Dividiendo la última ecuación por $\left( \frac{\mathrm{d} t}{\mathrm{d} \tau}\right)^2$ y aplicando la regla de la cadena, se tiene que
+\begin{equation}\label{gravLaw}
+	\frac{\mathrm{d}^2x^i}{\mathrm{d}t^2}=\frac{1}{2} \partial_i h_{00}.
+\end{equation}
+Tomando la componente $h_{00}$ como $-2V(x^i)$ en \eqref{gravLaw}, se obtiene la ley de gravitación universal de Newton. En otras palabras,
+\begin{equation}\label{g00}
+	\boxed{g_{00}=-\left(1+2V(x^i)\right).}
+\end{equation}
+Entonces, la curvatura del espacio-tiempo es suficiente para describir el comportamiento de la gravedad en el límite Newtoniano, siempre que la métrica satisfaga \eqref{g00}. La manera de conocer $g_{\mu\nu}$ es mediante las ecuaciones de campo para la métrica, conocidas como ecuaciones de campo de Einstein. Estas ecuaciones se deducen a través de un principio variacional sobre la acción de Hilbert-Einstein
+\begin{equation}
+	S_H=\int \mathrm{d}^4x\sqrt{-g}\left(R-2\Lambda\right),
+\end{equation}
+donde $\Lambda$ es la constante cosmológica. De esta forma, las ecuaciones de campo de Einstein son
+\begin{equation}\label{fieldEquations}
+	R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu}+\Lambda g_{\mu\nu}=8\pi G T_{\mu\nu},
+\end{equation}
+donde $T_{\mu\nu}$ es el tensor de momento-energía. De este modo, conociendo la métrica que soluciona \eqref{fieldEquations}, se puede determinar el potencial en el límite Newtoniano (de campo débil), producto de dicha métrica a través de \eqref{g00}. 
