@@ -1,6 +1,7 @@
 \chapter{Lentes Gravitacionales}
 En este capítulo se introduce la idea de lente gravitacional, fenómeno predicho por la teoría de la relatividad general, y comprobado observacionalmente en diferentes escalas del universo: desde la curvatura de la trayectoria de la luz de las estrellas de fondo detrás del sol, medible en los eclipses solares; hasta los efectos provocados por galaxias o súper cúmulos sobre las fuentes de luz que se encuentran detrás de ellas. Algunas referencias clave de este capítulo son \cite{schneider_ehlers_falco_1992,weinberg_2016}.
-\section{Lentes de Schwarzschild}
+\section{Introducción}
+\subsection{Lentes de Schwarschild}
 Como se comentó en el párrafo introductorio, uno de los primeros resultados de la teoría de la relatividad general susceptible a ser medido fue la desviación de un rayo de luz en presencia del sol. La teoría de la relatividad general predice que un rayo de luz que pase a una distancia mínima $\xi$ de un cuerpo de masa $M$ es desviado un ángulo
 \begin{equation}\label{deflection}
 	\alpha=\frac{4GM}{c^2\xi}=\frac{2R_S}{\xi},
@@ -110,3 +111,89 @@ y la separación angular verdadera entre la fuente y el observador está relacio
 	\theta_++\theta_-=\beta.
 \end{equation}
 De la ecuación \eqref{criteriaChAng}, se puede interpretar el significado físico del ángulo característico: Es la mitad de la distancia angular mínima que debe existir entre las dos imágenes formadas por el lente. Un caso de interés particular ocurre cuando $\beta=0$, es decir, cuando la fuente, la lente y el observador son colineales. En este caso, $\theta_\pm=\pm\alpha_0$. Sin embargo, el sistema completo es rotacionalmente simétrico respecto al eje óptico, y por esta simetría, el anillo con radio angular $\theta=\alpha_0$ es solución de la ecuación de lente. Este fenómeno se conoce como \textbf{anillo de Einstein}.
+\subsection{Lentes generales}
+En el caso más general, la fuente y el lente yacen en esferas respecto al observador, y las imágenes se observan en el cielo aparente del observador, que también se puede ver como una esfera. Considere entonces la esfera fuente $S_s$, con radio $D_s$, centrada en el observador $O$, o en una situación cosmológica, el conjunto de fuentes con corrimiento al rojo $z_s$. Considere también la esfera deflectora $S_d$ con radio $D_d$, donde se encuentra el lente $L$ (ver figura \ref{secondGL}).
+
+\begin{figure}
+\centering
+	\begin{tikzpicture}
+
+
+	
+	\coordinate (O) at (0,0);
+	\coordinate (M) at (5,0);
+	\coordinate (S) at ({9*cos(10)},{9*sin(-10)});
+	\coordinate (I) at ({5*cos(-25)},{5*sin(-25)});
+	\coordinate (N) at (9,0);
+	
+	\filldraw (0,0) circle (3pt) node[left] {$O$};
+	\filldraw (5,0) circle (3pt) node[above=0.5,right] {$L$}; 
+	\filldraw ({9*cos(10)},{9*sin(-10)}) circle (3pt) node[right] {$S$};
+	\filldraw (I) circle(3pt) node[above=0.3,right] {$I$};
+	\filldraw (N) circle(3pt) node[above=0.3,right] {$N$};
+	
+	\draw [domain=-30:30] plot ({5*cos(\x)}, {5*sin(\x)}) node[right] {$S_d$};
+	\draw [domain=-40:40] plot ({3*cos(\x)}, {3*sin(\x)}) node[right] {$S_o$};
+	\draw [domain=-20:20] plot ({9*cos(\x)}, {9*sin(\x)}) node[right] {$S_s$};
+	
+	\draw (S) -- ({5*cos(-25)},{5*sin(-25)});
+	\draw[dashed] ({5*cos(-25)},{5*sin(-25)}) -- ++ ({5*cos(-25)-9*cos(10)},{5*sin(-25)-9*sin(-10)});
+	\draw (I) -- (O);
+	\draw (O) -- (N);
+	\draw[dashed] (S) -- (O);
+	
+	\path[|-|] (0,-4) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_d$} (5,-4);
+	\path[|-|] (5,-4) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_{ds}$} (9,-4);
+	\path[|-|] (0,-5) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_s$} (9,-5);
+	
+	\begin{scope}
+	\path[clip] (N) -- (O) -- (S);
+	\draw[black, opacity=1, draw=black] (O) circle (15mm) ;
+	\node at ($(O)+(-5:22mm)$) {$\beta$};
+	\end{scope}
+	
+	\begin{scope}
+	\path[clip] (N) -- (O) -- (I);
+	\draw[black, opacity=1, draw=black] (O) circle (10mm) ;
+	\node at ($(O)+(-16:13mm)$) {$\theta$};
+	\end{scope}
+	
+	\begin{scope}
+	\path[clip] (O) -- (I) -- ({10*cos(-25)-9*cos(10)},{10*sin(-25)-9*sin(-10)});
+	\draw[black,opacity=1, draw=black] (I) circle (10mm) ;
+	\node at ($(I)+(170:13mm)$) {$\alpha$};
+	\end{scope}
+
+
+	\end{tikzpicture}
+	\caption{Configuración de lentes gravitacionales generales para un lente $L$, un observador $O$ y una fuente $S$.}
+	\label{secondGL}
+
+\end{figure}
+
+Nuevamente, se conoce a la línea determinada por segmento $\overline{OL}$ como eje óptico, que intersecta la esfera fuente $S_s$ en $N$. Adicionalmente, se considera la esfera del observador, $S_o$, como el cielo aparente de este.
+
+En $S_o$, la fuente aparecería en la posición angular $\beta$ si no hubiese presencia del lente. En presencia del lente, hay rayos de luz que conectan la fuente y el observador que se curvan cerca a $S_d$. El observador verá entonces la fuente en una posición angular $\theta$ sobre $S_o$.
+
+En general, las posiciones angulares son muy pequeñas, por lo que sólo se debe considerar un cono pequeño alrededor del eje óptico. Sobre él, se pueden ver las tres esferas como planos tangentes. En este caso, se llamarán a $S_s$ y $S_d$ como plano de fuente y plano de lente, respectivamente.
+
+La separación del rayo de luz respecto al eje óptico, $LI$, se describirá por el vector bidimensional $\vec{\xi}$ en el plano de lente. Si $\alpha$ es pequeño, se puede aproximar la trayectoria del rayo de luz por su forma asintótica descrita por los segmentos $\overline{SI}$ y $\overline{IO}$. Ahora, como $\vec{\xi}$ es un vector, los ángulos $\vec{\alpha}$ y $\vec{\beta}$ se describirán como vectores (angulares) en el plano tangente a $S_o$.
+
+Entonces, de forma análoga al caso planar, la ecuación de lente es
+\begin{equation}
+	\vec{\beta}=\vec{\theta}-\frac{D_{ds}}{D_s}\vec{\alpha}(\vec{xi}),
+\end{equation}
+con $\vec{\theta}=\frac{\vec{\xi}}{D_d}$, o, en términos de la distancia $\vec{\eta}=D_s\vec{\beta}$ de la fuente al eje óptico,
+\begin{equation}
+	\vec{\eta}=\frac{D_s}{D_d}\xi-D_{ds}\vec{\alpha}(\vec{\xi}).
+\end{equation}
+
+En las anteriores ecuaciones se escribió $\vec{\alpha}$ como función de $\xi$, y a continuación se determinará exactamente esta forma funcional. Para lentes geométricamente delgadas, los ángulos de desviación de varias masas puntuales se suman. De este modo, se puede descomponer la distribución general de materia en parcelas de masa $m_i$, y escribir el ángulo de desviación como
+\begin{equation}\label{deflectionSuperposition}
+	\vec{\alpha}(\vec{\xi})=\sum_i \frac{4Gm_i}{c^2}\frac{\vec{\xi}-\vec{\xi_i}}{|\vec{\xi}-\vec{\xi_i}|^2},
+\end{equation}
+donde $\xi$ representa la posición del rayo de luz en el plano de la lente, y $\xi_i$ es la posición de la masa $m_i$ sobre dicho plano. Se puede tomar el límite al continuo de \eqref{deflectionSuperposition}, con $\mathrm{d}m=\Sigma(\vec{\xi})\mathrm{d}^2\xi$, donde $\mathrm{d}^2\xi$ es el elemento de superficie del plano de la lente, y $\Sigma(\vec{\xi})$ es la densidad de masa superficial en la posición $\xi$, generada proyectando la distribución de masa volumétrica del deflector sobre el plano de la lente. Entonces
+\begin{equation}
+	\vec{\alpha}(\vec{\xi})=\frac{4G}{c^2}\int_{\mathbb{R}^2}\mathrm{d}{\xi'}^2 \Sigma(\vec{\xi'})\frac{\vec{\xi}-\vec{\xi'}}{|\vec{\xi}-\vec{\xi'}|^2}.
+\end{equation}
+Para que esta ecuación sea válida, el campo gravitacional debe ser débil y por lo tanto, el ángulo de desviación debe ser pequeño. Además, la distribución de materia debe ser estacionaria con respecto a la velocidad de la luz $c$, esto es, la velocidad de la materia en el lente debe ser mucho menor que $c$ \cite{schneider_ehlers_falco_1992}.
