@@ -1,2 +1,112 @@
 \chapter{Lentes Gravitacionales}
+En este capítulo se introduce la idea de lente gravitacional, fenómeno predicho por la teoría de la relatividad general, y comprobado observacionalmente en diferentes escalas del universo: desde la curvatura de la trayectoria de la luz de las estrellas de fondo detrás del sol, medible en los eclipses solares; hasta los efectos provocados por galaxias o súper cúmulos sobre las fuentes de luz que se encuentran detrás de ellas. Algunas referencias clave de este capítulo son \cite{schneider_ehlers_falco_1992,weinberg_2016}.
+\section{Lentes de Schwarzschild}
+Como se comentó en el párrafo introductorio, uno de los primeros resultados de la teoría de la relatividad general susceptible a ser medido fue la desviación de un rayo de luz en presencia del sol. La teoría de la relatividad general predice que un rayo de luz que pase a una distancia mínima $\xi$ de un cuerpo de masa $M$ es desviado un ángulo
+\begin{equation}\label{deflection}
+	\alpha=\frac{4GM}{c^2\xi}=\frac{2R_S}{\xi},
+\end{equation}
+suponiendo que el parámetro de impacto $\xi$ es mucho mayor que el radio de Schwarzschild \cite{weinberg_2016}
+\begin{equation}
+	R_S=\frac{2GM}{c^2}.
+\end{equation}
 
+\begin{figure}
+\centering
+	\begin{tikzpicture}
+	\draw (0,0) -- (5,0);
+	\draw (5,0) -- (5,-4);
+	\draw (9,-2) -- (5,-4);
+	\draw (5,-4) -- (0,0);
+	
+	\draw[dashed] (0,0) -- (9,-2);
+	\draw[dashed] (5,-4) -- (0, {-4-5/2});
+	\draw[dashed] (0,0) -- (0, {-4-5/2});
+	\draw[dashed] (9,-2) -- (5,-2);
+	
+	\filldraw (0,0) circle (3pt) node[left] {$O$};
+	\filldraw (5,0) circle (3pt) node[above] {$M$}; 
+	\filldraw (9,-2) circle (3pt) node[right] {$S$};
+	
+	\path[|-|] (-2, 0) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$\xi$} (-2,-4);
+	\path[|-|] (10,-2) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$\ell$} (10,-4);
+	\path[|-|] (10,-2) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$\xi-\ell$} (10,0);
+	\path[|-|] (0,1) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_d$} (5,1);
+	\path[|-|] (5,1) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_{ds}$} (9,1);
+	\path[|-|] (0,2) edge[] node[midway, fill=white, anchor=center, pos=0.5] {$D_s$} (9,2);
+	
+	\coordinate (O) at (0,0);
+	\coordinate (M) at (5,0);
+	\coordinate (S) at (9,-2);
+	\coordinate (I) at (5,-4);
+
+
+\begin{scope}
+\path[clip] (M) -- (O) -- (S);
+\draw[black, opacity=1, draw=black] (O) circle (15mm) ;
+\node at ($(O)+(-8:20mm)$) {$\beta$};
+\end{scope}
+
+\begin{scope}
+\path[clip] (M) -- (O) -- (I);
+\draw[black, opacity=1, draw=black] (O) circle (10mm) ;
+\node at ($(O)+(-30:12mm)$) {$\theta$};
+\end{scope}
+
+\begin{scope}
+\path[clip] (M) -- (I) -- (S);
+\draw[black, opacity=1, draw=black] (I) circle (10mm) ;
+\node at ($(I)+(50:12mm)$) {$\phi$};
+\end{scope}
+
+\begin{scope}
+\path[clip] (O) -- (I) -- (M);
+\draw[black, opacity=1, draw=black] (I) circle (11mm) ;
+\node at ($(I)+(120:13mm)$) {$\alpha$};
+\end{scope}
+
+	\end{tikzpicture}
+	\caption{Configuración de lentes gravitacionales para una masa puntual $M$, un observador $O$ y una fuente $S$.}
+	\label{firstGL}
+
+\end{figure}
+Para mostrar el efecto de una masa sobre los rayos de luz, considere la configuración más simple de lentes gravitacionales, ilustrado en la figura \ref{firstGL}: una masa puntual $M$, que se encuentra a una distancia $D_d$ del observador $O$. La fuente $S$ se encuentra a una distancia $D_s$ del observador y su verdadera separación angular respecto al segmento $\overline{OM}$ (conocido como eje óptico) es $\beta$, la separación angular a la cual se observaría en ausencia de lentes. $\theta$ es la separación angular observada en presencia de la lente.Un rayo de luz que pasa a una distancia $\xi$ es desviado un ángulo $\alpha$, dado por \eqref{deflection}.
+
+Se puede determinar una expresión para $\beta$ a partir de la trigonometría fundamental. Primero, observe que el ángulo $\phi$ de la figura \ref{firstGL} es $\pi/2+\theta-\alpha$. De este modo, es posible escribir la relación trigonométrica
+$$\frac{\pi}{2}-\phi=\alpha-\theta=\frac{\ell}{D_{ds}},$$
+de forma que $\ell=D_{ds}(\alpha-\theta),$ y
+\begin{equation}\label{someBeta}
+	\beta=\frac{\xi}{D_d}-\frac{D_{ds}}{D_s}\alpha=\frac{\xi}{D_d}-\frac{2R_S}{\xi}\frac{D_{ds}}{D_s}.
+\end{equation}
+Sin embargo, la mayoría de las lentes gravitacionales observables ocurren en el universo a gran escala, por lo que se debe usar un modelo cosmológico para determinar las distancias, que pasarán a ser distancias diámetro-angulares, para las cuales, en general, $D_{ds}\neq D_s-D_d$ \cite{schneider_ehlers_falco_1992}. Reescribiendo \eqref{someBeta}, se obtiene la ecuación de lente
+\begin{equation}\label{lensEquation}
+\boxed{	\beta=\theta-2R_S\frac{D_{ds}}{D_sD_d}\frac{1}{\theta}.}
+\end{equation}
+Se introduce el ángulo característico y la longitud característica como
+\begin{equation}
+	\alpha_0=\sqrt{2R_S\frac{D_{ds}}{D_dD_s}}
+\end{equation}
+y
+\begin{equation}
+	\xi_0=\sqrt{2R_S\frac{D_dD_{ds}}{D_s}}=\sqrt{\frac{4GM}{c^2}\frac{D_dD_{ds}}{D_s}}=\alpha_0D_d,
+\end{equation}
+respectivamente. Adicionalmente, se introduce una escala de longitud característica en el plano de la fuente, dada por
+\begin{equation}
+	\eta_0=\sqrt{2R_S\frac{D_sD_{ds}}{D_d}}=\sqrt{\frac{4GM}{c^2}\frac{D_sD_{ds}}{D_d}}=\alpha_0D_s.
+\end{equation}
+Con el ángulo característico, se puede escribir la ecuación de la lente \eqref{lensEquation} como
+\begin{equation}
+	\theta^2-\beta\theta-\alpha_0^2=0,
+\end{equation}
+cuyas posibles soluciones son
+\begin{equation}
+	\theta_\pm=\frac{1}{2}\left( \beta\pm \sqrt{4\alpha^2+\beta^2}\right),
+\end{equation}
+lo que sugiere que se forman dos imágenes, una a cada lado del eje óptico. La separación de estas imágenes es
+\begin{equation}\label{criteriaChAng}
+	\Delta\theta=\theta_+-\theta_-=\sqrt{4\alpha_0^2+\beta^2}\geq 2\alpha_0,
+\end{equation}
+y la separación angular verdadera entre la fuente y el observador está relacionada con las posiciones de las imágenes por la ecuación
+\begin{equation}
+	\theta_++\theta_-=\beta.
+\end{equation}
+De la ecuación \eqref{criteriaChAng}, se puede interpretar el significado físico del ángulo característico: Es la mitad de la distancia angular mínima que debe existir entre las dos imágenes formadas por el lente. Un caso de interés particular ocurre cuando $\beta=0$, es decir, cuando la fuente, la lente y el observador son colineales. En este caso, $\theta_\pm=\pm\alpha_0$. Sin embargo, el sistema completo es rotacionalmente simétrico respecto al eje óptico, y por esta simetría, el anillo con radio angular $\theta=\alpha_0$ es solución de la ecuación de lente. Este fenómeno se conoce como \textbf{anillo de Einstein}.
