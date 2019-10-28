@@ -180,20 +180,174 @@ En general, las posiciones angulares son muy pequeñas, por lo que sólo se debe
 La separación del rayo de luz respecto al eje óptico, $LI$, se describirá por el vector bidimensional $\vec{\xi}$ en el plano de lente. Si $\alpha$ es pequeño, se puede aproximar la trayectoria del rayo de luz por su forma asintótica descrita por los segmentos $\overline{SI}$ y $\overline{IO}$. Ahora, como $\vec{\xi}$ es un vector, los ángulos $\vec{\alpha}$ y $\vec{\beta}$ se describirán como vectores (angulares) en el plano tangente a $S_o$.
 
 Entonces, de forma análoga al caso planar, la ecuación de lente es
-\begin{equation}
-	\vec{\beta}=\vec{\theta}-\frac{D_{ds}}{D_s}\vec{\alpha}(\vec{xi}),
+\begin{equation}\label{newLensEquation}
+	\vec{\beta}=\vec{\theta}-\frac{D_{ds}}{D_s}\vec{\alpha}(\vec{\xi}),
 \end{equation}
 con $\vec{\theta}=\frac{\vec{\xi}}{D_d}$, o, en términos de la distancia $\vec{\eta}=D_s\vec{\beta}$ de la fuente al eje óptico,
 \begin{equation}
 	\vec{\eta}=\frac{D_s}{D_d}\xi-D_{ds}\vec{\alpha}(\vec{\xi}).
 \end{equation}
 
-En las anteriores ecuaciones se escribió $\vec{\alpha}$ como función de $\xi$, y a continuación se determinará exactamente esta forma funcional. Para lentes geométricamente delgadas, los ángulos de desviación de varias masas puntuales se suman. De este modo, se puede descomponer la distribución general de materia en parcelas de masa $m_i$, y escribir el ángulo de desviación como
+En las anteriores ecuaciones se escribió $\vec{\alpha}$ como función de $\vec{\xi}$, y a continuación se determinará exactamente esta forma funcional. Para lentes geométricamente delgadas, los ángulos de desviación de varias masas puntuales se suman. De este modo, se puede descomponer la distribución general de materia en parcelas de masa $m_i$, y escribir el ángulo de desviación como
 \begin{equation}\label{deflectionSuperposition}
 	\vec{\alpha}(\vec{\xi})=\sum_i \frac{4Gm_i}{c^2}\frac{\vec{\xi}-\vec{\xi_i}}{|\vec{\xi}-\vec{\xi_i}|^2},
 \end{equation}
-donde $\xi$ representa la posición del rayo de luz en el plano de la lente, y $\xi_i$ es la posición de la masa $m_i$ sobre dicho plano. Se puede tomar el límite al continuo de \eqref{deflectionSuperposition}, con $\mathrm{d}m=\Sigma(\vec{\xi})\mathrm{d}^2\xi$, donde $\mathrm{d}^2\xi$ es el elemento de superficie del plano de la lente, y $\Sigma(\vec{\xi})$ es la densidad de masa superficial en la posición $\xi$, generada proyectando la distribución de masa volumétrica del deflector sobre el plano de la lente. Entonces
+donde $\xi$ representa la posición del rayo de luz en el plano de la lente, y $\xi_i$ es la posición de la masa $m_i$ sobre dicho plano. Se puede tomar el límite al continuo de \eqref{deflectionSuperposition}, con $\mathrm{d}m=\Sigma(\vec{\xi})\mathrm{d}^2\xi$, donde $\mathrm{d}^2\xi$ es el elemento de superficie del plano de la lente, y $\Sigma(\vec{\xi})$ es la densidad de masa superficial en la posición $\xi$, generada proyectando la densidad de masa volumétrica del deflector sobre el plano de la lente, es decir, si $\rho(\vec{\xi},\chi)$ es la densidad de masa volumétrica, donde $\chi$ es la coordenada tangente al plano de la lente, se tiene que
+
+$$\Sigma(\vec{\xi})=\int_{\mathbb{R}} \rho(\vec{\xi},\chi)\mathrm{d}\chi.$$
+En conclusión, la ecuación del ángulo de desviación para una densidad de masa superficial $\Sigma(\vec{\xi})$ es
 \begin{equation}
 	\vec{\alpha}(\vec{\xi})=\frac{4G}{c^2}\int_{\mathbb{R}^2}\mathrm{d}{\xi'}^2 \Sigma(\vec{\xi'})\frac{\vec{\xi}-\vec{\xi'}}{|\vec{\xi}-\vec{\xi'}|^2}.
 \end{equation}
-Para que esta ecuación sea válida, el campo gravitacional debe ser débil y por lo tanto, el ángulo de desviación debe ser pequeño. Además, la distribución de materia debe ser estacionaria con respecto a la velocidad de la luz $c$, esto es, la velocidad de la materia en el lente debe ser mucho menor que $c$ \cite{schneider_ehlers_falco_1992}.
+Para que esta ecuación sea válida, el campo gravitacional debe ser débil y por lo tanto, el ángulo de desviación debe ser pequeño. Además, la distribución de materia debe ser estacionaria con respecto a la velocidad de la luz $c$, esto es, la velocidad de la materia en el lente debe ser mucho menor que $c$ \cite{schneider_ehlers_falco_1992}. 
+\subsection{Factor de magnificación}
+La desviación de la luz no sólo cambia la dirección de un rayo de luz, sino también la sección transversal del haz de rayos. El flujo de una imagen de una fuente infinitesimal es el producto de su brillo superficial (luminosidad) y el ángulo sólido $\Delta \omega$ que subtiende en el cielo. Como la luminosidad no varía, la razón del flujo de una imagen lo suficientemente pequeña en presencia de un lente con respecto al flujo de esta imagen en ausencia del lente está dada por
+\begin{equation}
+	\mu = \frac{\Delta \omega}{(\Delta \omega)_0},
+\end{equation}
+donde el subíndice $0$ denota cantidades en ausencia del lente.
+Considere ahora una fuente infinitesimal en $\vec{B}$ que subtiende un ángulo sólido $(\Delta\omega)_0$ es la esfera fuente y, en ausencia de lentes, en la esfera de visión del observador. Tome $\vec{\theta}$ como la posición angular de la imagen con ángulo sólido $\Delta\omega$. La relación entre los dos ángulos sólidos está determinada por la distorsión de área descrita por la ecuación de lente \eqref{newLensEquation}, dado por
+\begin{equation}
+\frac{(\Delta\omega)_0}{\Delta\omega}=\left|\mathop{det}\frac{\partial \vec{\beta}}{\partial \vec{\theta}}\right|=\frac{\mathcal{A}_s}{\mathcal{A}_I}\left(\frac{D_d}{D_s}\right)^2,
+\end{equation}
+esto es, la distorsión de área causada por la desviación es igual al Jacobiano del mapeo $\vec{\theta}\rightarrow\vec{\beta}$. De esta forma, el factor de magnificación es
+\begin{equation}
+\mu = \left|\mathop{det}\frac{\partial\vec{\beta}}{\partial\vec{\theta}} \right|^{-1}.
+\end{equation}
+La magnificación $\mu$ es la tasa de flujo de una imagen con respecto al flujo de la fuente sin presencia del lente. Si una fuente es enviada a distintas imágenes, las tasas de los factores de magnificación respectivos son iguales a las tasas de flujo de las imágenes \cite{schneider_ehlers_falco_1992}.
+\section{Óptica en el espacio-tiempo curvo}
+\subsection{Ecuaciones de Maxwell en el vacío}
+El tensor electromagnético es representado mediante un tensor antisimétrico $F_{\alpha\beta}=-F_{\beta\alpha}$. Este tensor guarda la información del campo eléctrico y magnético a la vez:
+
+\begin{center}
+$F_{0a}=E_a$ y $F_{ab}=-\epsilon_{abc}B_c$.
+\end{center}
+Las ecuaciones de Maxwell en una región libre de materia, generalizadas a un espacio-tiempo arbitrario $M$ con métrica $g_{\alpha\beta}$ son
+\begin{equation}\label{maxwell1}
+	F\indices{_{[\alpha\beta;\gamma]}}=\frac{1}{3}\left( F\indices{_{\alpha\beta;\gamma}}+F\indices{_{\beta\gamma;\alpha}}+F\indices{_{\gamma\alpha;\beta}} \right)=0 \text{ y}
+\end{equation}
+\begin{equation}\label{maxwell2}
+	F\indices{^{\alpha\beta}_{;\beta}}=0.
+\end{equation}
+Por otro lado, la distribución de energía y momento del campo electromagnético se tiene en cuenta por el campo tensorial
+\begin{equation}
+	T^{\alpha\beta}=F^{\alpha\gamma}F\indices{_{\gamma}^\beta}+\frac{1}{4}g^{\alpha\beta}F_{\gamma\delta}F^{\gamma\delta},
+\end{equation}
+simétrico y libre de traza:
+\begin{equation}
+T^{\alpha\beta}=T^{\beta\alpha}; \ T\indices{^\alpha_\alpha}=0,
+\end{equation}
+y obedece la ley de la divergencia
+\begin{equation}
+	T\indices{^{\alpha\beta}_{;\beta}}=0.
+\end{equation}
+\subsection{Aproximación de onda corta (WKB)}
+En general, no se pueden solucionar de forma explícita y cerrada las ecuaciones de Maxwell. Por suerte, uno está interesado en estudiar ondas planas y monocromáticas. Estas ondas planas son representadas como soluciones aproximadas de las ecuaciones de Maxwell de la forma
+\begin{equation}\label{WKB}
+	F_{\alpha\beta}\sim \mathop{Re}\left( e^{iS/\epsilon}\left( A_{\alpha\beta}+\frac{\epsilon}{i}B_{\alpha\beta} \right)+\mathop{O}(\epsilon^2)\right),
+\end{equation}
+donde $S$ es un campo escalar, $A_{\alpha\beta}$ y $B_{\alpha\beta}$ son tensores complejos antisimétricos. Para un observador con tiempo propio $\tau$, línea de mundo $x^\alpha(\tau)$ y $4-$velocidad $u^\alpha=\frac{\mathrm{d}x^\alpha}{\mathrm{d}\tau}$, la frecuencia angular $\omega$ de la onda \eqref{WKB} con $\epsilon=1$ está definida como
+\begin{equation}\label{omegaDefinition}
+	\omega=-\frac{\mathrm{d}S}{d\tau}\underset{\substack{\downarrow \\ \text{regla de la cadena}}}{=}-S_{,\alpha}u^\alpha = k_\alpha u^\alpha,
+\end{equation}
+con
+\begin{equation}
+	k_\alpha=-S_{,\alpha},
+\end{equation}
+conocido como $4$-vector de onda o vector de frecuencia.
+
+Reemplazando \eqref{WKB} en las ecuaciones de Mawxell \eqref{maxwell1}-\eqref{maxwell2} e igualando a cero los términos de orden $\epsilon^{-1}$ y $\epsilon^{0}$, se obtienen la siguientes relaciones:
+
+\begin{align}
+\label{firstWKB}
+\text{orden }\epsilon^{-1}: & & A_{[\alpha\beta}k_{\gamma]}=0, & & A_{\alpha\beta}k^\beta=0. \\
+\label{secondWKB}
+\text{orden }\epsilon^{0}: & & A_{[\alpha\beta;\gamma]}=B_{[\alpha\beta}k_{\gamma]}, & & A\indices{_\alpha^\beta_{;\beta}}=B_{\alpha\beta}k^\beta.
+\end{align}
+\subsection{Ecuación eikonal para los rayos de luz}
+Multiplicando la primera ecuación de \eqref{firstWKB} por $k^\gamma$ y usando la segunda ecuación de \eqref{firstWKB},
+$$0=A_{[\alpha\beta}k_{\gamma]}k^\gamma=\frac{1}{3}\left( A_{\alpha\beta}k_\gamma+A_{\gamma\alpha}k_\beta+A_{\beta\gamma}k_\alpha\right)k^\gamma=\frac{A_{\alpha\beta}k_\gamma k^\gamma}{3}$$
+$$\therefore A_{\alpha\beta}k_\gamma k^\gamma=0.$$
+Asumiendo que $A_{\alpha\beta}$ es un tensor no nulo (en general),
+\begin{equation}
+	k_\alpha k^\alpha=0,
+\end{equation}
+es decir, el vector de onda $k^\alpha=-g^{\alpha\beta}S_{,\beta}$ es un vector tipo luz (nulo), y la fase debe obedecer la ecuación eikonal
+\begin{equation}\label{eikonalEquation}
+	0=k_\alpha k^\alpha = g^{\alpha\beta}S_{,\alpha}S_{,\beta}.
+\end{equation}
+Entonces, las hipersuperficies de fase constante o frentes de onda son siempre tangentes al cono de luz local. Se requiere además, sin pérdida de generalidad, que $k^\alpha$ esté orientado al futuro, lo que implica que $\omega>0$, para todo observador.
+
+Las curvas integrales $x^\alpha (\vartheta)$ del campo vectorial $k^\alpha$, definidas por
+\begin{equation}\label{integralCurves}
+\frac{\mathrm{d}x^\alpha}{\mathrm{d}\vartheta}=k^\alpha = -g^{\alpha\beta} S_{,\beta}
+\end{equation}
+se llaman rayos de luz. Como $k^\alpha S_{,\alpha}=0,$ están contenidos en la hipersuperficie $S=$constante.
+
+\subsection{Propagación de los rayos de luz}
+Diferenciando el vector tangente $k^\alpha$ de un rayo de luz covariantemente a lo largo del rayo, y recordando que $k_\alpha$ es un gradiente, $k_{\alpha;\beta}=k_{\beta;\alpha}$. De \eqref{eikonalEquation}, se deduce que
+$$k^\beta k\indices{^\alpha_{;\beta}}=k^\beta g^{\alpha\gamma}k_{\gamma;\beta}=k^\beta g^{\alpha\gamma}k_{\beta;\gamma}=\frac{1}{2}g^{\alpha\gamma}\left( k^\beta k_\beta \right)_{;\gamma}=0.$$
+El resultado
+\begin{equation}
+	k\indices{^\alpha_{;\beta}}k^\beta =0
+\end{equation}
+se puede reescribir, usando \eqref{integralCurves} como
+\begin{dmath*}
+0=\nabla_\beta \left( \frac{\mathrm{d}x^\alpha}{\mathrm{d}\vartheta}\right)\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta}=\partial_\beta \left( \frac{\mathrm{d}x^\alpha}{\mathrm{d}\vartheta}\right)\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta} + \Gamma\indices{^\alpha_{\beta\gamma}} \frac{\mathrm{d}x^\gamma}{\mathrm{d}\vartheta}\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta}=\frac{\mathrm{d}^2 x^\alpha}{\mathrm{d}\vartheta^2}\frac{\partial \vartheta}{\partial x^\beta}\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta}+\Gamma\indices{^\alpha_{\beta\gamma}} \frac{\mathrm{d}x^\gamma}{\mathrm{d}\vartheta}\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta},
+\end{dmath*}
+\begin{equation}\label{geodesicLight}
+\therefore  \frac{\mathrm{d}^2 x^\alpha}{\mathrm{d}\vartheta^2}+\Gamma\indices{^\alpha_{\beta\gamma}} \frac{\mathrm{d}x^\gamma}{\mathrm{d}\vartheta}\frac{\mathrm{d}x^\beta}{\mathrm{d}\vartheta}=0,
+\end{equation}
+lo que implica que los rayos de luz son geodésicas nulas. Además, se le atribuyen a los rayos de luz el $4-$momento $\hbar k^\alpha$, como si fuesen líneas de mundo. Por otro lado, observe que si se toma el Hamiltoniano
+\begin{equation}\label{hamiltonianLight}
+	H=\frac{1}{2}g^{\alpha\beta}(x^\gamma)k_\alpha k_\beta,
+\end{equation}
+se tiene que
+$$\frac{\partial H}{\partial k_\eta}=\frac{1}{2}g^{\alpha\beta}(x^\gamma)\frac{\partial}{\partial k_\eta} \left( k_\alpha k_\beta \right)=k^\eta=\frac{\mathrm{d}x^\eta}{\mathrm{d}\vartheta}$$
+y
+$$-\frac{\partial H}{\partial x^\eta}=-\frac{1}{2}\partial_\eta g^{\alpha\beta}(x^\gamma)k_\alpha k_\beta=-\frac{1}{2}\left( \Gamma\indices{^\alpha_{\eta\sigma}}g^{\sigma\beta}+\Gamma\indices{^\beta_{\eta\sigma}}g^{\alpha\sigma} \right)k_\alpha k_\beta=-g_{\xi\eta}\Gamma\indices{^\xi_{\nu\sigma}}\frac{\mathrm{d}x^\nu}{\mathrm{d}\vartheta}\frac{\mathrm{d}x^\sigma}{\mathrm{d}\vartheta}=\frac{\mathrm{d}^2 x_\eta}{\mathrm{d}\vartheta^2}.$$
+Resumiendo,
+\begin{align}
+\label{hamiltonLight1}
+\frac{\mathrm{d}x^\alpha}{\mathrm{d}\vartheta} &=  \frac{\partial H}{\partial k_\alpha},\\
+\label{hamiltonLight2}
+\frac{\partial k_\alpha}{\partial\vartheta} &=  -\frac{\partial H}{\partial x^\alpha}.
+\end{align}
+\subsection{Corrimiento de la frecuencia}
+La ley de transporte \eqref{geodesicLight} para el vector de onda $k^\alpha$ permite calcular el corrimiento de la frecuencia entre una fuente puntual en un evento $S$ con $4-$velocidad $u_S^\alpha$ y un observador con $4-$velocidad $u_O^\alpha$.
+
+De acuerdo con la definición \eqref{omegaDefinition} de $\omega$, y al hecho de que el cambio de fase $\mathrm{d}S$ es el mismo en la fuente y en el observador, se tiene que
+\begin{equation}\label{frequencyShift}
+	\frac{\omega_O}{\omega_S}=\frac{(k_\alpha u^\alpha)_O}{(k_\beta u^\beta)_S}=\frac{\mathrm{d}\tau_S}{\mathrm{d}\tau_O}:=\frac{1}{1+z}.
+\end{equation}
+Vale la pena notar que el corrimiento de la frecuencia es independiente de la frecuencia o de la longitud de onda, puesto que un reescalamiento de $S$ y $k_\alpha$ no cambia la razón \eqref{frequencyShift}.
+\subsection{Principio de Fermat}
+Hasta ahora se ha visto que los rayos de luz (en el vacío) se pueden caracterizar como soluciones nulas de la ecuación geodésica \eqref{geodesicLight} o como soluciones de las ecuaciones de Hamilton \eqref{hamiltonLight1}-\eqref{hamiltonLight2}. De forma alternativa, se introduce el Lagrangiano
+\begin{equation}
+	\mathcal{L}(x^\alpha, \dot{x}^\beta)=\frac{1}{2}g_{\alpha\beta}(x^\gamma)\dot{x}^\alpha\dot{x}^\beta,
+\end{equation}
+y se escogen las soluciones a lo largo de las cuales $\mathcal{L}$ se anula. Esto equivale a decir que los rayos de luz son extremos del principio de acción 
+\begin{equation}
+	\delta\left[\int g_{\alpha\beta}\dot{x}^\alpha\dot{x}^\beta \mathrm{d}\vartheta \right]=0
+\end{equation}
+junto con que $\mathcal{L}=0$. A partir de este principio, se deduce el siguiente teorema, que caracteriza los rayos de luz.
+\begin{theo}[Principio de Fermat]
+Tome $S$ como un evento (fuente) y $\ell$ una línea de mundo tipo tiempo (observador) en un espacio tiempo $(M, g_{\alpha\beta})$. Entonces, una curva suave nula $\gamma$ de $S$ a $\ell$ es un rayo de luz (geodésica nula) si y sólo si su tiempo de llegada $\tau$ en $\ell$ es estacionario bajo variaciones de primer orden de $\gamma$ dentro del conjunto de curvas suaves nulas de $S$ a $\ell,$ esto es,
+\begin{equation}
+	\delta \tau=0.
+\end{equation}
+\end{theo}
+
+\begin{proof}
+Acá se demostrará la necesidad, puesto que la suficiencia es un poco más elaborada, y puede ser consultada en \cite{schneider_ehlers_falco_1992}. Tome $\ell$ como la línea de mundo del observador, caracterizada por su $4-$posición $\xi^\alpha(\tau)$, con $4-$velocidad $u^\alpha(\tau)=\frac{\mathrm{d}\xi^\alpha}{\mathrm{d}\tau}$, y tome $\eta^\alpha(\vartheta,\epsilon)$ como la familia de curvas nulas $\gamma(\epsilon)$ de $S$ a $\ell$, de tal modo que $0\leq\vartheta\leq1$, $|\epsilon|\leq \epsilon_0$ (para algún $\epsilon_0$ positivo lo suficientemente pequeño), $\eta^\alpha(0,\epsilon)=x^\alpha(S)$, $\eta^\alpha(1,\epsilon)=\xi^\alpha(\tau(\epsilon))$, y, para todo $\vartheta$ y $\epsilon$, $\dot{\eta}_\alpha\dot{\eta}^\alpha=0$. Entonces,
+
+$$0=\delta\left[ \int_0^1 \dot{\eta}_\alpha\dot{\eta}^\alpha \mathrm{d}\vartheta  \right]=\frac{\mathrm{d}}{\mathrm{d}\epsilon}\left[ \int_0^1 \dot{\eta}_\alpha\dot{\eta}^\alpha \mathrm{d}\vartheta  \right]_{\epsilon=0}.$$
+Integrando por partes,
+
+$$\frac{\mathrm{d}}{\mathrm{d}\epsilon}\left[ \int_0^1 \dot{\eta}_\alpha\dot{\eta}^\alpha \mathrm{d}\vartheta  \right]_{\epsilon=0} =\frac{\mathrm{d}}{\mathrm{d}\epsilon}\left[\dot{\eta}_\alpha(1,\epsilon)\eta^\alpha(1,\epsilon)- \dot{\eta}_\alpha(0,\epsilon)\eta^\alpha(0,\epsilon)-\int_0^1 \ddot{\eta}_\alpha(\vartheta,\epsilon) \eta^\alpha(\vartheta,\epsilon) \mathrm{d}\vartheta\right].$$
+Ahora, $\dot{\eta}_\alpha(0,\epsilon)\eta^\alpha(0,\epsilon)=\dot{\eta}_\alpha(0,\epsilon)x^\alpha(S)=\omega_S$ debe ser independiente de $\epsilon$, porque se espera que la frecuencia angular del rayo de luz al salir de la fuente sea invariante respecto a la curva que tome. Por otro lado, se espera que $\dot{\eta}_\alpha(1,\epsilon)$ sea independiente de $\epsilon$. De este modo,
+$$0=\dot{\eta}_\alpha(1)\frac{\mathrm{d}\xi^\alpha(\tau(\epsilon))}{\mathrm{d}\epsilon}\Big|_{\epsilon=0}-\frac{\mathrm{d}}{\mathrm{d}\epsilon}\left[ \int_0^1 \ddot{\eta}_\alpha \eta^\alpha\mathrm{d}\vartheta \right]_{\epsilon=0}=\dot{\eta}_\alpha(1)u^\alpha(\tau(0))\frac{\mathrm{d}\tau}{\mathrm{d}\epsilon}\Big|_{\epsilon=0}-\frac{\mathrm{d}}{\mathrm{d}\epsilon}\left[ \int_0^1 \ddot{\eta}_\alpha \eta^\alpha\mathrm{d}\vartheta \right]_{\epsilon=0}.$$
+Si $\gamma(0)$ es una geodésica y, sin pérdida de generalidad, afinmente parametrizada, se tiene que $\ddot{\eta}^\alpha=0$. Por otro lado, como $\dot{\eta}_\alpha$ es de tipo luz y $u^{\alpha}$ es de tipo tiempo, ambos están dirigidos hacia el futuro, de modo que $\dot{\eta}_\alpha(1)u^\alpha(\tau(0))$ es positivo, y
+
+$$0=\frac{\mathrm{d}\tau}{\mathrm{d}\epsilon}\Big|_{\epsilon=0}=\delta\tau.$$
+\end{proof}
