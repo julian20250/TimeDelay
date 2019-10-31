@@ -1,7 +1,7 @@
 import markovDelay as mD
 data = []
 initialGuess = [60,0.3,0.3,1,1,1]
-initialDeviations = [1,0.1,0.1,0.3,0.3,0.3]
+initialDeviations = [0.5,0.1,0.1,0.3,0.3,0.3]
 
 data.append([0.68, 0.77,0.31,0.42,0.89])
 data.append([0.96,2.32,1.72,1.72,1.59,2.51])

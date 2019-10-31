@@ -131,14 +131,14 @@ def likelihood_Function(H_0, omega_m0, omega_q0, alpha,
 
         acumulator = 0
         for x in range(len(data)):
-            acumulator += (delta_ts[x]-time_delay(theta_is[x], theta_js[x], H_0,z_ds[x], z_ss[x], omega_m0, omega_q0, alpha, alpha_x, m))**2
+            acumulator -= (delta_ts[x]-time_delay(theta_is[x], theta_js[x], H_0,z_ds[x], z_ss[x], omega_m0, omega_q0, alpha, alpha_x, m))**2
 
         return acumulator
 
 def model_Prior(H_0,omega_m0, omega_q0, alpha, alpha_x, m, deviations):
     """
-        This fit asummes that all the cosmological parameters are distributed
-        like gaussians with means and deviations given by input.
+        This prior distribution discards all the values that doesn't have
+        physical meaning.
 
         Input
         - H_0 (float): Hubble parameter
@@ -158,14 +158,22 @@ def model_Prior(H_0,omega_m0, omega_q0, alpha, alpha_x, m, deviations):
     if cond:
         return 0
     return 1
-    #acumulator = 0
-    #for x,y,z in zip(parameters, means, deviations):
-    #    acumulator += ((x-y)/z)**2
-    #return acumulator
 
 def transition_Model(means, deviations):
+    """
+        This function chooses the new values to be compared with the last values
+        using a normal like distribution for all the parameters.
+
+        Input:
+        - means (list): list with all the means of the cosmological parameters
+        - deviations (list): list with all the deviations of the cosmological parameters
+
+        Output:
+        - l (list): list with the new means and deviations for the cosmological parameters,
+        structured as follows: new_means+new_deviations
+    """
     l = []
-    hyperDeviations=[1, 0.001,0.001,.05,.05,.03]
+    hyperDeviations=[0.6, 0.001,0.001,.05,.05,.03]
     for x,y in zip(means, deviations):
         l.append(np.random.normal(x,y))
     for x,y in zip(deviations,hyperDeviations):
@@ -174,6 +182,17 @@ def transition_Model(means, deviations):
 
 
 def acceptance_rule(old, new):
+    """
+        This function determines if accept or reject the new data, based on the
+        detailed balance method.
+
+        Input:
+        - old (float): old value of detailed balance condition
+        - new (float): new value of detailed balance condition
+
+        Output:
+        - (Bool): True if accepting, False if rejecting
+    """
     if new>old:
         return True
     else:
@@ -181,7 +200,16 @@ def acceptance_rule(old, new):
         return (accept < np.exp(new-old))
 
 def metropolis_Hastings(param_init, iterations, deviations,data):
+    """
+        This function implements the Metropolis Hastings method for obtaining
+        the best possible parameters from a set of data.
 
+        Input:
+        - param_init (list): initial parameters
+        - iterations (int): number of iterations
+        - deviations (list): initial deviations
+        - data (list of lists): experimental data
+    """
     #Order of Data
     # H_0,omega_m0, omega_q0, alpha, alpha_x, m
 
