@@ -4,6 +4,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+c =299792.458 #km/s
+kmToMPc = 3.240779289666e-20
 
 def r_dyer_roeder(z, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
     """
@@ -85,7 +87,7 @@ def cosmological_Distances(H_0,z_a, z_b, omega_m0, omega_q0, alpha, alpha_x, m):
         Output:
         - D (float): Cosmological distance
     """
-    return r_dyer_roeder(abs(z_a-z_b), omega_m0, omega_q0, alpha, alpha_x, m)/H_0
+    return c*r_dyer_roeder(abs(z_a-z_b), omega_m0, omega_q0, alpha, alpha_x, m)/H_0
 
 def time_delay(th_1, th_2, H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m):
     """
@@ -107,7 +109,7 @@ def time_delay(th_1, th_2, H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m):
     D_s = cosmological_Distances(H_0,z_s, 0, omega_m0, omega_q0, alpha, alpha_x, m)
 
     DTheta_squared = abs(th_1**2-th_2**2)
-    return (1+z_d)*D_d*D_s*DTheta_squared/(2*D_ds)
+    return (1+z_d)*D_d*D_s*DTheta_squared/(2*D_ds*c*kmToMPc)
 
 def likelihood_Function(H_0, omega_m0, omega_q0, alpha,
         alpha_x, m, data):
@@ -175,7 +177,8 @@ def transition_Model(means, deviations):
         structured as follows: new_means+new_deviations
     """
     l = []
-    hyperDeviations=[0.1, 0.01,0.01,.05,.05,.05]
+    hyperDeviations=[0.5, 0.05,0.05,.5,.5,.5]
+    deviations = [0.5,0.01,0.01,0.5,0.5,0.5]
     for x,y in zip(means, deviations):
         l.append(np.random.normal(x,y))
     for x,y in zip(deviations,hyperDeviations):
@@ -239,11 +242,11 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
 
     graph_Likelihood(likely_accepted)
     return np.array(accepted), np.array(rejected)
-    
+
 def graph_Likelihood(likelihood):
     f = plt.figure()
-    plt.plot(range(1,len(likelihood)), likelihood)
-    plt.xlabel("Iterations")
+    plt.plot(range(1,len(likelihood)+1), likelihood)
+    plt.xlabel("Accepted Values")
     plt.ylabel("Likelihood")
     plt.tight_layout()
     plt.savefig("likelihood.png")
