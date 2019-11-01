@@ -2,6 +2,8 @@
 #Interesting References:
 #https://towardsdatascience.com/from-scratch-bayesian-inference-markov-chain-monte-carlo-and-metropolis-hastings-in-python-ef21a29e25a
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 def r_dyer_roeder(z, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
     """
@@ -173,7 +175,7 @@ def transition_Model(means, deviations):
         structured as follows: new_means+new_deviations
     """
     l = []
-    hyperDeviations=[0.6, 0.001,0.001,.05,.05,.03]
+    hyperDeviations=[0.1, 0.01,0.01,.05,.05,.05]
     for x,y in zip(means, deviations):
         l.append(np.random.normal(x,y))
     for x,y in zip(deviations,hyperDeviations):
@@ -233,3 +235,96 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
             rejected.append(x_new)
         print("Iteration %i/%i"%(ii+1,iterations), end="\r")
     return np.array(accepted), np.array(rejected)
+
+def graph_Confidence(result):
+    # H_0,omega_m0, omega_q0, alpha, alpha_x, m
+    H_0 = [ii[0] for ii in result]
+    omega_m0 = [ii[1] for ii in result]
+    omega_q0 = [ii[2] for ii in result]
+    alpha = [ii[3] for ii in result]
+    alpha_x = [ii[4] for ii in result]
+    m = [ii[5] for ii in result]
+
+    f = plt.figure(figsize=(15,15))
+    gs = GridSpec(5, 5)
+    f1 = f.add_subplot(gs[0, 0])
+    f1.scatter(H_0, omega_m0, s=1)
+    f1.set_xlabel(r"$H_0$")
+    f1.set_ylabel(r"$\Omega_{m_0}$")
+
+    f2 = f.add_subplot(gs[0, 1])
+    f2.scatter(H_0, omega_q0, s=1)
+    f2.set_xlabel(r"$H_0$")
+    f2.set_ylabel(r"$\Omega_{q_0}$")
+
+    f3 = f.add_subplot(gs[0, 2])
+    f3.scatter(H_0, alpha, s=1)
+    f3.set_xlabel(r"$H_0$")
+    f3.set_ylabel(r"$\alpha$")
+
+    f4 = f.add_subplot(gs[0, 3])
+    f4.scatter(H_0, alpha_x, s=1)
+    f4.set_xlabel(r"$H_0$")
+    f4.set_ylabel(r"$\alpha_x$")
+
+    f5 = f.add_subplot(gs[0, 4])
+    f5.scatter(H_0, m, s=1)
+    f5.set_xlabel(r"$H_0$")
+    f5.set_ylabel(r"$m$")
+
+    #New row ========
+    f6 = f.add_subplot(gs[1, 0])
+    f6.scatter(m, omega_m0, s=1)
+    f6.set_xlabel(r"$m$")
+    f6.set_ylabel(r"$\Omega_{m_0}$")
+
+    f7 = f.add_subplot(gs[1, 1])
+    f7.scatter(m, omega_q0, s=1)
+    f7.set_xlabel(r"$m$")
+    f7.set_ylabel(r"$\Omega_{q_0}$")
+
+    f8 = f.add_subplot(gs[1, 2])
+    f8.scatter(m, alpha, s=1)
+    f8.set_xlabel(r"$m$")
+    f8.set_ylabel(r"$\alpha$")
+
+    f9 = f.add_subplot(gs[1, 3])
+    f9.scatter(m, alpha_x, s=1)
+    f9.set_xlabel(r"$m$")
+    f9.set_ylabel(r"$\alpha_x$")
+
+    #New row ========
+    f10 = f.add_subplot(gs[2, 0])
+    f10.scatter(alpha_x, omega_m0, s=1)
+    f10.set_xlabel(r"$\alpha_x$")
+    f10.set_ylabel(r"$\Omega_{m_0}$")
+
+    f11 = f.add_subplot(gs[2, 1])
+    f11.scatter(alpha_x, omega_q0, s=1)
+    f11.set_xlabel(r"$\alpha_x$")
+    f11.set_ylabel(r"$\Omega_{q_0}$")
+
+    f12 = f.add_subplot(gs[2, 2])
+    f12.scatter(alpha_x, alpha, s=1)
+    f12.set_xlabel(r"$\alpha_x$")
+    f12.set_ylabel(r"$\alpha$")
+
+    #New row ========
+    f13 = f.add_subplot(gs[3, 0])
+    f13.scatter(alpha, omega_m0, s=1)
+    f13.set_xlabel(r"$\alpha$")
+    f13.set_ylabel(r"$\Omega_{m_0}$")
+
+    f14 = f.add_subplot(gs[3, 1])
+    f14.scatter(alpha, omega_q0, s=1)
+    f14.set_xlabel(r"$\alpha$")
+    f14.set_ylabel(r"$\Omega_{q_0}$")
+
+    #New row ========
+    f15 = f.add_subplot(gs[4, 0])
+    f15.scatter(omega_q0, omega_m0, s=1)
+    f15.set_xlabel(r"$\Omega_{q_0}$")
+    f15.set_ylabel(r"$\Omega_{m_0}$")
+
+    plt.tight_layout()
+    plt.savefig("result.pdf")

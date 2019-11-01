@@ -1,7 +1,7 @@
 import markovDelay as mD
 data = []
 initialGuess = [60,0.3,0.3,1,1,1]
-initialDeviations = [0.5,0.1,0.1,0.3,0.3,0.3]
+initialDeviations = [0.5,0.01,0.01,0.03,0.03,0.03]
 
 data.append([0.68, 0.77,0.31,0.42,0.89])
 data.append([0.96,2.32,1.72,1.72,1.59,2.51])
@@ -18,6 +18,6 @@ for ii in range(5):
 
 data = dataTmp
 
-result = mD.metropolis_Hastings(initialGuess, 1000, initialDeviations, data)
-print(result[0])
-print(result[1])
+result = mD.metropolis_Hastings(initialGuess, 10000, initialDeviations, data)
+mD.graph_Confidence(result[0])
+print(result[0][-1])
