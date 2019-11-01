@@ -218,6 +218,7 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
     x = param_init
     accepted = []
     rejected = []
+    likely_accepted = []
     x = x+deviations
     for ii in range(iterations):
         x_new =  transition_Model(x[:6], x[6:])
@@ -231,10 +232,21 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
                  x_new[4], x_new[5], x_new[6:])))):
             x = x_new
             accepted.append(x_new)
+            likely_accepted.append(x_new_lik)
         else:
             rejected.append(x_new)
         print("Iteration %i/%i"%(ii+1,iterations), end="\r")
+
+    graph_Likelihood(likely_accepted)
     return np.array(accepted), np.array(rejected)
+    
+def graph_Likelihood(likelihood):
+    f = plt.figure()
+    plt.plot(range(1,len(likelihood)), likelihood)
+    plt.xlabel("Iterations")
+    plt.ylabel("Likelihood")
+    plt.tight_layout()
+    plt.savefig("likelihood.png")
 
 def graph_Confidence(result):
     # H_0,omega_m0, omega_q0, alpha, alpha_x, m
