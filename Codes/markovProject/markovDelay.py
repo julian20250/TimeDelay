@@ -112,7 +112,7 @@ def time_delay(th_1, th_2, H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m):
     return (1+z_d)*D_d*D_s*DTheta_squared/(2*D_ds*c*kmToMPc)
 
 def likelihood_Function(H_0, omega_m0, omega_q0, alpha,
-        alpha_x, m, data):
+        alpha_x, m, data, error):
         """
             This function returns the likelihood function given the set of
             cosmological parameters and the experimental data.
@@ -135,7 +135,7 @@ def likelihood_Function(H_0, omega_m0, omega_q0, alpha,
 
         acumulator = 0
         for x in range(len(data)):
-            acumulator -= (delta_ts[x]-time_delay(theta_is[x], theta_js[x], H_0,z_ds[x], z_ss[x], omega_m0, omega_q0, alpha, alpha_x, m))**2
+            acumulator -= (delta_ts[x]-time_delay(theta_is[x], theta_js[x], H_0,z_ds[x], z_ss[x], omega_m0, omega_q0, alpha, alpha_x, m))**2/error[x]**2
 
         return acumulator
 
@@ -156,9 +156,11 @@ def model_Prior(H_0,omega_m0, omega_q0, alpha, alpha_x, m, deviations):
     parameters = [H_0,omega_m0, omega_q0, alpha, alpha_x, m]
     #Accept only valid cosmological parameters
     cond = H_0<0 or omega_m0>1 or omega_q0>1 or omega_m0<0 or omega_q0<0\
-            or alpha<0 or alpha_x<0 or m<0 or (omega_m0+omega_q0)>1
-    for ii in deviations:
-        cond = cond or (ii<0)
+            or alpha<0 or alpha_x<0 or m<0 or (omega_m0+omega_q0)>1\
+            or m>5#extra m
+
+    #for ii in deviations:
+    #    cond = cond or (ii<0)
     if cond:
         return 0
     return 1
@@ -178,9 +180,9 @@ def transition_Model(means, deviations):
     """
     l = []
     hyperDeviations=[0.5, 0.05,0.05,.5,.5,.5]
-    deviations = [0.5,0.01,0.01,0.5,0.5,0.5]
+    deviations = [0.5,0.1,0.1,0.1,0.1,0.1]
     for x,y in zip(means, deviations):
-        l.append(np.random.normal(x,y))
+        l.append(x+np.random.normal(0,y))
     for x,y in zip(deviations,hyperDeviations):
         l.append(np.random.normal(x,y))
     return l
@@ -204,7 +206,7 @@ def acceptance_rule(old, new):
         accept = np.random.uniform(0,1)
         return (accept < np.exp(new-old))
 
-def metropolis_Hastings(param_init, iterations, deviations,data):
+def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_limit=-1):
     """
         This function implements the Metropolis Hastings method for obtaining
         the best possible parameters from a set of data.
@@ -214,6 +216,10 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
         - iterations (int): number of iterations
         - deviations (list): initial deviations
         - data (list of lists): experimental data
+        - accept_limit (int>0, optional): stop when reaching len(accepted_values)==accept_limit
+
+        Output:
+        - [accepted, rejected,likely_accepted] (list of lists).
     """
     #Order of Data
     # H_0,omega_m0, omega_q0, alpha, alpha_x, m
@@ -223,35 +229,72 @@ def metropolis_Hastings(param_init, iterations, deviations,data):
     rejected = []
     likely_accepted = []
     x = x+deviations
-    for ii in range(iterations):
-        x_new =  transition_Model(x[:6], x[6:])
-        x_lik = likelihood_Function(x[0], x[1], x[2], x[3],
-                x[4], x[5], data)
-        x_new_lik = likelihood_Function(x_new[0], x_new[1], x_new[2], x_new[3],
-         x_new[4], x_new[5],data)
+    if accept_limit==-1:
+        for ii in range(iterations):
+            x_new =  transition_Model(x[:6], x[6:])
 
-        if (acceptance_rule(x_lik + np.log(model_Prior(x[0], x[1], x[2], x[3],
-                x[4], x[5], x[6:])),x_new_lik+np.log(model_Prior(x_new[0], x_new[1], x_new[2], x_new[3],
-                 x_new[4], x_new[5], x_new[6:])))):
-            x = x_new
-            accepted.append(x_new)
-            likely_accepted.append(x_new_lik)
-        else:
-            rejected.append(x_new)
-        print("Iteration %i/%i"%(ii+1,iterations), end="\r")
+            x_lik = likelihood_Function(x[0], x[1], x[2], x[3],
+                    x[4], x[5], data, error)
+            x_new_lik = likelihood_Function(x_new[0], x_new[1], x_new[2], x_new[3],
+             x_new[4], x_new[5],data, error)
 
-    graph_Likelihood(likely_accepted)
-    return np.array(accepted), np.array(rejected)
+            if (acceptance_rule(x_lik + np.log(model_Prior(x[0], x[1], x[2], x[3],
+                    x[4], x[5], x[6:])),x_new_lik+np.log(model_Prior(x_new[0], x_new[1], x_new[2], x_new[3],
+                     x_new[4], x_new[5], x_new[6:])))):
+                x = x_new
+                accepted.append(x_new)
+                likely_accepted.append(x_new_lik)
+            else:
+                rejected.append(x_new)
+            print("Iteration %i/%i. Accepted Values: %i"%(ii+1,iterations,len(accepted)), end="\r")
+    else:
+        ii=1
+        while(len(accepted)<accept_limit):
+            x_new =  transition_Model(x[:6], x[6:])
+
+            x_lik = likelihood_Function(x[0], x[1], x[2], x[3],
+                    x[4], x[5], data, error)
+            x_new_lik = likelihood_Function(x_new[0], x_new[1], x_new[2], x_new[3],
+             x_new[4], x_new[5],data, error)
+
+            if (acceptance_rule(x_lik + np.log(model_Prior(x[0], x[1], x[2], x[3],
+                    x[4], x[5], x[6:])),x_new_lik+np.log(model_Prior(x_new[0], x_new[1], x_new[2], x_new[3],
+                     x_new[4], x_new[5], x_new[6:])))):
+                x = x_new
+                accepted.append(x_new)
+                likely_accepted.append(x_new_lik)
+            else:
+                rejected.append(x_new)
+            print("Iteration %i. Accepted Values: %i"%(ii+1,len(accepted)), end="\r")
+            ii+=1
+
+
+    return [accepted, rejected,likely_accepted]
 
 def graph_Likelihood(likelihood):
+    """
+        This function graphs the abs(likelihood) of the accepted values, in order
+        to burn when necessary.
+
+        Input:
+        - likelihood (list): list with the likelihood of the accepted values.
+    """
     f = plt.figure()
-    plt.plot(range(1,len(likelihood)+1), likelihood)
-    plt.xlabel("Accepted Values")
-    plt.ylabel("Likelihood")
+    ax = f.add_subplot(1, 1, 1)
+    ax.plot(range(1,len(likelihood)+1), [abs(x) for x in likelihood])
+    ax.set_xlabel("Accepted Values")
+    ax.set_ylabel("Likelihood")
+    ax.set_yscale('log')
     plt.tight_layout()
-    plt.savefig("likelihood.png")
+    plt.show()
 
 def graph_Confidence(result):
+    """
+        This function graphs the confidence of all the parameters.
+
+        Input:
+        - result (list of lists): list with all the results after the calculation.
+    """
     # H_0,omega_m0, omega_q0, alpha, alpha_x, m
     H_0 = [ii[0] for ii in result]
     omega_m0 = [ii[1] for ii in result]
@@ -343,3 +386,13 @@ def graph_Confidence(result):
 
     plt.tight_layout()
     plt.savefig("result.pdf")
+
+def burn_Result(result, index):
+    """
+        This function burns the result until the first index.
+
+        Input:
+        - result (list): list with the data to be burned
+        - index (int>0): number until which the data will be burned
+    """
+    return result[index:]
