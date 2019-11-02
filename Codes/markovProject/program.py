@@ -3,7 +3,7 @@ from numpy import pi
 
 data = []
 initialGuess = [60,0.3,0.3,1,1,1]
-initialDeviations = [0.5,0.01,0.01,0.5,0.5,0.5]
+initialDeviations =  [0.1,0.01,0.01,0.05,0.05,0.05]
 errorDt = [ii*3600*24 for ii in [0.2, 36.525, 1.2, 1.6, 6,5]]
 data.append([0.68, 0.77,0.31,0.42,0.89])
 data.append([0.96,2.32,1.72,1.72,1.59,2.51])
@@ -21,7 +21,7 @@ for ii in range(5):
 data = dataTmp
 
 result = mD.metropolis_Hastings(initialGuess, 1000, initialDeviations, data,
-        errorDt, 1500)
+        errorDt, 2000, 50)
 mD.graph_Likelihood(result[2])
 chain=input("Wish to burn? (y/n)>")
 while chain!="n":

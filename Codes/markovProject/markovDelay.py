@@ -179,12 +179,13 @@ def transition_Model(means, deviations):
         structured as follows: new_means+new_deviations
     """
     l = []
-    hyperDeviations=[0.5, 0.05,0.05,.5,.5,.5]
-    deviations = [0.1,0.01,0.01,0.05,0.05,0.05]
+    #hyperDeviations=[0.5, 0.05,0.05,.5,.5,.5]
     for x,y in zip(means, deviations):
         l.append(x+np.random.normal(0,y))
-    for x,y in zip(deviations,hyperDeviations):
-        l.append(np.random.normal(x,y))
+    #for x,y in zip(deviations,hyperDeviations):
+    #    l.append(np.random.normal(x,y))
+    for x in deviations:
+        l.append(x)
     return l
 
 
@@ -206,7 +207,8 @@ def acceptance_rule(old, new):
         accept = np.random.uniform(0,1)
         return (accept < np.exp(new-old))
 
-def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_limit=-1):
+def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_limit=-1,
+                        decreaseDeviation=-1):
     """
         This function implements the Metropolis Hastings method for obtaining
         the best possible parameters from a set of data.
@@ -217,6 +219,8 @@ def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_l
         - deviations (list): initial deviations
         - data (list of lists): experimental data
         - accept_limit (int>0, optional): stop when reaching len(accepted_values)==accept_limit
+        - decreaseDeviation (int>0, optional) : decrease Deviations when not accepting
+        after decreaseDeviation iterations
 
         Output:
         - [accepted, rejected,likely_accepted] (list of lists).
@@ -229,6 +233,8 @@ def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_l
     rejected = []
     likely_accepted = []
     x = x+deviations
+    trueTime = 0
+    timesWithoutAccept=0
     if accept_limit==-1:
         for ii in range(iterations):
             x_new =  transition_Model(x[:6], x[6:])
@@ -244,9 +250,18 @@ def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_l
                 x = x_new
                 accepted.append(x_new)
                 likely_accepted.append(x_new_lik)
+                timesWithoutAccept = 0
+                trueTime = 0
             else:
                 rejected.append(x_new)
-            print("Iteration %i/%i. Accepted Values: %i"%(ii+1,iterations,len(accepted)), end="\r")
+                timesWithoutAccept += 1
+                trueTime +=1
+
+            if decreaseDeviation !=-1:
+                if timesWithoutAccept > decreaseDeviation:
+                    x[6:] = [jj/1.2 for jj in x[6:]]
+                    timesWithoutAccept = 0
+            print("Iteration %i/%i. Accepted Values: %i. Iterations without accepting: %i      "%(ii+1,iterations,len(accepted), trueTime), end="\r")
     else:
         ii=1
         while(len(accepted)<accept_limit):
@@ -263,9 +278,18 @@ def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_l
                 x = x_new
                 accepted.append(x_new)
                 likely_accepted.append(x_new_lik)
+                timesWithoutAccept = 0
+                trueTime = 0
             else:
                 rejected.append(x_new)
-            print("Iteration %i. Accepted Values: %i/%i"%(ii+1,len(accepted), accept_limit), end="\r")
+                timesWithoutAccept += 1
+                trueTime +=1
+            if decreaseDeviation !=-1:
+                if timesWithoutAccept > decreaseDeviation:
+                    x[6:] = [jj/1.2 for jj in x[6:]]
+                    timesWithoutAccept = 0
+
+            print("Iteration %i. Accepted Values: %i/%i. Iterations without accepting: %i      "%(ii+1,len(accepted), accept_limit, trueTime), end="\r")
             ii+=1
 
     print()
@@ -293,7 +317,9 @@ def graph_Confidence(result, data, error, resolution=10):
         This function graphs the confidence of all the parameters.
 
         Input:
-        - result (list of lists): list with all the results after the calculation.
+        - result (list of lists): list with all the results after the calculation
+        - data (list of lists): list with all the experimental values
+        - error (list): list with the uncertaintities for the time delay
     """
     # H_0,omega_m0, omega_q0, alpha, alpha_x, m
     H_0 = [ii[0] for ii in result]
@@ -314,7 +340,7 @@ def graph_Confidence(result, data, error, resolution=10):
     (r"$m$",r"$\alpha_x$"), (r"$\alpha_x$",r"$\Omega_{m_0}$"),
     (r"$\alpha_x$",r"$\Omega_{q_0}$"), (r"$\alpha_x$", r"$\alpha$"),
     (r"$\alpha$",r"$\Omega_{m_0}$"), (r"$\alpha$", r"$\Omega_{q_0}$"),
-    (r"$\Omega_{q_0}$", "$\Omega_{m_0}$")]
+    (r"$\Omega_{q_0}$", r"$\Omega_{m_0}$")]
 
     f = plt.figure(figsize=(15,15))
     gs = GridSpec(5, 5)
@@ -342,6 +368,19 @@ def burn_Result(result, index):
     """
     return result[index:]
 def info_Contourn(lastResult,limits, data, error, index, N=10):
+    """
+        This function makes the arrays to graph the confidence regions.
+
+        Input:
+        - lastResult (list): list with the last data obtained.
+        - limits (list of lists): list with all the limits of the graphics
+        - data (list of lists): list with all the experimental data
+        - error (list): list with the uncertaintities of the time delay
+        - index (int): number that determines the graphic to be done
+
+        Output:
+        - (tuple): matrices to be contoured
+    """
 
     corr = [(0,1), (0,2), (0,3), (0,4), (0,5), (5,1), (5,2), (5,3), (5,4),
     (4,1),(4,2),(4,3),(3,1),(3,2),(2,1)]
