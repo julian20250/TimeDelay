@@ -1,6 +1,7 @@
 #Database: https://www.cfa.harvard.edu/castles/
 #Interesting References:
 #https://towardsdatascience.com/from-scratch-bayesian-inference-markov-chain-monte-carlo-and-metropolis-hastings-in-python-ef21a29e25a
+#https://github.com/DanielTakeshi/MCMC_and_Dynamics/blob/master/standard_mcmc/Quick_MH_Test_Example.ipynb
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
@@ -156,8 +157,7 @@ def model_Prior(H_0,omega_m0, omega_q0, alpha, alpha_x, m, deviations):
     parameters = [H_0,omega_m0, omega_q0, alpha, alpha_x, m]
     #Accept only valid cosmological parameters
     cond = H_0<0 or omega_m0>1 or omega_q0>1 or omega_m0<0 or omega_q0<0\
-            or alpha<0 or alpha_x<0 or m<0 or (omega_m0+omega_q0)>1\
-            or m>5#extra m
+            or alpha<0 or alpha_x<0 or m<0 or (omega_m0+omega_q0)>1
 
     #for ii in deviations:
     #    cond = cond or (ii<0)
@@ -180,7 +180,7 @@ def transition_Model(means, deviations):
     """
     l = []
     hyperDeviations=[0.5, 0.05,0.05,.5,.5,.5]
-    deviations = [0.5,0.1,0.1,0.1,0.1,0.1]
+    deviations = [0.1,0.01,0.01,0.05,0.05,0.05]
     for x,y in zip(means, deviations):
         l.append(x+np.random.normal(0,y))
     for x,y in zip(deviations,hyperDeviations):
@@ -265,10 +265,10 @@ def metropolis_Hastings(param_init, iterations, deviations,data, error, accept_l
                 likely_accepted.append(x_new_lik)
             else:
                 rejected.append(x_new)
-            print("Iteration %i. Accepted Values: %i"%(ii+1,len(accepted)), end="\r")
+            print("Iteration %i. Accepted Values: %i/%i"%(ii+1,len(accepted), accept_limit), end="\r")
             ii+=1
 
-
+    print()
     return [accepted, rejected,likely_accepted]
 
 def graph_Likelihood(likelihood):
@@ -288,7 +288,7 @@ def graph_Likelihood(likelihood):
     plt.tight_layout()
     plt.show()
 
-def graph_Confidence(result):
+def graph_Confidence(result, data, error, resolution=10):
     """
         This function graphs the confidence of all the parameters.
 
@@ -309,80 +309,125 @@ def graph_Confidence(result):
     f1.scatter(H_0, omega_m0, s=1)
     f1.set_xlabel(r"$H_0$")
     f1.set_ylabel(r"$\Omega_{m_0}$")
+    limits = [f1.get_xlim(),f1.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 0, N=resolution)
+    f1.contour(A,B,C,300)
 
     f2 = f.add_subplot(gs[0, 1])
     f2.scatter(H_0, omega_q0, s=1)
     f2.set_xlabel(r"$H_0$")
     f2.set_ylabel(r"$\Omega_{q_0}$")
+    limits = [f2.get_xlim(),f2.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 1, N=resolution)
+    f2.contour(A,B,C,300)
 
     f3 = f.add_subplot(gs[0, 2])
     f3.scatter(H_0, alpha, s=1)
     f3.set_xlabel(r"$H_0$")
     f3.set_ylabel(r"$\alpha$")
+    limits = [f3.get_xlim(),f3.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 2, N=resolution)
+    f3.contour(A,B,C,300)
 
     f4 = f.add_subplot(gs[0, 3])
     f4.scatter(H_0, alpha_x, s=1)
     f4.set_xlabel(r"$H_0$")
     f4.set_ylabel(r"$\alpha_x$")
+    limits = [f4.get_xlim(),f4.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 3, N=resolution)
+    f4.contour(A,B,C,300)
 
     f5 = f.add_subplot(gs[0, 4])
     f5.scatter(H_0, m, s=1)
     f5.set_xlabel(r"$H_0$")
     f5.set_ylabel(r"$m$")
+    limits = [f5.get_xlim(),f5.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 4, N=resolution)
+    f5.contour(A,B,C,300)
 
     #New row ========
     f6 = f.add_subplot(gs[1, 0])
     f6.scatter(m, omega_m0, s=1)
     f6.set_xlabel(r"$m$")
     f6.set_ylabel(r"$\Omega_{m_0}$")
+    limits = [f6.get_xlim(),f6.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 5, N=resolution)
+    f6.contour(A,B,C,300)
 
     f7 = f.add_subplot(gs[1, 1])
     f7.scatter(m, omega_q0, s=1)
     f7.set_xlabel(r"$m$")
     f7.set_ylabel(r"$\Omega_{q_0}$")
+    limits = [f7.get_xlim(),f7.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 6, N=resolution)
+    f7.contour(A,B,C,300)
 
     f8 = f.add_subplot(gs[1, 2])
     f8.scatter(m, alpha, s=1)
     f8.set_xlabel(r"$m$")
     f8.set_ylabel(r"$\alpha$")
+    limits = [f8.get_xlim(),f8.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 7, N=resolution)
+    f8.contour(A,B,C,300)
 
     f9 = f.add_subplot(gs[1, 3])
     f9.scatter(m, alpha_x, s=1)
     f9.set_xlabel(r"$m$")
     f9.set_ylabel(r"$\alpha_x$")
+    limits = [f9.get_xlim(),f9.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 8, N=resolution)
+    f9.contour(A,B,C,300)
 
     #New row ========
     f10 = f.add_subplot(gs[2, 0])
     f10.scatter(alpha_x, omega_m0, s=1)
     f10.set_xlabel(r"$\alpha_x$")
     f10.set_ylabel(r"$\Omega_{m_0}$")
+    limits = [f10.get_xlim(),f10.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 9, N=resolution)
+    f10.contour(A,B,C,300)
 
     f11 = f.add_subplot(gs[2, 1])
     f11.scatter(alpha_x, omega_q0, s=1)
     f11.set_xlabel(r"$\alpha_x$")
     f11.set_ylabel(r"$\Omega_{q_0}$")
+    limits = [f11.get_xlim(),f11.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 10, N=resolution)
+    f11.contour(A,B,C,300)
 
     f12 = f.add_subplot(gs[2, 2])
     f12.scatter(alpha_x, alpha, s=1)
     f12.set_xlabel(r"$\alpha_x$")
     f12.set_ylabel(r"$\alpha$")
+    limits = [f12.get_xlim(),f12.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 11, N=resolution)
+    f12.contour(A,B,C,300)
 
     #New row ========
     f13 = f.add_subplot(gs[3, 0])
     f13.scatter(alpha, omega_m0, s=1)
     f13.set_xlabel(r"$\alpha$")
     f13.set_ylabel(r"$\Omega_{m_0}$")
+    limits = [f13.get_xlim(),f13.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 12, N=resolution)
+    f13.contour(A,B,C,300)
 
     f14 = f.add_subplot(gs[3, 1])
     f14.scatter(alpha, omega_q0, s=1)
     f14.set_xlabel(r"$\alpha$")
     f14.set_ylabel(r"$\Omega_{q_0}$")
+    limits = [f14.get_xlim(),f14.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 13, N=resolution)
+    f14.contour(A,B,C,300)
 
     #New row ========
     f15 = f.add_subplot(gs[4, 0])
     f15.scatter(omega_q0, omega_m0, s=1)
     f15.set_xlabel(r"$\Omega_{q_0}$")
     f15.set_ylabel(r"$\Omega_{m_0}$")
+    limits = [f15.get_xlim(),f15.get_ylim()]
+    A,B,C = info_Contourn(result[-1],limits, data, error, 14, N=resolution)
+    f15.contour(A,B,C,300)
 
     plt.tight_layout()
     plt.savefig("result.pdf")
@@ -396,3 +441,30 @@ def burn_Result(result, index):
         - index (int>0): number until which the data will be burned
     """
     return result[index:]
+def info_Contourn(lastResult,limits, data, error, index, N=10):
+
+    corr = [(0,1), (0,2), (0,3), (0,4), (0,5), (5,1), (5,2), (5,3), (5,4),
+    (4,1),(4,2),(4,3),(3,1),(3,2),(2,1)]
+    #Avoid negative limits
+    x_low, y_low = limits[0][0], limits[1][0]
+    if limits[0][0]<0:
+        x_low = 0
+    if limits[1][0]<0:
+        y_low = 0
+    x_arr = np.linspace(x_low, limits[0][1], N)
+    y_arr = np.linspace(y_low, limits[1][1], N)
+
+    X_a,Y_a = np.meshgrid(x_arr, y_arr)
+    Z_a = np.zeros((N,N))
+    count = 1
+    for ii, x in enumerate(x_arr):
+        for jj,y in enumerate(y_arr):
+            tmpResult = lastResult.copy()
+            tmpResult[corr[index][0]] = x
+            tmpResult[corr[index][1]] = y
+            Z_a[ii,jj]=likelihood_Function(tmpResult[0], tmpResult[1],
+             tmpResult[2],tmpResult[3], tmpResult[4], tmpResult[5], data, error)
+            print("Graphic %i/15. Block %i/%i  "%(index+1, count, N*N), end="\r")
+            count+=1
+
+    return X_a, Y_a, Z_a
