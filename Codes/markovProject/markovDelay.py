@@ -302,132 +302,32 @@ def graph_Confidence(result, data, error, resolution=10):
     alpha = [ii[3] for ii in result]
     alpha_x = [ii[4] for ii in result]
     m = [ii[5] for ii in result]
+    newShape = [H_0, omega_m0, omega_q0, alpha, alpha_x, m]
+    corr = [(0,1), (0,2), (0,3), (0,4), (0,5), (5,1), (5,2), (5,3), (5,4),
+        (4,1),(4,2),(4,3),(3,1),(3,2),(2,1)]
+    subplots = [(0,0), (0,1), (0,2), (0,3), (0,4), (1,0), (1,1), (1,2), (1,3),
+    (2,0), (2,1), (2,2), (3,0), (3,1), (4,0)]
+
+    axisLabels = [(r"$H_0$", r"$\Omega_{m_0}$"), (r"$H_0$", r"$\Omega_{q_0}$"),
+    (r"$H_0$", r"$\alpha$"), (r"$H_0$", r"$\alpha_x$"), (r"$H_0$", r"$m$"),
+    (r"$m$",r"$\Omega_{m_0}$"), (r"$m$",r"$\Omega_{q_0}$"), (r"$m$",r"$\alpha$"),
+    (r"$m$",r"$\alpha_x$"), (r"$\alpha_x$",r"$\Omega_{m_0}$"),
+    (r"$\alpha_x$",r"$\Omega_{q_0}$"), (r"$\alpha_x$", r"$\alpha$"),
+    (r"$\alpha$",r"$\Omega_{m_0}$"), (r"$\alpha$", r"$\Omega_{q_0}$"),
+    (r"$\Omega_{q_0}$", "$\Omega_{m_0}$")]
 
     f = plt.figure(figsize=(15,15))
     gs = GridSpec(5, 5)
-    f1 = f.add_subplot(gs[0, 0])
-    f1.scatter(H_0, omega_m0, s=1)
-    f1.set_xlabel(r"$H_0$")
-    f1.set_ylabel(r"$\Omega_{m_0}$")
-    limits = [f1.get_xlim(),f1.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 0, N=resolution)
-    f1.contour(A,B,C,300)
 
-    f2 = f.add_subplot(gs[0, 1])
-    f2.scatter(H_0, omega_q0, s=1)
-    f2.set_xlabel(r"$H_0$")
-    f2.set_ylabel(r"$\Omega_{q_0}$")
-    limits = [f2.get_xlim(),f2.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 1, N=resolution)
-    f2.contour(A,B,C,300)
-
-    f3 = f.add_subplot(gs[0, 2])
-    f3.scatter(H_0, alpha, s=1)
-    f3.set_xlabel(r"$H_0$")
-    f3.set_ylabel(r"$\alpha$")
-    limits = [f3.get_xlim(),f3.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 2, N=resolution)
-    f3.contour(A,B,C,300)
-
-    f4 = f.add_subplot(gs[0, 3])
-    f4.scatter(H_0, alpha_x, s=1)
-    f4.set_xlabel(r"$H_0$")
-    f4.set_ylabel(r"$\alpha_x$")
-    limits = [f4.get_xlim(),f4.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 3, N=resolution)
-    f4.contour(A,B,C,300)
-
-    f5 = f.add_subplot(gs[0, 4])
-    f5.scatter(H_0, m, s=1)
-    f5.set_xlabel(r"$H_0$")
-    f5.set_ylabel(r"$m$")
-    limits = [f5.get_xlim(),f5.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 4, N=resolution)
-    f5.contour(A,B,C,300)
-
-    #New row ========
-    f6 = f.add_subplot(gs[1, 0])
-    f6.scatter(m, omega_m0, s=1)
-    f6.set_xlabel(r"$m$")
-    f6.set_ylabel(r"$\Omega_{m_0}$")
-    limits = [f6.get_xlim(),f6.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 5, N=resolution)
-    f6.contour(A,B,C,300)
-
-    f7 = f.add_subplot(gs[1, 1])
-    f7.scatter(m, omega_q0, s=1)
-    f7.set_xlabel(r"$m$")
-    f7.set_ylabel(r"$\Omega_{q_0}$")
-    limits = [f7.get_xlim(),f7.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 6, N=resolution)
-    f7.contour(A,B,C,300)
-
-    f8 = f.add_subplot(gs[1, 2])
-    f8.scatter(m, alpha, s=1)
-    f8.set_xlabel(r"$m$")
-    f8.set_ylabel(r"$\alpha$")
-    limits = [f8.get_xlim(),f8.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 7, N=resolution)
-    f8.contour(A,B,C,300)
-
-    f9 = f.add_subplot(gs[1, 3])
-    f9.scatter(m, alpha_x, s=1)
-    f9.set_xlabel(r"$m$")
-    f9.set_ylabel(r"$\alpha_x$")
-    limits = [f9.get_xlim(),f9.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 8, N=resolution)
-    f9.contour(A,B,C,300)
-
-    #New row ========
-    f10 = f.add_subplot(gs[2, 0])
-    f10.scatter(alpha_x, omega_m0, s=1)
-    f10.set_xlabel(r"$\alpha_x$")
-    f10.set_ylabel(r"$\Omega_{m_0}$")
-    limits = [f10.get_xlim(),f10.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 9, N=resolution)
-    f10.contour(A,B,C,300)
-
-    f11 = f.add_subplot(gs[2, 1])
-    f11.scatter(alpha_x, omega_q0, s=1)
-    f11.set_xlabel(r"$\alpha_x$")
-    f11.set_ylabel(r"$\Omega_{q_0}$")
-    limits = [f11.get_xlim(),f11.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 10, N=resolution)
-    f11.contour(A,B,C,300)
-
-    f12 = f.add_subplot(gs[2, 2])
-    f12.scatter(alpha_x, alpha, s=1)
-    f12.set_xlabel(r"$\alpha_x$")
-    f12.set_ylabel(r"$\alpha$")
-    limits = [f12.get_xlim(),f12.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 11, N=resolution)
-    f12.contour(A,B,C,300)
-
-    #New row ========
-    f13 = f.add_subplot(gs[3, 0])
-    f13.scatter(alpha, omega_m0, s=1)
-    f13.set_xlabel(r"$\alpha$")
-    f13.set_ylabel(r"$\Omega_{m_0}$")
-    limits = [f13.get_xlim(),f13.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 12, N=resolution)
-    f13.contour(A,B,C,300)
-
-    f14 = f.add_subplot(gs[3, 1])
-    f14.scatter(alpha, omega_q0, s=1)
-    f14.set_xlabel(r"$\alpha$")
-    f14.set_ylabel(r"$\Omega_{q_0}$")
-    limits = [f14.get_xlim(),f14.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 13, N=resolution)
-    f14.contour(A,B,C,300)
-
-    #New row ========
-    f15 = f.add_subplot(gs[4, 0])
-    f15.scatter(omega_q0, omega_m0, s=1)
-    f15.set_xlabel(r"$\Omega_{q_0}$")
-    f15.set_ylabel(r"$\Omega_{m_0}$")
-    limits = [f15.get_xlim(),f15.get_ylim()]
-    A,B,C = info_Contourn(result[-1],limits, data, error, 14, N=resolution)
-    f15.contour(A,B,C,300)
+    for ii in range(15):
+        g = f.add_subplot(gs[subplots[ii][0], subplots[ii][1]])
+        g.scatter(newShape[corr[ii][0]], newShape[corr[ii][1]], s=1, color="white")
+        g.set_xlabel(axisLabels[ii][0])
+        g.set_ylabel(axisLabels[ii][1])
+        limits = [g.get_xlim(), g.get_ylim()]
+        A,B,C = info_Contourn(result[-1],limits, data, error, ii, N=resolution)
+        g.contour(A,B,C, 300, alpha=0.6)
+        g.scatter(newShape[corr[ii][0]], newShape[corr[ii][1]], s=1, color="k")
 
     plt.tight_layout()
     plt.savefig("result.pdf")

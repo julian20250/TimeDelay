@@ -21,7 +21,7 @@ for ii in range(5):
 data = dataTmp
 
 result = mD.metropolis_Hastings(initialGuess, 1000, initialDeviations, data,
-        errorDt, 10)
+        errorDt, 1500)
 mD.graph_Likelihood(result[2])
 chain=input("Wish to burn? (y/n)>")
 while chain!="n":
