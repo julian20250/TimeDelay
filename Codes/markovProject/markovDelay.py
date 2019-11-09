@@ -8,7 +8,7 @@ from matplotlib.gridspec import GridSpec
 c =299792.458 #km/s
 kmToMPc = 3.240779289666e-20
 
-def r_dyer_roeder(z, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
+def r_dyer_roeder(z_0, z_1, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
     """
         This function returns the value for r(z) given a set of cosmological
         parameters (\Omega_{m_0}, \Omega_{q_0}, \alpha, \alpha_x, m) solving
@@ -53,7 +53,6 @@ def r_dyer_roeder(z, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
 
     N=int(z/h) #Number of steps
 
-    z_0 = 0
     #Initial conditions
     r_0 = 0
     v_0 = 1/((1+z_0)**2*(omega_m0*z_0+1+omega_q0*(1+z_0)**(m-2)*\
@@ -88,7 +87,7 @@ def cosmological_Distances(H_0,z_a, z_b, omega_m0, omega_q0, alpha, alpha_x, m):
         Output:
         - D (float): Cosmological distance
     """
-    return c*r_dyer_roeder(abs(z_a-z_b), omega_m0, omega_q0, alpha, alpha_x, m)/H_0
+    return c*r_dyer_roeder(z_a,z_b, omega_m0, omega_q0, alpha, alpha_x, m)/H_0
 
 def time_delay(th_1, th_2, H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m):
     """
@@ -105,9 +104,9 @@ def time_delay(th_1, th_2, H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m):
         Output:
         - Dt (float): time delay
     """
-    D_d = cosmological_Distances(H_0,z_d, 0, omega_m0, omega_q0, alpha, alpha_x, m)
+    D_d = cosmological_Distances(H_0,0, z_d, omega_m0, omega_q0, alpha, alpha_x, m)
     D_ds = cosmological_Distances(H_0,z_d, z_s, omega_m0, omega_q0, alpha, alpha_x, m)
-    D_s = cosmological_Distances(H_0,z_s, 0, omega_m0, omega_q0, alpha, alpha_x, m)
+    D_s = cosmological_Distances(H_0,0, z_s, omega_m0, omega_q0, alpha, alpha_x, m)
 
     DTheta_squared = abs(th_1**2-th_2**2)
     return (1+z_d)*D_d*D_s*DTheta_squared/(2*D_ds*c*kmToMPc)
