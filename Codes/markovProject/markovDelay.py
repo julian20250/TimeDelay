@@ -15,7 +15,7 @@ def r_dyer_roeder(z_0, z_1, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
         numerically the Dyer-Roeder equation.
 
         Input:
-        - z (float): redshift
+        - z_0, z_1 (float): redshift
         - (omega_m0, omega_q0, alpha, alpha_x, m) (floats): cosmological parameters
         - h (float): Length of integration steps
 
@@ -50,8 +50,8 @@ def r_dyer_roeder(z_0, z_1, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
         in the Dyer-Roeder equation.
         """
         return -(f_2(z)*v+f_3(z)*r)/f_1(z)
-
-    N=int(z/h) #Number of steps
+    z=0
+    N=int(z_1/h) #Number of steps
 
     #Initial conditions
     r_0 = 0
@@ -61,7 +61,6 @@ def r_dyer_roeder(z_0, z_1, omega_m0, omega_q0, alpha, alpha_x, m, h=0.001):
     #Numeric Integration Zone
     r = r_0
     v = v_0
-    z = z_0
 
     for ii in range(N):
         #Runge Kutta Fourth Order
