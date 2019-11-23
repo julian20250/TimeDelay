@@ -351,3 +351,80 @@ $$0=\dot{\eta}_\alpha(1,\epsilon) u^\alpha\frac{\mathrm{d}\tau}{\mathrm{d}\epsil
 Si $\gamma(0)$ es una geodésica afinmente parametrizada, se tiene que $\ddot{\eta}^\alpha=0$. Como $\dot{\eta}_\alpha$ es tipo luz y $u^\alpha$ tipo tiempo, y ambos están dirigidos hacia el futuro, $\dot{\eta}_\alpha(1,0)u^\alpha$ es positivo. De esta forma,
 $$\delta\tau=\frac{\mathrm{d}\tau}{\mathrm{d}\epsilon}\Big|_{\epsilon=0}=0.$$
 \end{proof}
+\subsection{Principio de Fermat en un espacio-tiempo conformalmente estacionario}
+Un caso especial del teorema de Fermat se manifiesta cuando se tiene un espacio-tiempo conformalmente estacionario, esto es, un espacio cuya métrica física $\overset{\sim}{\mathrm{d}s^2}$ es conformal a una métrica estacionaria (independiente del tiempo) $\mathrm{d}s^2$:
+\begin{align}
+\overset{\sim}{\mathrm{d}s^2} =& \Omega^2 \mathrm{d}s^2,\\
+\mathrm{d}s^2 =& -e^{2U}(\mathrm{d}t-\omega_i\mathrm{d}x^i)^2+e^{-2U}\mathrm{d}\ell^2,\\
+\mathrm{d}\ell^2 =& \gamma_{ij} \mathrm{d}x^i\mathrm{d}x^j,
+\end{align}
+donde $U$, $\omega_i$ y $\gamma_{ij}$ son funciones únicamente de las coordenadas espaciales $x^i$, y $\mathrm{d}\ell^2$ es una métrica espacial Riemanniana (definida positiva). El factor conformal $\Omega$ puede depender de las cuatro coordenadas.
+
+Como las curvas que son geodésicas de tipo luz con respecto a $\overset{\sim}{\mathrm{d}s^2}$ también lo son respecto a $\mathrm{d}s^2$, se puede aplicar el teorema de Fermat a $\mathrm{d}s^2$ para encontrar los rayos de luz de $\overset{\sim}{\mathrm{d}s^2}$. Para una curva nula dirigida hacia el futuro, $\mathrm{d}s^2=0$ implica
+\begin{equation}
+\mathrm{d}t=\omega_i\mathrm{d}x^i+e^{-2U}\mathrm{d}\ell.
+\end{equation}
+Si se produce una emisión en $t=0$ y se considera un observador estacionario, es decir, uno con una línea de mundo $x^i=const$, parametrizada por $t$, el tiempo de llegada de una curva nula cuya proyección espacial $\tilde{\gamma}$ está dada por funciones $x^i(\lambda)$ es
+\begin{equation}
+	t=\int_{\tilde{\gamma}} (\omega_i\mathrm{d}x^i+e^{-2U}\mathrm{d\ell}).
+\end{equation}
+Entonces, bajo estas suposiciones, el principio de Fermat es
+\begin{equation}
+\delta \int_{\tilde{\gamma}} (\omega_i\mathrm{d}x^i+e^{-2U}\mathrm{d\ell})=0,
+\end{equation}
+donde las curvas espaciales $\tilde{\gamma}$ varían con respecto a puntos fijos. Esta versión del principio de Fermat es formalmente idéntica a la del caso clásico si \cite{schneider_ehlers_falco_1992}
+\begin{equation}
+n=e^{-2U}+\omega_i\frac{\mathrm{d}x^i}{\mathrm{d}\ell}
+\end{equation}
+se considera como un índice efectivo de refracción (dependiente de la posición y dirección) y si $\mathrm{d}\ell$ se considera como la longitud de arco geométrica. Cuando además ocurre que el campo es estático, esto es, $\omega_i=0$, el vacío se comporta como un medio isotrópico no dispersivo, con índice de refracción
+\begin{equation}
+	n=e^{-2U}.
+\end{equation} 
+
+\section{Ecuación del tiempo de retraso}
+\subsection{Distribuciones de masa aisladas, casi estacionarias y no compactas}
+\subsubsection{Ecuación de campo linealizada}
+Suponga que la métrica $g_{\alpha\beta}$ difiere poco de $\eta_{\alpha\beta}$ en coordenadas ortonormales $x^0=ct, \vec{x}=x^i$, para escribir
+\begin{equation}\label{metricApprox}
+g_{\alpha\beta}=\left( 1-\frac{1}{2}h\right)\eta_{\alpha\beta}+h_{\alpha\beta}, \text{ con }h:=\eta^{\alpha\beta}h_{\alpha\beta}, \text{ }|h_{\alpha\beta}|<<1.
+\end{equation} 
+La ecuación de campo gravitacional
+\begin{equation}
+G^{\alpha\beta}=R^{\alpha\beta}-\frac{1}{2}Rg^{\alpha\beta}=\frac{8\pi G}{c^4}T^{\alpha\beta}
+\end{equation}
+linealizada en $h_{\alpha\beta}$ es
+\begin{equation}
+\left(\nabla^2-\frac{1}{c^2}\frac{\partial^2}{\partial t^2}\right) h^{\alpha\beta} = \frac{16\pi G}{c^4}T^{\alpha\beta}.
+\end{equation}
+La solución de esta última expresión para una fuente aislada sin radiación gravitacional incidente es
+\begin{equation}\label{retarded1}
+h^{\alpha\beta}(t,\vec{x}) = -\frac{4G}{c^4}\int \frac{T^{\alpha\beta}(t-\frac{|\vec{y}|}{c}, \vec{x}+\vec{y})}{|\vec{y}|}\mathrm{d}^3y.
+\end{equation}
+\subsubsection{Fuentes modeladas como fluidos perfectos casi estacionarios}
+Considerando un tensor de momento energía de la forma
+\begin{equation}\label{perfectFluidTensor}
+	T^{\alpha\beta} = (\rho c^2+p)u^\alpha u^\beta-pg^{\alpha\beta};
+\end{equation}
+suponiendo que la materia se mueve lentamente con respecto al sistema coordenado $x^i$, esto es, $v^i := \frac{\mathrm{d}x^i}{\mathrm{d}t}$ obedece $|v|<<c$ y $|p|<<\rho c^2$, se puede deducir de \eqref{perfectFluidTensor} las siguientes componentes (de forma aproximada) del tensor de momento energía
+\begin{align}\label{EM1}
+T^{00} \approx& -\rho c^2,\\
+\label{EM2}
+T^{0i} \approx& \rho c v^i,\\
+\label{EM3}
+T^{ij} \approx& \rho v^iv^j+p\delta^{ij}.
+\end{align}
+Introduciendo los potenciales retardados
+\begin{equation}\label{retardedPotential1}
+U(t,\vec{x})=-G\int\frac{\rho(t-\frac{|\vec{y}|}{c}, \vec{x}+\vec{y})}{|\vec{y}|}\mathrm{d}^3y,
+\end{equation}
+\begin{equation}\label{retardedPotential2}
+	\vec{V}(t,\vec{x}) = -G \int \frac{(\rho\vec{v})(t-\frac{|\vec{y}|}{c}, \vec{x}+\vec{y})}{|\vec{y}|}\mathrm{d}^3y,
+\end{equation}
+se obtiene de \eqref{metricApprox} y de la ecuación \eqref{retarded1} a la \eqref{EM3} que
+\begin{equation}\label{postNewtonianArc}
+\mathrm{d}s^2 = g_{\alpha\beta}\mathrm{d}x^\alpha\mathrm{d}x^\beta \approx -\left(1+\frac{2U}{c^2}\right)c^2\mathrm{d}t^2+8c\mathrm{d}t \frac{\vec{V}\cdot \mathrm{d}\vec{x}}{c^3}+\left(1+\frac{2U}{c^2}\right) \mathrm{d}\vec{x}^2.
+\end{equation}
+En la zona cercana a un sistema de partículas que se mueven lentamente, el retardo temporal en \eqref{retardedPotential1} y \eqref{retardedPotential2} se puede despreciar. Por otro lado, la métrica post-Minkowskiana satisface la condición del límite de campo débil si adicionalmente se exige que $|U|<<c^2$ \cite{schneider_ehlers_falco_1992}, de modo que
+$$\left|\frac{\vec{V}}{c^3}\right| \lesssim \left| \frac{\vec{v}}{c}\right| \cdot \left| \frac{U}{c^2} \right|<<1.$$
+\subsection{Tiempo de llegada y potencial de Fermat}
+Considere el principio de Fermat en su forma original. Se asume que la fuente (puntual), la masa desviadora y el observador hacen parte de un sistema aislado y están en reposo con respecto al sistema coordenado en consideración $(t,\vec{x})$. Nuevamente se asume también que los lentes son geométricamente delgados y la desviación es pequeña.
