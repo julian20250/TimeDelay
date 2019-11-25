@@ -428,3 +428,49 @@ En la zona cercana a un sistema de partículas que se mueven lentamente, el reta
 $$\left|\frac{\vec{V}}{c^3}\right| \lesssim \left| \frac{\vec{v}}{c}\right| \cdot \left| \frac{U}{c^2} \right|<<1.$$
 \subsection{Tiempo de llegada y potencial de Fermat}
 Considere el principio de Fermat en su forma original. Se asume que la fuente (puntual), la masa desviadora y el observador hacen parte de un sistema aislado y están en reposo con respecto al sistema coordenado en consideración $(t,\vec{x})$. Nuevamente se asume también que los lentes son geométricamente delgados y la desviación es pequeña.
+
+Si tiene una señal lumínica emitida en la fuente $S$ a tiempo $t=0$, que viaja de forma rectilínea al punto de desviación cerca de la lente $I$, y posteriormente se dirige al punto de observación $O$; de acuerdo a la métrica \eqref{postNewtonianArc} (despreciando $\vec{V}$) llegará a tiempo
+\begin{equation}\label{firstTime}
+t = c^{-1}\int \left( 1-\frac{2U}{c^2}\right)\mathrm{d}\ell = c^{-1} \ell - 2c^{-3}\int U\mathrm{d}\ell,
+\end{equation}
+donde $\ell$ es la longitud del camino, y el potencial se integra a lo largo de esta trayectoria. Del diagrama \ref{secondGL}, se tiene que
+\begin{equation}
+\ell=\sqrt{(\xi-\eta)^2 +D_{ds}^2}+\sqrt{\xi^2+D_d^2}\approx D_{ds}+D_d+\frac{1}{2D_{ds}}(\xi-\eta)^2+\frac{1}{2D_d}\xi^2.
+\end{equation}
+Las distancias $D_d$, $D_{ds}$ y $D_s=D_d+D_{ds}$ se refieren a la métrica euclideana de fondo.
+
+Para determinar el término de \eqref{firstTime} debido al potencial, se calcula la integral de $U$ de una masa puntual en el origen del plano de lente a lo largo e un rayo que viaja de forma rectilínea desde la fuente $S$ en $\vec{\eta}$ a una imagen $I$ en $\vec{\xi}$. El resultado es
+
+\begin{equation}
+\int_S^I U\mathrm{d}\ell = GM\left(\mathop{ln} \frac{|\vec{\xi}|}{2D_{ds}}+\frac{\vec{\xi}\cdot(\vec{\eta}-\vec{\xi})}{|\vec{\xi}|D_{ds}}+\mathop{O}\left( \left(\frac{\vec{\eta}-\vec{\xi}}{D_{ds}} \right)^2 \right) \right).
+\end{equation}
+Bajo las condiciones usuales de lente, se aproxima este último resultado a
+\begin{equation}
+\int_S^I U \mathrm{d}\ell = GM\mathop{ln} \frac{|\vec{\xi}|}{2D_{ds}},
+\end{equation}
+puesto que la dependencia de $\vec{\eta}$ es despreciable. Si $D'$ es una distancia pequeña comparada con $D_{ds}$ pero grande por respecto a los parámetros de impacto relevantes $|\vec{\xi}|$, la última expresión se puede descomponer como
+\begin{equation}\label{descomposed}
+	GM\left( \mathop{ln} \frac{|\vec{\xi}|}{2D'}+\mathop{ln}\frac{D'}{D_{ds}} \right).
+\end{equation}
+En la primera parte de esta expresión se considera el rayo contenido en un bloque de ancho $D'$ encima del plano de lente, mientras que la segunda parte se debe al rayo fuera del bloque. Sólo la primera parte depende de $\vec{\xi}$, surgiendo de una vecindad $D'$ del desviador.
+
+Añadiendo a este resultado un término análogo para el rayo de $I$ a $O$, descomponiéndolo de la misma forma que \eqref{descomposed} y usando la linealidad de $U$ en la distribución de masa, se obtiene que
+\begin{equation}
+-\frac{2}{c^3}\int U \mathrm{d}\ell =- \frac{4G}{c^3}\int \mathrm{d}^2\xi' \Sigma(\vec{\xi}')\mathop{ln} \left( \frac{|\vec{\xi}-\vec{\xi}'|}{D'}\right)+ \text{ const}.
+\end{equation}
+Sumando las contribuciones geométrica y del potencial, y restándole el tiempo de llegada para un rayo no desviado de $S$ a $O$, se determina el tiempo de retraso de un rayo respecto a un rayo no desviado,
+\begin{equation}
+	c\Delta t = \hat{\phi}(\vec{\xi}, \vec{\eta})+\text{ const},
+\end{equation} 
+donde el potencial de Fermat $\hat{\phi}$ está dado por
+\begin{equation}
+	\hat{\phi}(\vec{\xi},\vec{\eta})= \frac{D_dD_s}{2D_{ds}}\left(\frac{\vec{\xi}}{D_d}-\frac{\vec{\eta}}{D_s} \right)^2+\hat{\Psi}(\vec{\xi}).
+\end{equation}
+El potencial desviador es
+\begin{equation}
+	\hat{\Psi}(\vec{\xi})=\frac{4G}{c^2}\int \mathrm{d}^2\xi' \Sigma(\vec{\xi}') \mathop{ln}\left( \frac{|\vec{\xi}-\vec{\xi}'|}{\xi_0} \right),
+\end{equation}
+donde se reemplazó $D'$ por una escala de longitud arbitraria $\xi_0$, puesto que el valor de esta constante no es de interés \cite{schneider_ehlers_falco_1992}. Ahora, la diferencia del tiempo de llegada (o tiempo de retardo) entre dos imágenes $\vec{\xi}^{(1)},$ $\vec{\xi}^{(2)}$ de una fuente en la posición $\vec{\eta}$ se puede expresar como
+\begin{equation}
+	c\Delta t:=c(t_1-t_2) = \hat{\phi}(\vec{\xi}^{(1)},\vec{\eta})- \hat{\phi}(\vec{\xi}^{(2)},\vec{\eta}).
+\end{equation}
