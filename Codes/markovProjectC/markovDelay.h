@@ -55,8 +55,8 @@ double r_dyer_roeder(double z_0, double z_1, double omega_m0, double omega_q0,
       Output:
       - r(z) (float)
       */
-    double z = 0;
-    int N = z_1/h;
+    double z = z_0;
+    int N = (z_1-z_0)/h;
 
     //Initial conditions
     double r_0 = 0;
@@ -195,6 +195,7 @@ double* transition_Model(double meansAndDeviations[]){
     structured as follows: new_means+new_deviations
     */
     double* l = new double[12];
+    //- (H_0, omega_m0, omega_q0, alpha, alpha_x, m) (doubles): cosmological parameters
     for (int ii=0; ii<6; ii++){
       unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
       default_random_engine generator (seed);
@@ -205,6 +206,11 @@ double* transition_Model(double meansAndDeviations[]){
       l[ii+6] = meansAndDeviations[6+ii];
 
     }
+    //l[1]=.3;
+    //l[2]=0.7;
+    //l[3]=1;
+    //l[4]=0;
+    //l[5]=0;
     return l;
 }
 
@@ -261,9 +267,9 @@ void metropolis_Hastings(double param_init[],double data[], int dataSize,
     ofstream fileRejected;
     ofstream fileLikeli;
 
-    fileAccepted.open("tmpRes/accepted.txt");
-    fileRejected.open("tmpRes/rejected.txt");
-    fileLikeli.open("tmpRes/likelihoodAccepted.txt");
+    fileAccepted.open("tmpRes4/accepted.txt");
+    fileRejected.open("tmpRes4/rejected.txt");
+    fileLikeli.open("tmpRes4/likelihoodAccepted.txt");
 
     if (accept_limit==-1){
       for(int ii=0; ii<iterations; ii++){

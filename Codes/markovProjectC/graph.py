@@ -12,4 +12,4 @@ while chain!="n":
     gL.graph_Likelihood(likelihood)
     chain = input("Continue burning? (y/n)>")
 
-gL.graph_Confidence(accepted, errorDt)
+gL.newGraph_Confidence(accepted)
