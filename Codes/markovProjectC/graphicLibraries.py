@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from matplotlib.patches import Ellipse
 import numpy as np
+from matplotlib import cm
+from getdist import plots, MCSamples
+import getdist
 
 def graph_Likelihood(likelihood):
     """
@@ -18,15 +21,15 @@ def graph_Likelihood(likelihood):
     ax.set_ylabel("Likelihood")
     ax.set_yscale('log')
     plt.tight_layout()
-    plt.show()
+    plt.savefig("likelihood.png")
 def getValues():
     """
         This function extracts all values from .txt after the c++ run.
     """
 
-    f1 = open("tmpRes/accepted.txt", "r")
-    f2 = open("tmpRes/likelihoodAccepted.txt", "r")
-    f3 = open("tmpRes/rejected.txt", "r")
+    f1 = open("tmpRes4/accepted.txt", "r")
+    f2 = open("tmpRes4/likelihoodAccepted.txt", "r")
+    f3 = open("tmpRes4/rejected.txt", "r")
 
     likelihood = []
     accepted = []
@@ -48,6 +51,33 @@ def burn_Result(result, index):
         - index (int>0): number until which the data will be burned
     """
     return result[index:]
+
+def newGraph_Confidence(result):
+    H_0 = [ii[0] for ii in result]
+    omega_m0 = [ii[1] for ii in result]
+    omega_q0 = [ii[2] for ii in result]
+    alpha = [ii[3] for ii in result]
+    alpha_x = [ii[4] for ii in result]
+    m = [ii[5] for ii in result]
+
+    names = ["H_0", "\Omega_{m_0}", "\Omega_{Q_0}", r"\tilde{\alpha}",
+    r"\tilde{\alpha}_x", "m"]
+    #names = ["H_0"]
+    labels =  names
+
+    newShape = [H_0, omega_m0, omega_q0, alpha, alpha_x, m]
+    #newShape = [H_0]
+    values = np.array(newShape).T
+    #print(values.shape)
+    s1 = MCSamples(samples=values, names=names, labels=labels)
+    g = plots.get_subplot_plotter()
+    s1.updateSettings({'contours': [0.68, 0.95, 0.99]})
+    g.settings.colormap = "binary"
+    g.settings.num_plot_contours = 3
+    g.triangle_plot([s1],shaded=True, title_limit=1)
+
+
+    plt.savefig("result.pdf")
 
 def graph_Confidence(result, error, resolution=10):
     """
@@ -80,6 +110,7 @@ def graph_Confidence(result, error, resolution=10):
 
     f = plt.figure(figsize=(15,15))
     gs = GridSpec(5, 5)
+
 
     for ii in range(15):
         g = f.add_subplot(gs[subplots[ii][0], subplots[ii][1]])
