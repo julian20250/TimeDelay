@@ -1,5 +1,5 @@
 \chapter{Lentes Gravitacionales}
-En este capítulo se introduce la idea de lente gravitacional, fenómeno predicho por la teoría de la relatividad general, y comprobado observacionalmente en diferentes escalas del universo: desde la curvatura de la trayectoria de la luz de las estrellas de fondo detrás del sol, medible en los eclipses solares; hasta los efectos provocados por galaxias o súper cúmulos sobre las fuentes de luz que se encuentran detrás de ellas. Algunas referencias clave de este capítulo son \cite{schneider_ehlers_falco_1992,weinberg_2016}.
+En este capítulo se introduce la idea de lente gravitacional, fenómeno predicho por la teoría de la relatividad general, y comprobado observacionalmente en diferentes escalas del universo: desde la curvatura de la trayectoria de la luz de las estrellas de fondo detrás del sol, medible en los eclipses solares; hasta los efectos provocados por galaxias o súper cúmulos sobre las fuentes de luz que se encuentran detrás de ellas. Algunas referencias clave de este capítulo son \cite{schneider_ehlers_falco_1992,weinberg_2016, castaneda, Giovi_2001}.
 \section{Introducción}
 \subsection{Lentes de Schwarschild}
 Como se comentó en el párrafo introductorio, uno de los primeros resultados de la teoría de la relatividad general susceptible a ser medido fue la desviación de un rayo de luz en presencia del sol. La teoría de la relatividad general predice que un rayo de luz que pase a una distancia mínima $\xi$ de un cuerpo de masa $M$ es desviado un ángulo
@@ -474,3 +474,40 @@ donde se reemplazó $D'$ por una escala de longitud arbitraria $\xi_0$, puesto q
 \begin{equation}
 	c\Delta t:=c(t_1-t_2) = \hat{\phi}(\vec{\xi}^{(1)},\vec{\eta})- \hat{\phi}(\vec{\xi}^{(2)},\vec{\eta}).
 \end{equation}
+Uno de los potenciales de Fermat más sencillos pero a la vez más versátiles es el provisto por el modelo isotermal, a través del cual el tiempo de retraso entre dos imágenes es \cite{Giovi_2001}
+\begin{equation}
+c\Delta t=\frac{1+z_{d}}{2} \frac{D_{d} D_{s}}{D_{d s}} \Delta \vartheta^{2},
+\end{equation}
+donde
+\begin{equation}
+\Delta \vartheta^{2}=\left[\vartheta_{1}^{2}-\vartheta_{2}^{2}\right],
+\end{equation}
+$\vartheta_{1,2}$ es la distancia angular de la imagen 1,2 al centro de la lente.
+\section{Distancias cosmológicas}
+\subsection{Modelo estándar cosmológico}
+Para el modelo propuesto en este trabajo, el universo está modelado por las soluciones de las ecuaciones de campo de Einstein de tipo Friedmann-Robertson-Walker, las cuales asumen que a grandes escalas (mayores a $100$ Mpc) el universo es homogéneo e isotrópico. Estas suposiciones llevan de manera única a las métricas de tipo Robertson-Walker, donde el elemento de línea es de la forma
+\begin{equation}
+\mathrm{d}s^2=-c^2\mathrm{d}t^2+R^2(t)\left(\frac{\mathrm{d}r^2}{1-kr^2}+r^2\mathrm{d}\theta^2+r^2\sin^2\theta\mathrm{d}\phi^2 \right).
+\end{equation}
+Las coordenadas $t,r,\theta,\phi$ son comóviles y $t$ es el tiempo cosmológico, $k=0,1,-1$ es la curvatura escalar y determina si el universo es espacialmente plano, cerrado o abierto, respectivamente \cite{castaneda}. La función $R(t)$ es el factor de escala cosmológico, cuya evolución temporal está gobernada por las ecuaciones de campo de Einstein. Las ecuaciones del movimiento para este factor de escala son
+\begin{align}
+\frac{\dot{R}^2}{R^2}&=\frac{8\pi G \rho}{3}-\frac{k}{R^2},\\
+\frac{\ddot{R}}{R}&=-\frac{4\pi G}{3}\left( \rho+3p\right).
+\end{align}
+La primera de estas ecuaciones se conoce como ecuación de Friedmann y corresponde a la componente $00$ de las ecuaciones de campo, mientras que la segunda reúne las componentes espacial-espacial de las ecuaciones de campo, que resultan ser idénticas.
+
+\subsection{Ecuación de Dyer-Roeder en universos tipo Friedmann - Robertson - Walker}
+La ecuación de Dyer-Roeder es fundamental para determinar distancias cosmológicas en universos de tipo Friedmann-Robertson-Walker. Esta es una ecuación diferencial de segundo orden para el parámetro $r(z_0,z)=\frac{H_0}{c}D(z_0,z)$, donde $D(z_0,z)$ es la distancia a la que se encuentra una fuente con corrimiento al rojo $z$ de un observador con corrimiento al rojo $z_0$. 
+
+Para deducir la ecuación de Dyer-Roeder se hace uso de la ecuación de Sachs para el área propia de un haz, de las ecuaciones de campo de Einstein y se supone que el tensor momento-energía el del tipo fluido perfecto \eqref{perfectFluidTensor}. La deducción explícita se puede encontrar en la referencia \cite{castaneda}. Además, esta ecuación involucra las constantes cosmológicas $(H_0,\Omega_{m_0}, \Omega_{Q_0}, \tilde{\alpha}, \tilde{\alpha}_x, m)$, y dependiendo de la combinación de éstas, se obtendrán distancias distintas para un observador y fuente con corrimiento al rojo dados. 
+
+Finalmente, la ecuación de Dyer-Roeder es
+\begin{dmath}
+\left(\Omega_{m_0} z+1+\Omega_{Q_0}(1+z)^{m-2}\left(1-\frac{1}{(1+z)^{m-2}}\right)\right) \frac{\mathrm{d}^{2} r(z_0,z)}{\mathrm{d} z^{2}} +\frac{1}{(1+z)}\left(\frac{7 \Omega_{m_0} z}{2}+\frac{\Omega_{m_0}}{2}+3+\Omega_{Q_0}(1+z)^{m-2}\left(\frac{m+4}{2}-\frac{3}{(1+z)^{m-2}}\right)\right) \frac{\mathrm{d} r(z_0,z)}{\mathrm{d} z} +\frac{3}{2(1+z)^{4}}\left(\tilde{\alpha} \Omega_{m_0}(1+z)^{3}+\tilde{\alpha}_{x} \frac{m}{3} \Omega_{Q_0}(1+z)^{m}\right) r(z_0,z) = 0,
+\end{dmath}
+y sus condiciones de frontera son
+\begin{align}
+r\left(z_{0}, z_{0}\right)&=0,\\
+\left.\frac{d r\left(z_{0}, z\right)}{d z}\right|_{z=z_{0}} &= \frac{1}{\left(1+z_{0}\right)^{2} \sqrt{\Omega_{m_0} z_{0}+1+\Omega_{Q_0}\left(1+z_{0}\right)^{m-2}\left(1-\frac{1}{\left(1+z_{0}\right)^{m-2}}\right)}}.
+\end{align}
+Bajo combinaciones adecuadas de los parámetros cosmológicos es posible encontrar expresiones explícitas para $r(z_0,z)$, pero en general la única manera de determinar el valor de esta función para un corrimiento al rojo dado es integrando numéricamente la ecuación de Dyer-Roeder.
